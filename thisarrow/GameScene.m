@@ -9,37 +9,49 @@
 #import "GameScene.h"
 
 @implementation GameScene
-
--(void)didMoveToView:(SKView *)view {
-    /* Setup your scene here */
-    SKLabelNode *myLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
-    
-    myLabel.text = @"Hello, World!";
-    myLabel.fontSize = 45;
-    myLabel.position = CGPointMake(CGRectGetMidX(self.frame),
-                                   CGRectGetMidY(self.frame));
-    
-    [self addChild:myLabel];
+{
+    CMMotionManager* _motionManager;
+    SKSpriteNode* arrow;
 }
 
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    /* Called when a touch begins */
+-(void)didMoveToView:(SKView *)view {
+    arrow=[SKSpriteNode spriteNodeWithImageNamed:@"arrow"];
+    arrow.position=CGPointMake(self.size.width/2, self.size.height/2);
+    [self addChild:arrow];
     
-    for (UITouch *touch in touches) {
-        CGPoint location = [touch locationInNode:self];
-        
-        SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithImageNamed:@"Spaceship"];
-        
-        sprite.xScale = 0.5;
-        sprite.yScale = 0.5;
-        sprite.position = location;
-        
-        SKAction *action = [SKAction rotateByAngle:M_PI duration:1];
-        
-        [sprite runAction:[SKAction repeatActionForever:action]];
-        
-        [self addChild:sprite];
+    _motionManager=[[CMMotionManager alloc]init];
+    if ([_motionManager isAccelerometerAvailable]) {
+        // 设置加速计频率
+        [_motionManager setAccelerometerUpdateInterval:1/60.0];
+        //开始采样数据
+        [_motionManager startAccelerometerUpdatesToQueue:[NSOperationQueue mainQueue] withHandler:^(CMAccelerometerData *accelerometerData, NSError *error) {
+            //            NSLog(@"%f,%f,%f",accelerometerData.acceleration.x,accelerometerData.acceleration.y,accelerometerData.acceleration.z);
+            CGFloat m=20;
+            CGFloat y=-accelerometerData.acceleration.x*m;
+            CGFloat x=accelerometerData.acceleration.y*m;
+            CGFloat ra=atan2f(-x, y);
+            arrow.zRotation=ra;
+            //            NSLog(@"%f",arrow.zRotation);
+            CGFloat sx=arrow.position.x+x;
+            CGFloat sy=arrow.position.y+y;
+            CGFloat w=arrow.size.width/2;
+            if (sx-w<0) {
+                sx=w;
+            }
+            if (sx+w>self.size.width) {
+                sx=self.size.width-w;
+            }
+            if (sy-w<0) {
+                sy=w;
+            }
+            if (sy+w>self.size.height) {
+                sy=self.size.height-w;
+            }
+            CGPoint newP=CGPointMake(sx, sy);
+            arrow.position=newP;
+        }];
     }
+
 }
 
 -(void)update:(CFTimeInterval)currentTime {

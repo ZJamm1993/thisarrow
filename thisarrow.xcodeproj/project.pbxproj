@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		392D5C0A1DFE85BF009DD396 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 392D5C091DFE85BF009DD396 /* CoreMotion.framework */; };
 		398312EF1DFE82B700BB4306 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 398312EE1DFE82B700BB4306 /* main.m */; };
 		398312F21DFE82B700BB4306 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 398312F11DFE82B700BB4306 /* AppDelegate.m */; };
 		398312F51DFE82B700BB4306 /* GameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 398312F41DFE82B700BB4306 /* GameScene.m */; };
-		398312F71DFE82B700BB4306 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 398312F61DFE82B700BB4306 /* GameScene.sks */; };
 		398312FA1DFE82B700BB4306 /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 398312F91DFE82B700BB4306 /* GameViewController.m */; };
 		398312FD1DFE82B700BB4306 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 398312FB1DFE82B700BB4306 /* Main.storyboard */; };
 		398312FF1DFE82B700BB4306 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 398312FE1DFE82B700BB4306 /* Assets.xcassets */; };
@@ -18,13 +18,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		392D5C091DFE85BF009DD396 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		398312EA1DFE82B700BB4306 /* thisarrow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = thisarrow.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		398312EE1DFE82B700BB4306 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		398312F01DFE82B700BB4306 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		398312F11DFE82B700BB4306 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		398312F31DFE82B700BB4306 /* GameScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameScene.h; sourceTree = "<group>"; };
 		398312F41DFE82B700BB4306 /* GameScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameScene.m; sourceTree = "<group>"; };
-		398312F61DFE82B700BB4306 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		398312F81DFE82B700BB4306 /* GameViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameViewController.h; sourceTree = "<group>"; };
 		398312F91DFE82B700BB4306 /* GameViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameViewController.m; sourceTree = "<group>"; };
 		398312FC1DFE82B700BB4306 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -38,6 +38,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				392D5C0A1DFE85BF009DD396 /* CoreMotion.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -47,6 +48,7 @@
 		398312E11DFE82B700BB4306 = {
 			isa = PBXGroup;
 			children = (
+				392D5C091DFE85BF009DD396 /* CoreMotion.framework */,
 				398312EC1DFE82B700BB4306 /* thisarrow */,
 				398312EB1DFE82B700BB4306 /* Products */,
 			);
@@ -67,7 +69,6 @@
 				398312F11DFE82B700BB4306 /* AppDelegate.m */,
 				398312F31DFE82B700BB4306 /* GameScene.h */,
 				398312F41DFE82B700BB4306 /* GameScene.m */,
-				398312F61DFE82B700BB4306 /* GameScene.sks */,
 				398312F81DFE82B700BB4306 /* GameViewController.h */,
 				398312F91DFE82B700BB4306 /* GameViewController.m */,
 				398312FB1DFE82B700BB4306 /* Main.storyboard */,
@@ -118,6 +119,7 @@
 				TargetAttributes = {
 					398312E91DFE82B700BB4306 = {
 						CreatedOnToolsVersion = 7.2.1;
+						DevelopmentTeam = KPC52YPZEQ;
 					};
 				};
 			};
@@ -144,7 +146,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				398312F71DFE82B700BB4306 /* GameScene.sks in Resources */,
 				398313021DFE82B700BB4306 /* LaunchScreen.storyboard in Resources */,
 				398312FF1DFE82B700BB4306 /* Assets.xcassets in Resources */,
 				398312FD1DFE82B700BB4306 /* Main.storyboard in Resources */,
@@ -273,6 +274,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = thisarrow/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ind.jamstudio.thisarrow;
@@ -284,6 +286,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = thisarrow/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ind.jamstudio.thisarrow;
@@ -310,6 +313,7 @@
 				398313081DFE82B700BB4306 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

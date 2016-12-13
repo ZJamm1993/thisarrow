@@ -15,6 +15,9 @@
 		398312FD1DFE82B700BB4306 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 398312FB1DFE82B700BB4306 /* Main.storyboard */; };
 		398312FF1DFE82B700BB4306 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 398312FE1DFE82B700BB4306 /* Assets.xcassets */; };
 		398313021DFE82B700BB4306 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 398313001DFE82B700BB4306 /* LaunchScreen.storyboard */; };
+		BBDBD8161DFF7DD2001C5F4A /* ArrowNode.m in Sources */ = {isa = PBXBuildFile; fileRef = BBDBD8151DFF7DD2001C5F4A /* ArrowNode.m */; };
+		BBDBD81A1DFF85AA001C5F4A /* texture.atlas in Resources */ = {isa = PBXBuildFile; fileRef = BBDBD8191DFF85AA001C5F4A /* texture.atlas */; };
+		BBDBD81D1DFF8921001C5F4A /* MyTextureAtlas.m in Sources */ = {isa = PBXBuildFile; fileRef = BBDBD81C1DFF8921001C5F4A /* MyTextureAtlas.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +34,12 @@
 		398312FE1DFE82B700BB4306 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		398313011DFE82B700BB4306 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		398313031DFE82B700BB4306 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BBDBD8141DFF7DD2001C5F4A /* ArrowNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArrowNode.h; sourceTree = "<group>"; };
+		BBDBD8151DFF7DD2001C5F4A /* ArrowNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArrowNode.m; sourceTree = "<group>"; };
+		BBDBD8191DFF85AA001C5F4A /* texture.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = texture.atlas; sourceTree = "<group>"; };
+		BBDBD81B1DFF8921001C5F4A /* MyTextureAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTextureAtlas.h; sourceTree = "<group>"; };
+		BBDBD81C1DFF8921001C5F4A /* MyTextureAtlas.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTextureAtlas.m; sourceTree = "<group>"; };
+		BBDBD81E1DFF8A6E001C5F4A /* pch.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pch.pch; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +74,7 @@
 		398312EC1DFE82B700BB4306 /* thisarrow */ = {
 			isa = PBXGroup;
 			children = (
+				BBDBD8191DFF85AA001C5F4A /* texture.atlas */,
 				398312F01DFE82B700BB4306 /* AppDelegate.h */,
 				398312F11DFE82B700BB4306 /* AppDelegate.m */,
 				398312F31DFE82B700BB4306 /* GameScene.h */,
@@ -76,6 +86,11 @@
 				398313001DFE82B700BB4306 /* LaunchScreen.storyboard */,
 				398313031DFE82B700BB4306 /* Info.plist */,
 				398312ED1DFE82B700BB4306 /* Supporting Files */,
+				BBDBD8141DFF7DD2001C5F4A /* ArrowNode.h */,
+				BBDBD8151DFF7DD2001C5F4A /* ArrowNode.m */,
+				BBDBD81B1DFF8921001C5F4A /* MyTextureAtlas.h */,
+				BBDBD81C1DFF8921001C5F4A /* MyTextureAtlas.m */,
+				BBDBD81E1DFF8A6E001C5F4A /* pch.pch */,
 			);
 			path = thisarrow;
 			sourceTree = "<group>";
@@ -147,6 +162,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				398313021DFE82B700BB4306 /* LaunchScreen.storyboard in Resources */,
+				BBDBD81A1DFF85AA001C5F4A /* texture.atlas in Resources */,
 				398312FF1DFE82B700BB4306 /* Assets.xcassets in Resources */,
 				398312FD1DFE82B700BB4306 /* Main.storyboard in Resources */,
 			);
@@ -159,8 +175,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BBDBD8161DFF7DD2001C5F4A /* ArrowNode.m in Sources */,
 				398312FA1DFE82B700BB4306 /* GameViewController.m in Sources */,
 				398312F21DFE82B700BB4306 /* AppDelegate.m in Sources */,
+				BBDBD81D1DFF8921001C5F4A /* MyTextureAtlas.m in Sources */,
 				398312F51DFE82B700BB4306 /* GameScene.m in Sources */,
 				398312EF1DFE82B700BB4306 /* main.m in Sources */,
 			);
@@ -275,6 +293,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GCC_PREFIX_HEADER = "$(SRCROOT)/thisarrow/pch.pch";
 				INFOPLIST_FILE = thisarrow/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ind.jamstudio.thisarrow;
@@ -287,6 +306,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GCC_PREFIX_HEADER = "$(SRCROOT)/thisarrow/pch.pch";
 				INFOPLIST_FILE = thisarrow/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ind.jamstudio.thisarrow;

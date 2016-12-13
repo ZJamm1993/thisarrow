@@ -1,0 +1,20 @@
+//
+//  pch.pch
+//  thisarrow
+//
+//  Created by iMac206 on 16/12/13.
+//  Copyright © 2016年 jamstudio. All rights reserved.
+//
+
+#ifndef pch_pch
+#define pch_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#import <CoreMotion/CoreMotion.h>
+#import <SpriteKit/SpriteKit.h>
+#import "MyTextureAtlas.h"
+
+
+#endif /* pch_pch */

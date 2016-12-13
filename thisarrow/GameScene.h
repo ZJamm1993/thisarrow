@@ -7,7 +7,6 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
-#import <CoreMotion/CoreMotion.h>
 
 @interface GameScene : SKScene
 

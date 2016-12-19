@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		392D5C0A1DFE85BF009DD396 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 392D5C091DFE85BF009DD396 /* CoreMotion.framework */; };
+		3975367B1E07FCD8000A44D6 /* PickUpNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 3975367A1E07FCD8000A44D6 /* PickUpNode.m */; };
 		398312EF1DFE82B700BB4306 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 398312EE1DFE82B700BB4306 /* main.m */; };
 		398312F21DFE82B700BB4306 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 398312F11DFE82B700BB4306 /* AppDelegate.m */; };
 		398312F51DFE82B700BB4306 /* GameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 398312F41DFE82B700BB4306 /* GameScene.m */; };
@@ -22,6 +23,8 @@
 
 /* Begin PBXFileReference section */
 		392D5C091DFE85BF009DD396 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		397536791E07FCD8000A44D6 /* PickUpNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickUpNode.h; sourceTree = "<group>"; };
+		3975367A1E07FCD8000A44D6 /* PickUpNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PickUpNode.m; sourceTree = "<group>"; };
 		398312EA1DFE82B700BB4306 /* thisarrow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = thisarrow.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		398312EE1DFE82B700BB4306 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		398312F01DFE82B700BB4306 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -91,6 +94,8 @@
 				BBDBD81B1DFF8921001C5F4A /* MyTextureAtlas.h */,
 				BBDBD81C1DFF8921001C5F4A /* MyTextureAtlas.m */,
 				BBDBD81E1DFF8A6E001C5F4A /* pch.pch */,
+				397536791E07FCD8000A44D6 /* PickUpNode.h */,
+				3975367A1E07FCD8000A44D6 /* PickUpNode.m */,
 			);
 			path = thisarrow;
 			sourceTree = "<group>";
@@ -179,6 +184,7 @@
 				398312FA1DFE82B700BB4306 /* GameViewController.m in Sources */,
 				398312F21DFE82B700BB4306 /* AppDelegate.m in Sources */,
 				BBDBD81D1DFF8921001C5F4A /* MyTextureAtlas.m in Sources */,
+				3975367B1E07FCD8000A44D6 /* PickUpNode.m in Sources */,
 				398312F51DFE82B700BB4306 /* GameScene.m in Sources */,
 				398312EF1DFE82B700BB4306 /* main.m in Sources */,
 			);

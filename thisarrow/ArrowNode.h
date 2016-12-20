@@ -8,7 +8,7 @@
 
 #import <SpriteKit/SpriteKit.h>
 
-@interface ArrowNode : SKSpriteNode
+@interface ArrowNode : ZZSpriteNode
 
 +(instancetype)defaultNode;
 

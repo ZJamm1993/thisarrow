@@ -19,7 +19,7 @@
 -(void)actionWithAcceleration:(CMAcceleration)acc
 {
     SKNode* parent=self.parent;
-    if (self.parent) {
+    if (parent) {
         CGFloat m=20;
         CGFloat y=-acc.x*m;
         CGFloat x=acc.y*m;

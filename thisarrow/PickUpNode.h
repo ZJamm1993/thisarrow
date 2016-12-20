@@ -8,8 +8,12 @@
 
 #import <SpriteKit/SpriteKit.h>
 
-@interface PickUpNode : SKSpriteNode
+@interface PickUpNode : ZZSpriteNode
 
 +(instancetype)randomNode;
+
+//-(void)blick;
+
+-(void)rotateAuto;
 
 @end

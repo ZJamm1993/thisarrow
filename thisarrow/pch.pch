@@ -15,6 +15,6 @@
 #import <CoreMotion/CoreMotion.h>
 #import <SpriteKit/SpriteKit.h>
 #import "MyTextureAtlas.h"
-
+#import "ZZSpriteNode.h"
 
 #endif /* pch_pch */

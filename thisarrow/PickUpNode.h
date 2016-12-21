@@ -8,12 +8,25 @@
 
 #import <SpriteKit/SpriteKit.h>
 
+typedef NS_ENUM(NSInteger,PickUpType){
+    PickUpTypeOrange,
+    PickUpTypePurple,
+//    PickUpTypeBlue,
+    PickUpTypeNothing
+};
+
 @interface PickUpNode : ZZSpriteNode
+
+@property (nonatomic,assign) BOOL shouldMoving;
+@property (nonatomic,assign) PickUpType type;
+@property (nonatomic,assign) CFTimeInterval createTime;
+@property (nonatomic,assign) BOOL disappearing;
 
 +(instancetype)randomNode;
 
-//-(void)blick;
+-(void)movingAround;
+-(void)disappear;
 
--(void)rotateAuto;
+-(void)bePickedUpByNode:(SKNode*)node;
 
 @end

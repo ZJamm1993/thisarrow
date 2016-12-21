@@ -10,4 +10,7 @@
 
 @interface ZZSpriteNode : SKSpriteNode
 
+@property (nonatomic,assign) CGFloat speedX;
+@property (nonatomic,assign) CGFloat speedY;
+
 @end

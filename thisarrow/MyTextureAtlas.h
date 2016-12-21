@@ -12,4 +12,6 @@
 
 +(instancetype)sharedTextureAtlas;
 
++(SKTexture*)textureNamed:(NSString*)name;
+
 @end

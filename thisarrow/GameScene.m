@@ -11,7 +11,8 @@
 #import "PickUpNode.h"
 
 const CFTimeInterval frequentPickUp=0.1;
-const NSInteger maxPickUpCount=100;
+const CFTimeInterval pickUpLifeTime=5;
+const NSInteger maxPickUpCount=3;
 
 @interface GameScene()<SKPhysicsContactDelegate>
 
@@ -22,7 +23,6 @@ const NSInteger maxPickUpCount=100;
     CMMotionManager* _motionManager;
     ArrowNode* arrow;
     CFTimeInterval currentTimeInterval;
-    NSMutableArray* pickUps;
 }
 
 -(void)didMoveToView:(SKView *)view {
@@ -31,8 +31,6 @@ const NSInteger maxPickUpCount=100;
     self.physicsWorld.contactDelegate=self;
     self.scaleMode = SKSceneScaleModeAspectFit;
     self.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:self.frame];
-    
-    pickUps=[NSMutableArray array];
     
     self.backgroundColor=[UIColor blackColor];
     arrow=[ArrowNode defaultNode];
@@ -44,42 +42,35 @@ const NSInteger maxPickUpCount=100;
     [_motionManager startAccelerometerUpdates];
     [_motionManager setAccelerometerUpdateInterval:1/60.0];
     
-    //acc push
-//    if ([_motionManager isAccelerometerAvailable]) {
-//        // 设置加速计频率
-//        //开始采样数据
-//        [_motionManager startAccelerometerUpdatesToQueue:[NSOperationQueue mainQueue] withHandler:^(CMAccelerometerData *accelerometerData, NSError *error) {
-//            //            NSLog(@"%f,%f,%f",accelerometerData.acceleration.x,accelerometerData.acceleration.y,accelerometerData.acceleration.z);
-//            [arrow actionWithAcceleration:accelerometerData.acceleration];
-//        }];
-//    }
-    
 }
 
 -(void)addPickUp
 {
-    if (pickUps.count>=maxPickUpCount) {
+    NSInteger pickUpCount=0;
+    for (SKNode* node in self.children) {
+        if ([node isKindOfClass:[PickUpNode class]]) {
+            pickUpCount++;
+        }
+    }
+    if (pickUpCount>=maxPickUpCount) {
         return;
     }
+    
+//    if (pickUps.count>=maxPickUpCount) {
+//        return;
+//    }
+    
     PickUpNode* pick=[PickUpNode randomNode];
+    pick.createTime=currentTimeInterval+ZZRandom_0_1()*5;
     CGFloat r=pick.size.width/2;
     CGFloat x=(arc4random()%(int)(self.size.width-2*r));
     CGFloat y=(arc4random()%(int)(self.size.height-2*r));
     CGPoint p=CGPointMake(r+x, r+y);
     pick.position=p;
-//    pick.physicsBody=[SKPhysicsBody bodyWithRectangleOfSize:pick.size];
-//    pick.physicsBody.categoryBitMask=pickUpCategory;
-//    pick.physicsBody.contactTestBitMask=arrowCategory;
-    [pick rotateAuto];
     [self addChild:pick];
-    [pickUps addObject:pick];
 }
 
 -(void)update:(CFTimeInterval)currentTime {
-//    NSLog(@"%f",currentTime);
-////    if (currentTime>currentTimeInterval) {
-////        currentTimeInterval=currentTime;
-////    }
     
     [arrow actionWithAcceleration:_motionManager.accelerometerData.acceleration];
     
@@ -87,22 +78,23 @@ const NSInteger maxPickUpCount=100;
         currentTimeInterval=currentTime;
         [self addPickUp];
     }
-    NSArray* picks=[NSArray arrayWithArray:pickUps];
-    for (PickUpNode* pic in picks) {
-        if ([arrow intersectsNode:pic]) {
-            [pic removeFromParent];
-            [pickUps removeObject:pic];
+    
+    NSArray* children=[NSArray arrayWithArray:self.children];
+    for (SKNode* node in children) {
+        if ([node isKindOfClass:[PickUpNode class]]) {
+            PickUpNode* pic=(PickUpNode*)node;
+            [pic movingAround];
+            if (pic.type==PickUpTypePurple) {
+                [pic runAction:[SKAction rotateToAngle:-arrow.zRotation+M_PI_2 duration:0.1 shortestUnitArc:YES]];
+            }
+            if ([arrow intersectsNode:pic]) {
+                [pic bePickedUpByNode:arrow];
+            }
+            if (currentTime-pic.createTime>=pickUpLifeTime) {
+                [pic disappear];
+            }
         }
     }
 }
-//
-//-(void)didBeginContact:(SKPhysicsContact *)contact
-//{
-//    SKPhysicsBody* fir=contact.bodyA;
-//    SKPhysicsBody* sec=contact.bodyB;
-//    if (fir.categoryBitMask==arrowCategory&&sec.categoryBitMask==pickUpCategory) {
-//        NSLog(@"contact:%@,",NSStringFromCGPoint(contact.contactPoint));
-//    }
-//}
 
 @end

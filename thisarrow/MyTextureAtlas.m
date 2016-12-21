@@ -19,4 +19,10 @@ static MyTextureAtlas* sharedTextureAtlasInstancetype;
     return sharedTextureAtlasInstancetype;
 }
 
++(SKTexture*)textureNamed:(NSString *)name
+{
+    SKTexture* texture=[[MyTextureAtlas sharedTextureAtlas]textureNamed:name];
+    return texture;
+}
+
 @end

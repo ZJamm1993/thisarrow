@@ -12,8 +12,7 @@
 
 +(instancetype)defaultNode
 {
-    MyTextureAtlas* atlas=[MyTextureAtlas sharedTextureAtlas];
-    return [ArrowNode spriteNodeWithTexture:[atlas textureNamed:@"arrow"]];
+    return [ArrowNode spriteNodeWithTexture:[MyTextureAtlas textureNamed:@"arrow"]];
 }
 
 -(void)actionWithAcceleration:(CMAcceleration)acc

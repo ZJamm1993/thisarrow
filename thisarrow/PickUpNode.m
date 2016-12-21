@@ -7,6 +7,10 @@
 //
 
 #import "PickUpNode.h"
+#import "MegaBombNode.h"
+
+const CGFloat speedRate=0.25;
+const NSString* rotationActionKey=@"rotationActionKey";
 
 @implementation PickUpNode
 
@@ -24,66 +28,103 @@
      + (UIColor *)purpleColor;     // 0.5, 0.0, 0.5 RGB
      + (UIColor *)brownColor;      // 0.6, 0.4, 0.2 RGB
      */
-    int ran=arc4random()%10;
+    
+    PickUpType ran=arc4random()%PickUpTypeNothing;
     SKColor* randomColor;
-    if (ran==0) {
-        randomColor=[SKColor grayColor];
-    }
-    else if (ran==1) {
-        randomColor=[SKColor redColor];
-    }
-    else if (ran==2) {
-        randomColor=[SKColor greenColor];
-    }
-    else if (ran==3) {
-        randomColor=[SKColor blueColor];
-    }
-    else if (ran==4) {
-        randomColor=[SKColor cyanColor];
-    }
-    else if (ran==5) {
-        randomColor=[SKColor yellowColor];
-    }
-    else if (ran==6) {
-        randomColor=[SKColor magentaColor];
-    }
-    else if (ran==7) {
+    if (ran==PickUpTypeOrange) {
         randomColor=[SKColor orangeColor];
     }
-    else if (ran==8) {
+    else if(ran==PickUpTypePurple)
+    {
         randomColor=[SKColor purpleColor];
     }
-    else if (ran==9) {
-        randomColor=[SKColor brownColor];
-    }
     PickUpNode* node=[PickUpNode spriteNodeWithColor:randomColor size:CGSizeMake(20,20)];
+    node.type=ran;
+    if (ran==PickUpTypePurple) {
+        ZZSpriteNode* chi=[ZZSpriteNode spriteNodeWithColor:[SKColor whiteColor] size:CGSizeMake(5,5)];
+        chi.position=CGPointMake(5, 5);
+        [node addChild:chi];
+    }
+    node.speedX=ZZRandom_1_0_1();
+    node.speedY=ZZRandom_1_0_1();
+    
+    [node showUp];
+    
     return node;
 }
 
 -(void)rotateAuto
 {
     int ra=arc4random();
-    CFTimeInterval duration=(ra%100+100)/100.0;
+    CFTimeInterval duration=(ra%50+50)/100.0;
     if (duration<0.1) {
         duration=0.1;
     }
     CGFloat radian=ra>0?M_PI_2:-M_PI_2;
-    [self runAction:[SKAction repeatActionForever:[SKAction rotateByAngle:radian duration:duration]]];
+    SKAction* repeatRotation=[SKAction repeatActionForever:[SKAction rotateByAngle:radian duration:duration]];
+    repeatRotation.timingMode=SKActionTimingEaseIn;
+    [self runAction:repeatRotation withKey:rotationActionKey.description];
 }
 
-//-(void)blick
-//{
-//    SKAction* closeEye=[SKAction scaleYTo:0.5 duration:0.25];
-//    SKAction* openEye=[SKAction scaleYTo:1 duration:0.25];
-//    SKAction* blin=[SKAction sequence:[NSArray arrayWithObjects:closeEye,openEye, nil]];
-//    SKAction* repeat=[SKAction repeatAction:blin count:2];
-//    [self runAction:repeat completion:^{
-//    }];
-//}
+-(void)showUp
+{
+    SKAction* seq=[SKAction sequence:[NSArray arrayWithObjects:[SKAction scaleTo:1.2 duration:0.2],[SKAction scaleTo:1 duration:0.2], nil]];
+    [self runAction:seq completion:^{
+        self.shouldMoving=YES;
+        if (self.type==PickUpTypeOrange) {
+            [self rotateAuto];
+        }
+    }];
+}
 
-//-(void)moveToParent:(SKNode *)parent // Did not work as I expected;
-//{
-//    [self runAction:[SKAction repeatActionForever:[SKAction rotateByAngle:M_PI duration:(arc4random()%100+100)/100.0]]];
-//}
+-(void)disappear
+{
+    if (self.disappearing) {
+        return;
+    }
+    self.disappearing=YES;
+    self.shouldMoving=NO;
+    [self removeActionForKey:rotationActionKey.description];
+    [self runAction:[SKAction sequence:[NSArray arrayWithObjects:[SKAction scaleTo:1.2 duration:0.25],[SKAction scaleTo:0.1 duration:0.25],nil]] completion:^{
+        [self removeFromParent];
+    }];
+}
+
+-(void)movingAround
+{
+    if (!self.shouldMoving) {
+        return;
+    }
+    CGSize pSize=self.parent.frame.size;
+    CGPoint position=self.position;
+    CGFloat w2=self.size.width/2;
+    BOOL isTouchTop=position.y+w2>=pSize.height;
+    BOOL isTouchBottom=position.y-w2<=0;
+    BOOL isTouchRight=position.x+w2>=pSize.width;
+    BOOL isTouchLeft=position.x-w2<=0;
+    if (isTouchTop) {
+        self.speedY=-fabsf(self.speedY);
+    }
+    if (isTouchBottom) {
+        self.speedY=fabsf(self.speedY);
+    }
+    if (isTouchRight) {
+        self.speedX=-fabsf(self.speedX);
+    }
+    if (isTouchLeft) {
+        self.speedX=fabsf(self.speedX);
+    }
+    self.position=CGPointMake(position.x+self.speedX*speedRate, position.y+self.speedY*speedRate);
+}
+
+-(void)bePickedUpByNode:(SKNode *)node
+{
+    if (self.type==PickUpTypeOrange) {
+        MegaBombNode* mega=[MegaBombNode defaultNode];
+        mega.position=self.position;
+        [node.parent addChild:mega];
+    }
+    [self removeFromParent];
+}
 
 @end

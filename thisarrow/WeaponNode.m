@@ -10,9 +10,14 @@
 
 @implementation WeaponNode
 
++(instancetype)defaultNode
+{
+    return [[WeaponNode alloc]initWithColor:[SKColor redColor] size:CGSizeMake(10, 10)];
+}
+
 -(void)disappear
 {
-    [self runAction:[SKAction scaleTo:0.1 duration:0.25] completion:^{
+    [self runAction:[SKAction group:[NSArray arrayWithObjects:[SKAction scaleTo:0.1 duration:0.25],[SKAction fadeAlphaTo:0 duration:0.25],nil]] completion:^{
         [self removeFromParent];
     }];
 }

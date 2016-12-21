@@ -8,6 +8,7 @@
 
 #import "PickUpNode.h"
 #import "MegaBombNode.h"
+#import "RailGunNode.h"
 
 const CGFloat speedRate=0.25;
 const NSString* rotationActionKey=@"rotationActionKey";
@@ -31,16 +32,19 @@ const NSString* rotationActionKey=@"rotationActionKey";
     
     PickUpType ran=arc4random()%PickUpTypeNothing;
     SKColor* randomColor;
+    SKTexture* texture;
     if (ran==PickUpTypeOrange) {
         randomColor=[SKColor orangeColor];
+        texture=[MyTextureAtlas textureNamed:@"orangePickUp"];
     }
     else if(ran==PickUpTypePurple)
     {
         randomColor=[SKColor purpleColor];
+        texture=[MyTextureAtlas textureNamed:@"purplePickUp"];
     }
-    PickUpNode* node=[PickUpNode spriteNodeWithColor:randomColor size:CGSizeMake(20,20)];
+    PickUpNode* node=texture?[PickUpNode spriteNodeWithTexture:texture]:[PickUpNode spriteNodeWithColor:randomColor size:CGSizeMake(20,20)];
     node.type=ran;
-    if (ran==PickUpTypePurple) {
+    if (ran==PickUpTypePurple&&!texture) {
         ZZSpriteNode* chi=[ZZSpriteNode spriteNodeWithColor:[SKColor whiteColor] size:CGSizeMake(5,5)];
         chi.position=CGPointMake(5, 5);
         [node addChild:chi];
@@ -123,6 +127,11 @@ const NSString* rotationActionKey=@"rotationActionKey";
         MegaBombNode* mega=[MegaBombNode defaultNode];
         mega.position=self.position;
         [node.parent addChild:mega];
+    }
+    else if(self.type==PickUpTypePurple)
+    {
+        RailGunNode* rail=[RailGunNode defaultNode];
+        [rail loadedToGun:node];
     }
     [self removeFromParent];
 }

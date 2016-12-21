@@ -10,6 +10,4 @@
 
 @interface MegaBombNode : WeaponNode
 
-+(instancetype)defaultNode;
-
 @end

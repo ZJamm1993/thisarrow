@@ -10,6 +10,7 @@
 
 @interface WeaponNode : ZZSpriteNode
 
++(instancetype)defaultNode;
 -(void)disappear;
 
 @end

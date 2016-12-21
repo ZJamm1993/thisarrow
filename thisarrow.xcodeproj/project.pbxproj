@@ -22,6 +22,7 @@
 		BBDBD81D1DFF8921001C5F4A /* MyTextureAtlas.m in Sources */ = {isa = PBXBuildFile; fileRef = BBDBD81C1DFF8921001C5F4A /* MyTextureAtlas.m */; };
 		BBF89D5F1E0A0D8100AC0E80 /* WeaponNode.m in Sources */ = {isa = PBXBuildFile; fileRef = BBF89D5E1E0A0D8100AC0E80 /* WeaponNode.m */; };
 		BBF89D671E0A2C0F00AC0E80 /* MegaBombNode.m in Sources */ = {isa = PBXBuildFile; fileRef = BBF89D661E0A2C0F00AC0E80 /* MegaBombNode.m */; };
+		BBF89D6A1E0A7EAC00AC0E80 /* RailGunNode.m in Sources */ = {isa = PBXBuildFile; fileRef = BBF89D691E0A7EAC00AC0E80 /* RailGunNode.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,8 @@
 		BBF89D5E1E0A0D8100AC0E80 /* WeaponNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeaponNode.m; sourceTree = "<group>"; };
 		BBF89D651E0A2C0F00AC0E80 /* MegaBombNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MegaBombNode.h; sourceTree = "<group>"; };
 		BBF89D661E0A2C0F00AC0E80 /* MegaBombNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MegaBombNode.m; sourceTree = "<group>"; };
+		BBF89D681E0A7EAC00AC0E80 /* RailGunNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RailGunNode.h; sourceTree = "<group>"; };
+		BBF89D691E0A7EAC00AC0E80 /* RailGunNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RailGunNode.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +114,8 @@
 				398312ED1DFE82B700BB4306 /* Supporting Files */,
 				BBF89D651E0A2C0F00AC0E80 /* MegaBombNode.h */,
 				BBF89D661E0A2C0F00AC0E80 /* MegaBombNode.m */,
+				BBF89D681E0A7EAC00AC0E80 /* RailGunNode.h */,
+				BBF89D691E0A7EAC00AC0E80 /* RailGunNode.m */,
 			);
 			path = thisarrow;
 			sourceTree = "<group>";
@@ -201,6 +206,7 @@
 				BB0B1AE41E08FF66004DB73E /* ZZSpriteNode.m in Sources */,
 				398312F21DFE82B700BB4306 /* AppDelegate.m in Sources */,
 				BBDBD81D1DFF8921001C5F4A /* MyTextureAtlas.m in Sources */,
+				BBF89D6A1E0A7EAC00AC0E80 /* RailGunNode.m in Sources */,
 				3975367B1E07FCD8000A44D6 /* PickUpNode.m in Sources */,
 				398312F51DFE82B700BB4306 /* GameScene.m in Sources */,
 				398312EF1DFE82B700BB4306 /* main.m in Sources */,

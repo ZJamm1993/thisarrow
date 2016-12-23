@@ -44,6 +44,14 @@ const NSInteger maxPickUpCount=3;
     
 }
 
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    UITouch* touch=[touches anyObject];
+    CGPoint p=[touch locationInNode:self];
+    NSLog(@"%@",NSStringFromCGPoint(p));
+    [arrow actionWithPoint:p];
+}
+
 -(void)addPickUp
 {
     NSInteger pickUpCount=0;
@@ -71,8 +79,9 @@ const NSInteger maxPickUpCount=3;
 }
 
 -(void)update:(CFTimeInterval)currentTime {
-    
-    [arrow actionWithAcceleration:_motionManager.accelerometerData.acceleration];
+    if ([_motionManager isAccelerometerAvailable]) {
+        [arrow actionWithAcceleration:_motionManager.accelerometerData.acceleration];
+    }
     
     if (currentTime-currentTimeInterval>=frequentPickUp) {
         currentTimeInterval=currentTime;

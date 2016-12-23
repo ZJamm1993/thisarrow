@@ -50,4 +50,14 @@
     }
 }
 
+-(void)actionWithPoint:(CGPoint)point
+{
+    CGFloat dx=point.x-self.position.x;
+    CGFloat dy=point.y-self.position.y;
+    CGFloat rotation=atan2f(-dx, dy);
+    CGFloat distance=sqrtf(dx*dx+dy*dy);
+    [self runAction:[SKAction rotateToAngle:rotation duration:0.1 shortestUnitArc:YES]];
+    [self runAction:[SKAction moveTo:point duration:distance/60]];
+}
+
 @end

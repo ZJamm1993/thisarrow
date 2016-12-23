@@ -14,4 +14,6 @@
 
 -(void)actionWithAcceleration:(CMAcceleration)acc;
 
+-(void)actionWithPoint:(CGPoint)point;
+
 @end

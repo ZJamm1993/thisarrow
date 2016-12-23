@@ -20,7 +20,7 @@
 {
     if (node) {
         [node addChild:self];
-        self.position=CGPointMake(node.frame.size.width/2, node.frame.size.height);
+        self.position=CGPointMake(0, node.frame.size.height/2);
         [self performSelector:@selector(prepareToShoot) withObject:nil afterDelay:2];
     }
 }

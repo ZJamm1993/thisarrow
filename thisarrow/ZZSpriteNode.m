@@ -34,4 +34,11 @@
     return newRect;
 }
 
+-(CGPoint)rotateVector:(CGPoint)vec rotation:(CGFloat)rad
+{
+    CGFloat x=vec.x*cos(rad)-vec.y*sin(rad);
+    CGFloat y=vec.x*sin(rad)+vec.y*cos(rad);
+    return CGPointMake(x, y);    
+}
+
 @end

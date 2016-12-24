@@ -19,7 +19,7 @@
 {
     SKNode* parent=self.parent;
     if (parent) {
-        CGFloat m=20;
+        CGFloat m=10;
         CGFloat y=-acc.x*m;
         CGFloat x=acc.y*m;
         
@@ -57,7 +57,7 @@
     CGFloat rotation=atan2f(-dx, dy);
     CGFloat distance=sqrtf(dx*dx+dy*dy);
     [self runAction:[SKAction rotateToAngle:rotation duration:0.1 shortestUnitArc:YES]];
-    [self runAction:[SKAction moveTo:point duration:distance/60]];
+    [self runAction:[SKAction moveTo:point duration:distance/90]];
 }
 
 @end

@@ -9,10 +9,13 @@
 #import "GameScene.h"
 #import "ArrowNode.h"
 #import "PickUpNode.h"
+#import "WeaponNode.h"
+#import "DotNode.h"
 
 const CFTimeInterval frequentPickUp=0.1;
-const CFTimeInterval pickUpLifeTime=5;
-const NSInteger maxPickUpCount=3;
+const CFTimeInterval pickUpLifeTime=8;
+const NSInteger maxPickUpCount=10;
+const NSInteger maxDotCount=100;
 
 @interface GameScene()<SKPhysicsContactDelegate>
 
@@ -27,15 +30,9 @@ const NSInteger maxPickUpCount=3;
 
 -(void)didMoveToView:(SKView *)view {
     
-    self.physicsWorld.speed=60;
-    self.physicsWorld.contactDelegate=self;
-    self.scaleMode = SKSceneScaleModeAspectFit;
-    self.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:self.frame];
-    
-    self.backgroundColor=[UIColor blackColor];
+    self.backgroundColor=[SKColor lightGrayColor];
     arrow=[ArrowNode defaultNode];
     arrow.position=CGPointMake(self.size.width/2, self.size.height/2);
-    arrow.physicsBody=[SKPhysicsBody bodyWithEdgeLoopFromRect:arrow.frame];
     [self addChild:arrow];
     
     _motionManager=[[CMMotionManager alloc]init];
@@ -46,28 +43,22 @@ const NSInteger maxPickUpCount=3;
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    UITouch* touch=[touches anyObject];
-    CGPoint p=[touch locationInNode:self];
-    NSLog(@"%@",NSStringFromCGPoint(p));
-    [arrow actionWithPoint:p];
+    [self touchesMoved:touches withEvent:event];
+}
+
+-(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    if(![_motionManager isAccelerometerAvailable])
+    {
+        UITouch* touch=[touches anyObject];
+        CGPoint p=[touch locationInNode:self];
+        //    NSLog(@"%@",NSStringFromCGPoint(p));
+        [arrow actionWithPoint:p];
+    }
 }
 
 -(void)addPickUp
 {
-    NSInteger pickUpCount=0;
-    for (SKNode* node in self.children) {
-        if ([node isKindOfClass:[PickUpNode class]]) {
-            pickUpCount++;
-        }
-    }
-    if (pickUpCount>=maxPickUpCount) {
-        return;
-    }
-    
-//    if (pickUps.count>=maxPickUpCount) {
-//        return;
-//    }
-    
     PickUpNode* pick=[PickUpNode randomNode];
     pick.createTime=currentTimeInterval+ZZRandom_0_1()*5;
     CGFloat r=pick.size.width/2;
@@ -78,32 +69,78 @@ const NSInteger maxPickUpCount=3;
     [self addChild:pick];
 }
 
+-(void)addDot
+{
+    DotNode* dot=[DotNode defaultNode];
+    CGFloat r=dot.size.width/2;
+    CGFloat x=(arc4random()%(int)(self.size.width-2*r));
+    CGFloat y=(arc4random()%(int)(self.size.height-2*r));
+    CGPoint p=CGPointMake(r+x, r+y);
+    dot.position=p;
+    [dot wakeUp];
+    [self addChild:dot];
+}
+
 -(void)update:(CFTimeInterval)currentTime {
     if ([_motionManager isAccelerometerAvailable]) {
         [arrow actionWithAcceleration:_motionManager.accelerometerData.acceleration];
     }
     
-    if (currentTime-currentTimeInterval>=frequentPickUp) {
-        currentTimeInterval=currentTime;
-        [self addPickUp];
-    }
-    
     NSArray* children=[NSArray arrayWithArray:self.children];
+    NSMutableArray* pickUps=[NSMutableArray array];
+    NSMutableArray* dots=[NSMutableArray array];
+    NSMutableArray* weapons=[NSMutableArray array];
+    
     for (SKNode* node in children) {
         if ([node isKindOfClass:[PickUpNode class]]) {
-            PickUpNode* pic=(PickUpNode*)node;
-            [pic movingAround];
-            if (pic.type==PickUpTypePurple) {
-                [pic runAction:[SKAction rotateToAngle:-arrow.zRotation+M_PI_2 duration:0.1 shortestUnitArc:YES]];
-            }
-            if ([arrow intersectsNode:pic]) {
-                [pic bePickedUpByNode:arrow];
-            }
-            if (currentTime-pic.createTime>=pickUpLifeTime) {
-                [pic disappear];
-            }
+            [pickUps addObject:node];
+        }
+        else if([node isKindOfClass:[WeaponNode class]]) {
+            [weapons addObject:node];
+        }
+        else if([node isKindOfClass:[DotNode class]]) {
+            [dots addObject:node];
         }
     }
+    
+    //add something if need
+    
+    if (currentTime-currentTimeInterval>=frequentPickUp) {
+        currentTimeInterval=currentTime;
+        if (pickUps.count<maxPickUpCount) {
+            [self addPickUp];
+        }
+        if (dots.count<maxDotCount) {
+            [self addDot];
+        }
+    }
+    
+    for (PickUpNode * pic in pickUps) {
+        [pic movingAround];
+        if (pic.type==PickUpTypePurple) {
+            [pic runAction:[SKAction rotateToAngle:-arrow.zRotation+M_PI_2 duration:0.1 shortestUnitArc:YES]];
+        }
+        if ([arrow intersectsNode:pic]) {
+            [pic bePickedUpByNode:arrow];
+            continue;
+        }
+        if (currentTime-pic.createTime>=pickUpLifeTime) {
+            [pic disappear];
+            continue;
+        }
+    }
+    
+    for (DotNode* dot in dots) {
+        [dot actionWithTarget:arrow];
+    }
+    
+    for (WeaponNode* wea in weapons) {
+        for (DotNode* dot in dots) {
+            if ([wea intersectsNode:dot]) {
+                [dot beKilled];
+            }
+        }
+    }\
 }
 
 @end

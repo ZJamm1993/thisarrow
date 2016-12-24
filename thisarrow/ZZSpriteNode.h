@@ -13,4 +13,10 @@
 @property (nonatomic,assign) CGFloat speedX;
 @property (nonatomic,assign) CGFloat speedY;
 
+
+/**
+ counterclockwise rotation
+ */
+-(CGPoint)rotateVector:(CGPoint)vec rotation:(CGFloat)rad;
+
 @end

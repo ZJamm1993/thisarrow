@@ -16,9 +16,6 @@
 #import <SpriteKit/SpriteKit.h>
 #import "MyTextureAtlas.h"
 #import "ZZSpriteNode.h"
-#import "WeaponNode.h"
-#import "PickUpNode.h"
-#import "ArrowNode.h"
 
 #define ZZRandom_1_0_1() ((CGFloat)(rand()/(CGFloat)RAND_MAX)*(rand()>0?1:-1))
 #define ZZRandom_0_1() ((CGFloat)(rand()/(CGFloat)RAND_MAX))

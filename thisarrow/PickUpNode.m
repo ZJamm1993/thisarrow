@@ -123,6 +123,7 @@ const NSString* rotationActionKey=@"rotationActionKey";
 
 -(void)bePickedUpByNode:(SKNode *)node
 {
+    [self removeAllActions];
     if (self.type==PickUpTypeOrange) {
         MegaBombNode* mega=[MegaBombNode defaultNode];
         mega.position=self.position;

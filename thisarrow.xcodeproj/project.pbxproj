@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3901135B1E0E01360005EB3D /* DotNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 3901135A1E0E01360005EB3D /* DotNode.m */; };
 		39099BAD1E0CC03700A7B385 /* Launch Screen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39099BAC1E0CC03700A7B385 /* Launch Screen.xib */; };
 		392D5C0A1DFE85BF009DD396 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 392D5C091DFE85BF009DD396 /* CoreMotion.framework */; };
 		3975367B1E07FCD8000A44D6 /* PickUpNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 3975367A1E07FCD8000A44D6 /* PickUpNode.m */; };
@@ -26,6 +27,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		390113591E0E01360005EB3D /* DotNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DotNode.h; sourceTree = "<group>"; };
+		3901135A1E0E01360005EB3D /* DotNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DotNode.m; sourceTree = "<group>"; };
 		39099BAC1E0CC03700A7B385 /* Launch Screen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "Launch Screen.xib"; sourceTree = "<group>"; };
 		392D5C091DFE85BF009DD396 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		397536791E07FCD8000A44D6 /* PickUpNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickUpNode.h; sourceTree = "<group>"; };
@@ -116,6 +119,8 @@
 				BBF89D681E0A7EAC00AC0E80 /* RailGunNode.h */,
 				BBF89D691E0A7EAC00AC0E80 /* RailGunNode.m */,
 				39099BAC1E0CC03700A7B385 /* Launch Screen.xib */,
+				390113591E0E01360005EB3D /* DotNode.h */,
+				3901135A1E0E01360005EB3D /* DotNode.m */,
 			);
 			path = thisarrow;
 			sourceTree = "<group>";
@@ -205,6 +210,7 @@
 				398312FA1DFE82B700BB4306 /* GameViewController.m in Sources */,
 				BB0B1AE41E08FF66004DB73E /* ZZSpriteNode.m in Sources */,
 				398312F21DFE82B700BB4306 /* AppDelegate.m in Sources */,
+				3901135B1E0E01360005EB3D /* DotNode.m in Sources */,
 				BBDBD81D1DFF8921001C5F4A /* MyTextureAtlas.m in Sources */,
 				BBF89D6A1E0A7EAC00AC0E80 /* RailGunNode.m in Sources */,
 				3975367B1E07FCD8000A44D6 /* PickUpNode.m in Sources */,
@@ -315,12 +321,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PREFIX_HEADER = "$(SRCROOT)/thisarrow/pch.pch";
 				INFOPLIST_FILE = thisarrow/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ind.jamstudio.thisarrow;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -329,12 +337,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PREFIX_HEADER = "$(SRCROOT)/thisarrow/pch.pch";
 				INFOPLIST_FILE = thisarrow/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ind.jamstudio.thisarrow;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

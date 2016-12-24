@@ -72,7 +72,7 @@ const NSString* defaultActionKey=@"defaultActionKey";
     spark.position=self.position;
     [self.parent addChild:spark];
     spark.alpha=0;
-    SKAction* sp_show=[SKAction sequence:[NSArray arrayWithObjects:[SKAction fadeAlphaTo:0.6 duration:0.25],[SKAction group:[NSArray arrayWithObjects:[SKAction scaleTo:0.1 duration:0.5],[SKAction fadeAlphaTo:0 duration:0.5], nil]], nil]];
+    SKAction* sp_show=[SKAction sequence:[NSArray arrayWithObjects:[SKAction fadeAlphaTo:0.4 duration:0],[SKAction group:[NSArray arrayWithObjects:[SKAction scaleTo:0.1 duration:0.5],[SKAction fadeAlphaTo:0 duration:0.5], nil]], nil]];
     [spark runAction:sp_show completion:^{
         [spark removeFromParent];
     }];

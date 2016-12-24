@@ -17,7 +17,7 @@ const CFTimeInterval pickUpLifeTime=8;
 const NSInteger maxPickUpCount=10;
 const NSInteger maxDotCount=100;
 
-@interface GameScene()<SKPhysicsContactDelegate>
+@interface GameScene()
 
 @end
 
@@ -33,6 +33,7 @@ const NSInteger maxDotCount=100;
     self.backgroundColor=[SKColor lightGrayColor];
     arrow=[ArrowNode defaultNode];
     arrow.position=CGPointMake(self.size.width/2, self.size.height/2);
+    arrow.zPosition=1000;
     [self addChild:arrow];
     
     _motionManager=[[CMMotionManager alloc]init];

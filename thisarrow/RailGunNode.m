@@ -63,14 +63,14 @@ const CGFloat gainTime=1;
     CGSize sceneSize=newParent.frame.size; //should be a scene;
     CGFloat maxDistance=sqrtf(sceneSize.width*sceneSize.width+sceneSize.height*sceneSize.height)+100;
     
-    CGFloat duration=maxDistance/200;
+    CGFloat duration=maxDistance/360;
     
     CGFloat dx=maxDistance*sin(-radian);
     CGFloat dy=maxDistance*cos(-radian);
     
     for(NSInteger i=0;i<count;i++)
     {
-        WeaponNode* leftNode=[WeaponNode spriteNodeWithColor:[UIColor magentaColor] size:CGSizeMake(ww, ww)];
+        WeaponNode* leftNode=[WeaponNode spriteNodeWithColor:[UIColor clearColor] size:CGSizeMake(ww, ww)];
         leftNode.position=CGPointMake(ww/2+i*ww, ww-i*ff);
         leftNode.userData=[NSMutableDictionary dictionaryWithObject:@"invisable" forKey:@"invisable"];
         leftNode.zRotation=-radian;
@@ -82,6 +82,28 @@ const CGFloat gainTime=1;
         rightNode.zRotation=leftNode.zRotation;
         [self addChild:rightNode];
     }
+    
+    WeaponNode* head=[WeaponNode spriteNodeWithTexture:[MyTextureAtlas textureNamed:@"purpleRailHead"]];
+    head.position=CGPointMake(0, self.size.height-head.size.height);
+    head.yScale=0;
+    [head runAction:[SKAction repeatActionForever:[SKAction sequence:[NSArray arrayWithObjects:[SKAction scaleYTo:1.1 duration:0.2],[SKAction scaleYTo:0.9 duration:0.2], nil]]]];
+    [self addChild:head];
+    
+    CGFloat fadeDuration=0.3;
+    CGFloat disppearDur=0.1;
+    SKAction* fading=[SKAction repeatActionForever:[SKAction group:[NSArray arrayWithObjects:[SKAction sequence:[NSArray arrayWithObjects:[SKAction scaleYTo:1.1 duration:fadeDuration+disppearDur],[SKAction scaleYTo:0.8 duration:fadeDuration+disppearDur], nil]],[SKAction sequence:[NSArray arrayWithObjects:[SKAction fadeAlphaTo:1 duration:fadeDuration],[SKAction waitForDuration:disppearDur],[SKAction fadeAlphaTo:0 duration:fadeDuration],[SKAction waitForDuration:disppearDur], nil]], nil]]];
+    CGFloat waitTime=0.3;
+    WeaponNode* tail1=[WeaponNode spriteNodeWithTexture:[MyTextureAtlas textureNamed:@"purpleRailTail1"]];
+    tail1.position=CGPointMake(0, self.size.height-1.5*tail1.size.height);
+    tail1.alpha=0;
+    [tail1 runAction:[SKAction sequence:[NSArray arrayWithObjects:[SKAction waitForDuration:waitTime],fading, nil]]];
+    [self addChild:tail1];
+    
+    WeaponNode* tail2=[WeaponNode spriteNodeWithTexture:[MyTextureAtlas textureNamed:@"purpleRailTail2"]];
+    tail2.position=tail1.position;
+    tail2.alpha=0;
+    [tail2 runAction:[SKAction sequence:[NSArray arrayWithObjects:[SKAction waitForDuration:waitTime+fadeDuration+disppearDur],fading, nil]]];
+    [self addChild:tail2];
     
     CGPoint newPosition=CGPointMake(self.position.x+dx, self.position.y+dy);
     [self runAction:[SKAction moveTo:newPosition duration:duration] completion:^{

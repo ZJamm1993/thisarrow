@@ -30,25 +30,56 @@ const NSString* defaultActionKey=@"defaultActionKey";
     CGSize size=self.frame.size;
     CGPoint center=self.position;
     
-    CFTimeInterval showTime=0.1;
-    CFTimeInterval hideTime=0.2;
-    CFTimeInterval waitTime=0.3;
+    CFTimeInterval showTime=0.1+0.1*ZZRandom_1_0_1();
+    CFTimeInterval hideTime=0.2+0.1*ZZRandom_1_0_1();
+    CFTimeInterval waitTime=0.3+0.2*ZZRandom_1_0_1();
     CGFloat alpha=0.6;
     
-    SKAction* blick1=[SKAction repeatActionForever:[SKAction sequence:[NSArray arrayWithObjects:[SKAction fadeAlphaTo:alpha duration:showTime],[SKAction waitForDuration:waitTime],[SKAction fadeAlphaTo:0 duration:hideTime],[SKAction waitForDuration:waitTime], nil]]];
-    SKAction* blick2=[SKAction repeatActionForever:[SKAction sequence:[NSArray arrayWithObjects:[SKAction waitForDuration:waitTime],[SKAction fadeAlphaTo:alpha duration:showTime],[SKAction waitForDuration:waitTime],[SKAction fadeAlphaTo:0 duration:hideTime], nil]]];
+    CGFloat offSetRate=0.25;
     
     light1=[WeaponNode spriteNodeWithTexture:[MyTextureAtlas textureNamed:@"lightning1"]];
-    light1.position=CGPointMake(center.x+size.width*0.25, center.y+size.height*0.25);
+    light1.position=CGPointMake(center.x+size.width*offSetRate, center.y+size.height*offSetRate);
     light1.alpha=0;
-    [light1 runAction:blick1];
+    light1.xScale=0.7;
+    light1.yScale=light1.xScale;
     [self.parent addChild:light1];
     
     light2=[WeaponNode spriteNodeWithTexture:[MyTextureAtlas textureNamed:@"lightning2"]];
-    light2.position=CGPointMake(center.x-size.width*0.25, center.y-size.height*0.25);
-    light2.alpha=0;
-    [light2 runAction:blick2];
+    light2.position=CGPointMake(center.x-size.width*offSetRate, center.y-size.height*offSetRate);
+    light2.alpha=light1.alpha;
+    light2.xScale=light1.xScale;
+    light2.yScale=light2.yScale;
     [self.parent addChild:light2];
+    
+    SKAction* blick1=[SKAction repeatActionForever:[SKAction sequence:
+                                                    [NSArray arrayWithObjects:
+                                                     [SKAction fadeAlphaTo:alpha duration:showTime],
+                                                     [SKAction waitForDuration:waitTime],
+                                                     [SKAction fadeAlphaTo:0 duration:hideTime],
+                                                     [SKAction waitForDuration:waitTime],
+                                                     [SKAction moveBy:CGVectorMake(-size.width*offSetRate*2, 0)  duration:0.01],
+                                                     [SKAction fadeAlphaTo:alpha duration:showTime],
+                                                     [SKAction waitForDuration:waitTime],
+                                                     [SKAction fadeAlphaTo:0 duration:hideTime],
+                                                     [SKAction waitForDuration:waitTime],
+                                                     [SKAction moveBy:CGVectorMake(size.width*offSetRate*2, 0) duration:0.01],
+                                                     nil]]];
+    SKAction* blick2=[SKAction repeatActionForever:[SKAction sequence:
+                                                    [NSArray arrayWithObjects:
+                                                     [SKAction waitForDuration:waitTime],
+                                                     [SKAction fadeAlphaTo:alpha duration:showTime],
+                                                     [SKAction waitForDuration:waitTime],
+                                                     [SKAction fadeAlphaTo:0 duration:hideTime],
+                                                     [SKAction moveBy:CGVectorMake(size.width*offSetRate*2, 0)  duration:0.01]
+                                                     ,[SKAction waitForDuration:waitTime],
+                                                     [SKAction fadeAlphaTo:alpha duration:showTime],
+                                                     [SKAction waitForDuration:waitTime],
+                                                     [SKAction fadeAlphaTo:0 duration:hideTime],
+                                                     [SKAction moveBy:CGVectorMake(-size.width*offSetRate*2, 0)  duration:0.01]
+                                                     , nil]]];
+    
+    [light1 runAction:blick1];
+    [light2 runAction:blick2];
     
     SKAction* scales=[SKAction sequence:[NSArray arrayWithObjects:[SKAction scaleTo:1.05 duration:0.25],[SKAction scaleTo:1 duration:0.25], nil]];
     SKAction* rep=[SKAction repeatAction:scales count:3];

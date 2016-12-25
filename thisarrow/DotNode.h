@@ -7,6 +7,9 @@
 //
 
 #import "ZZSpriteNode.h"
+#import "WeaponNode.h"
+#import "MegaBombNode.h"
+#import "RailGunNode.h"
 
 @interface DotNode : ZZSpriteNode
 
@@ -19,6 +22,6 @@
 
 -(void)actionWithTarget:(SKNode*)node;
 -(void)wakeUp;
--(void)beKilled;
+-(void)beKilledByWeapon:(WeaponNode*)weapon;
 
 @end

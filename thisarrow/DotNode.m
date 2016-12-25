@@ -52,14 +52,24 @@ const CGFloat defaultFollowSpeed=10/60.0;
     }
 }
 
--(void)beKilled
+-(void)beKilledByWeapon:(WeaponNode *)weapon
 {
     [self removeAllActions];
     _isDead=YES;
-    self.color=[SKColor blackColor];
-    [self runAction:[SKAction fadeAlphaTo:0 duration:0.15] completion:^{
-        [self removeFromParent];
-    }];
+    if ([weapon isKindOfClass:[MegaBombNode class]])
+    {
+    }
+    else if([weapon isKindOfClass:[RailGunNode class]])
+    {
+        ZZSpriteNode* ball=[ZZSpriteNode spriteNodeWithTexture:[MyTextureAtlas textureNamed:@"purpleBall"]];
+        ball.position=self.position;
+        [self.parent addChild:ball];
+        [ball runAction:[SKAction scaleTo:0 duration:0.15] completion:^{
+            [ball removeFromParent];
+        }];
+    }
+    
+    [self removeFromParent];
 }
 
 @end

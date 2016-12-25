@@ -31,7 +31,7 @@ const CGFloat safeZoneRadius=32;
 
 -(void)didMoveToView:(SKView *)view {
     
-    self.backgroundColor=[SKColor colorWithRed:0.5 green:0.8 blue:0.3 alpha:1];
+    self.backgroundColor=[SKColor blackColor];
     arrow=[ArrowNode defaultNode];
     arrow.position=CGPointMake(self.size.width/2, self.size.height/2);
     arrow.zPosition=1000;
@@ -54,7 +54,6 @@ const CGFloat safeZoneRadius=32;
     {
         UITouch* touch=[touches anyObject];
         CGPoint p=[touch locationInNode:self];
-        //    NSLog(@"%@",NSStringFromCGPoint(p));
         [arrow actionWithPoint:p];
     }
 }
@@ -157,7 +156,7 @@ const CGFloat safeZoneRadius=32;
     for (WeaponNode* wea in weapons) {
         for (DotNode* dot in dots) {
             if ([wea intersectsNode:dot]) {
-                [dot beKilled];
+                [dot beKilledByWeapon:wea];
             }
         }
     }

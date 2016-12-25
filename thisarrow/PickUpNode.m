@@ -14,6 +14,9 @@ const CGFloat speedRate=0.25;
 const NSString* rotationActionKey=@"rotationActionKey";
 
 @implementation PickUpNode
+{
+    ZZSpriteNode* gloss;
+}
 
 +(instancetype)randomNode
 {
@@ -72,7 +75,11 @@ const NSString* rotationActionKey=@"rotationActionKey";
 
 -(void)showUp
 {
+    gloss=[ZZSpriteNode spriteNodeWithTexture:[MyTextureAtlas textureNamed:@"pickUpGloss"]];
+    [self addChild:gloss];
+    
     SKAction* seq=[SKAction sequence:[NSArray arrayWithObjects:[SKAction scaleTo:1.2 duration:0.2],[SKAction scaleTo:1 duration:0.2], nil]];
+    
     [self runAction:seq completion:^{
         self.shouldMoving=YES;
         if (self.type==PickUpTypeOrange) {
@@ -118,6 +125,7 @@ const NSString* rotationActionKey=@"rotationActionKey";
     if (isTouchLeft) {
         self.speedX=fabsf(self.speedX);
     }
+    gloss.zRotation=-self.zRotation;
     self.position=CGPointMake(position.x+self.speedX*speedRate, position.y+self.speedY*speedRate);
 }
 

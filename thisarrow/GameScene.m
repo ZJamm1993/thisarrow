@@ -16,6 +16,7 @@ const CFTimeInterval frequentPickUp=0.1;
 const CFTimeInterval pickUpLifeTime=8;
 const NSInteger maxPickUpCount=10;
 const NSInteger maxDotCount=100;
+const CGFloat safeZoneRadius=32;
 
 @interface GameScene()
 
@@ -30,7 +31,7 @@ const NSInteger maxDotCount=100;
 
 -(void)didMoveToView:(SKView *)view {
     
-    self.backgroundColor=[SKColor lightGrayColor];
+    self.backgroundColor=[SKColor colorWithRed:0.5 green:0.8 blue:0.3 alpha:1];
     arrow=[ArrowNode defaultNode];
     arrow.position=CGPointMake(self.size.width/2, self.size.height/2);
     arrow.zPosition=1000;
@@ -65,9 +66,18 @@ const NSInteger maxDotCount=100;
     CGFloat r=pick.size.width/2;
     CGFloat x=(arc4random()%(int)(self.size.width-2*r));
     CGFloat y=(arc4random()%(int)(self.size.height-2*r));
-    CGPoint p=CGPointMake(r+x, r+y);
-    pick.position=p;
-    [self addChild:pick];
+    CGFloat dx=x-arrow.position.x;
+    CGFloat dy=y-arrow.position.y;
+    CGFloat duration=sqrtf(dx*dx+dy*dy);
+    if (duration<safeZoneRadius) {
+        [self addPickUp];
+    }
+    else
+    {
+        CGPoint p=CGPointMake(r+x, r+y);
+        pick.position=p;
+        [self addChild:pick];
+    }
 }
 
 -(void)addDot
@@ -76,10 +86,19 @@ const NSInteger maxDotCount=100;
     CGFloat r=dot.size.width/2;
     CGFloat x=(arc4random()%(int)(self.size.width-2*r));
     CGFloat y=(arc4random()%(int)(self.size.height-2*r));
-    CGPoint p=CGPointMake(r+x, r+y);
-    dot.position=p;
-    [dot wakeUp];
-    [self addChild:dot];
+    CGFloat dx=x-arrow.position.x;
+    CGFloat dy=y-arrow.position.y;
+    CGFloat duration=sqrtf(dx*dx+dy*dy);
+    if (duration<safeZoneRadius) {
+        [self addPickUp];
+    }
+    else
+    {
+        CGPoint p=CGPointMake(r+x, r+y);
+        dot.position=p;
+        [dot wakeUp];
+        [self addChild:dot];
+    }
 }
 
 -(void)update:(CFTimeInterval)currentTime {
@@ -141,7 +160,7 @@ const NSInteger maxDotCount=100;
                 [dot beKilled];
             }
         }
-    }\
+    }
 }
 
 @end

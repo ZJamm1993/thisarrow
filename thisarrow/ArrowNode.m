@@ -24,8 +24,6 @@
         CGFloat x=acc.y*m;
         
         CGFloat acc_speed=sqrt(acc.x*acc.x+acc.y*acc.y);
-//        NSLog(@"acc_speed: %f",acc_speed);
-//        NSLog(@"x:%f,y:%f,z:%f",acc.x,acc.y,acc.z);
         if (acc_speed>0.02) {
             CGFloat ra=atan2f(-x, y);
             [self runAction:[SKAction rotateToAngle:ra duration:0.1 shortestUnitArc:YES]];

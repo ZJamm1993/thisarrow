@@ -54,10 +54,17 @@ const CGFloat gainTime=1;
     
     [parent.parent addChild:self];
     
+    
+    WeaponNode* head=[WeaponNode spriteNodeWithTexture:[MyTextureAtlas textureNamed:@"purpleRailHead"]];
+    head.position=CGPointMake(0, self.size.height-head.size.height);
+    head.yScale=0;
+    [head runAction:[SKAction repeatActionForever:[SKAction sequence:[NSArray arrayWithObjects:[SKAction scaleYTo:1.1 duration:0.2],[SKAction scaleYTo:0.9 duration:0.2], nil]]]];
+    [self addChild:head];
+    
     self.texture=nil;
     NSInteger count=6;
-    CGFloat ww=10;
-    CGFloat ff=2;
+    CGFloat ww=head.size.width/count;
+    CGFloat ff=4;
     
     SKNode* newParent=self.parent;
     CGSize sceneSize=newParent.frame.size; //should be a scene;
@@ -68,40 +75,37 @@ const CGFloat gainTime=1;
     CGFloat dx=maxDistance*sin(-radian);
     CGFloat dy=maxDistance*cos(-radian);
     
-    for(NSInteger i=0;i<count;i++)
+    for(NSInteger i=0;i<count/2;i++)
     {
         WeaponNode* leftNode=[WeaponNode spriteNodeWithColor:[UIColor clearColor] size:CGSizeMake(ww, ww)];
-        leftNode.position=CGPointMake(ww/2+i*ww, ww-i*ff);
+        leftNode.zPosition=1000;
+        leftNode.position=CGPointMake(ww/2+i*ww, -ww/2-(i*ff));
         leftNode.userData=[NSMutableDictionary dictionaryWithObject:@"invisable" forKey:@"invisable"];
         leftNode.zRotation=-radian;
         [self addChild:leftNode];
         
         WeaponNode* rightNode=[WeaponNode spriteNodeWithColor:leftNode.color size:leftNode.size];
+        rightNode.zPosition=leftNode.zPosition;
         rightNode.position=CGPointMake(-leftNode.position.x, leftNode.position.y);
         rightNode.userData=[NSMutableDictionary dictionaryWithDictionary:leftNode.userData];
         rightNode.zRotation=leftNode.zRotation;
         [self addChild:rightNode];
     }
     
-    WeaponNode* head=[WeaponNode spriteNodeWithTexture:[MyTextureAtlas textureNamed:@"purpleRailHead"]];
-    head.position=CGPointMake(0, self.size.height-head.size.height);
-    head.yScale=0;
-    [head runAction:[SKAction repeatActionForever:[SKAction sequence:[NSArray arrayWithObjects:[SKAction scaleYTo:1.1 duration:0.2],[SKAction scaleYTo:0.9 duration:0.2], nil]]]];
-    [self addChild:head];
     
     CGFloat fadeDuration=0.3;
     CGFloat disppearDur=0.1;
-    SKAction* fading=[SKAction repeatActionForever:[SKAction group:[NSArray arrayWithObjects:[SKAction sequence:[NSArray arrayWithObjects:[SKAction scaleYTo:1.1 duration:fadeDuration+disppearDur],[SKAction scaleYTo:0.8 duration:fadeDuration+disppearDur], nil]],[SKAction sequence:[NSArray arrayWithObjects:[SKAction fadeAlphaTo:1 duration:fadeDuration],[SKAction waitForDuration:disppearDur],[SKAction fadeAlphaTo:0 duration:fadeDuration],[SKAction waitForDuration:disppearDur], nil]], nil]]];
+    SKAction* fading=[SKAction repeatActionForever:[SKAction sequence:[NSArray arrayWithObjects:[SKAction scaleYTo:1 duration:fadeDuration+disppearDur],[SKAction scaleYTo:0.5 duration:fadeDuration+disppearDur], nil]]];
     CGFloat waitTime=0.3;
     WeaponNode* tail1=[WeaponNode spriteNodeWithTexture:[MyTextureAtlas textureNamed:@"purpleRailTail1"]];
     tail1.position=CGPointMake(0, self.size.height-1.5*tail1.size.height);
-    tail1.alpha=0;
+    tail1.yScale=0;
     [tail1 runAction:[SKAction sequence:[NSArray arrayWithObjects:[SKAction waitForDuration:waitTime],fading, nil]]];
     [self addChild:tail1];
     
     WeaponNode* tail2=[WeaponNode spriteNodeWithTexture:[MyTextureAtlas textureNamed:@"purpleRailTail2"]];
     tail2.position=tail1.position;
-    tail2.alpha=0;
+    tail2.yScale=tail1.yScale;
     [tail2 runAction:[SKAction sequence:[NSArray arrayWithObjects:[SKAction waitForDuration:waitTime+fadeDuration+disppearDur],fading, nil]]];
     [self addChild:tail2];
     
@@ -124,7 +128,7 @@ const CGFloat gainTime=1;
             rectInScene.origin=CGPointMake(positionInScene.x-rectInScene.size.width/2, positionInScene.y-rectInScene.size.height/2);
             if (CGRectIntersectsRect(rectInScene, node.frame)) {
                 inter=YES;
-                NSLog(@"%@",NSStringFromCGRect(rectInScene));
+//                NSLog(@"%@",NSStringFromCGRect(rectInScene));
                 
                 
                 ////testing intersects

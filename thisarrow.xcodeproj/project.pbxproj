@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		3901135B1E0E01360005EB3D /* DotNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 3901135A1E0E01360005EB3D /* DotNode.m */; };
 		39099BAD1E0CC03700A7B385 /* Launch Screen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39099BAC1E0CC03700A7B385 /* Launch Screen.xib */; };
-		392D5C0A1DFE85BF009DD396 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 392D5C091DFE85BF009DD396 /* CoreMotion.framework */; };
+		392D5C0A1DFE85BF009DD396 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 392D5C091DFE85BF009DD396 /* CoreMotion.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		3975367B1E07FCD8000A44D6 /* PickUpNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 3975367A1E07FCD8000A44D6 /* PickUpNode.m */; };
 		398312EF1DFE82B700BB4306 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 398312EE1DFE82B700BB4306 /* main.m */; };
 		398312F21DFE82B700BB4306 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 398312F11DFE82B700BB4306 /* AppDelegate.m */; };
@@ -44,6 +44,7 @@
 		398312FC1DFE82B700BB4306 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		398312FE1DFE82B700BB4306 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		398313031DFE82B700BB4306 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		39B35E8A1E0EC07B007AC823 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		BB0B1AE21E08FF66004DB73E /* ZZSpriteNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZZSpriteNode.h; sourceTree = "<group>"; };
 		BB0B1AE31E08FF66004DB73E /* ZZSpriteNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZZSpriteNode.m; sourceTree = "<group>"; };
 		BBDBD8141DFF7DD2001C5F4A /* ArrowNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArrowNode.h; sourceTree = "<group>"; };
@@ -75,6 +76,7 @@
 		398312E11DFE82B700BB4306 = {
 			isa = PBXGroup;
 			children = (
+				39B35E8A1E0EC07B007AC823 /* GLKit.framework */,
 				392D5C091DFE85BF009DD396 /* CoreMotion.framework */,
 				398312EC1DFE82B700BB4306 /* thisarrow */,
 				398312EB1DFE82B700BB4306 /* Products */,
@@ -324,7 +326,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PREFIX_HEADER = "$(SRCROOT)/thisarrow/pch.pch";
 				INFOPLIST_FILE = thisarrow/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ind.jamstudio.thisarrow;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -340,7 +342,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PREFIX_HEADER = "$(SRCROOT)/thisarrow/pch.pch";
 				INFOPLIST_FILE = thisarrow/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ind.jamstudio.thisarrow;
 				PRODUCT_NAME = "$(TARGET_NAME)";

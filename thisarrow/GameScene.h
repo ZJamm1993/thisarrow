@@ -8,10 +8,13 @@
 
 #import <SpriteKit/SpriteKit.h>
 
-//static const uint32_t arrowCategory  =  0x1 << 0;
-//static const uint32_t pickUpCategory =  0x1 << 1;
-//static const uint32_t dotCategory    =  0x1 << 2;
-//static const uint32_t weaponCategory =  0x1 << 3;
+typedef NS_ENUM(NSInteger, SpriteZPosition)
+{
+    Weapon_Z_Position,
+    Pick_Z_Position,
+    Dot_Z_Position,
+    Arrow_Z_Position,
+};
 
 @interface GameScene : SKScene
 

@@ -46,6 +46,9 @@ const NSString* rotationActionKey=@"rotationActionKey";
         texture=[MyTextureAtlas textureNamed:@"purplePickUp"];
     }
     PickUpNode* node=texture?[PickUpNode spriteNodeWithTexture:texture]:[PickUpNode spriteNodeWithColor:randomColor size:CGSizeMake(20,20)];
+    
+    node.zPosition=Pick_Z_Position;
+    
     node.type=ran;
     if (ran==PickUpTypePurple&&!texture) {
         ZZSpriteNode* chi=[ZZSpriteNode spriteNodeWithColor:[SKColor whiteColor] size:CGSizeMake(5,5)];

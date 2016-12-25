@@ -15,6 +15,7 @@ const CGFloat defaultFollowSpeed=10/60.0;
 +(instancetype)defaultNode
 {
     DotNode* dot=[DotNode spriteNodeWithColor:[SKColor redColor] size:CGSizeMake(10, 10)];
+    dot.zPosition=Dot_Z_Position;
     return dot;
 }
 
@@ -58,6 +59,14 @@ const CGFloat defaultFollowSpeed=10/60.0;
     _isDead=YES;
     if ([weapon isKindOfClass:[MegaBombNode class]])
     {
+        ZZSpriteNode* burn=[ZZSpriteNode spriteNodeWithTexture:[MyTextureAtlas textureNamed:@"burnup1"]];
+//        burn.alpha=0.8;
+        burn.position=self.position;
+        [self.parent addChild:burn];
+        
+        [burn runAction:[SKAction animateWithTextures:[MyTextureAtlas burnUpTextures] timePerFrame:0.025] completion:^{
+            [burn removeFromParent];
+        }];
     }
     else if([weapon isKindOfClass:[RailGunNode class]])
     {

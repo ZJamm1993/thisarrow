@@ -14,4 +14,6 @@
 
 +(SKTexture*)textureNamed:(NSString*)name;
 
++(NSArray*)burnUpTextures;
+
 @end

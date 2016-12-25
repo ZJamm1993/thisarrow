@@ -31,10 +31,10 @@ const CGFloat safeZoneRadius=32;
 
 -(void)didMoveToView:(SKView *)view {
     
-    self.backgroundColor=[SKColor blackColor];
+    self.backgroundColor=[SKColor cyanColor];
     arrow=[ArrowNode defaultNode];
     arrow.position=CGPointMake(self.size.width/2, self.size.height/2);
-    arrow.zPosition=1000;
+    arrow.zPosition=Arrow_Z_Position;
     [self addChild:arrow];
     
     _motionManager=[[CMMotionManager alloc]init];

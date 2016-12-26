@@ -88,6 +88,15 @@ const CGFloat defaultFollowSpeed=16/60.0;
             [ball removeFromParent];
         }];
     }
+    else if([weapon isKindOfClass:[MissileTrackNode class]])
+    {
+        ZZSpriteNode* ball=[ZZSpriteNode spriteNodeWithTexture:[MyTextureAtlas textureNamed:@"yellowBall"]];
+        ball.position=self.position;
+        [self.parent addChild:ball];
+        [ball runAction:[SKAction scaleTo:0 duration:0.25] completion:^{
+            [ball removeFromParent];
+        }];
+    }
     
     [self removeFromParent];
 }

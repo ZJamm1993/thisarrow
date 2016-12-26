@@ -15,7 +15,7 @@
 const CFTimeInterval frequentPickUp=0.1;
 const CFTimeInterval pickUpLifeTime=8;
 const NSInteger maxPickUpCount=10;
-const NSInteger maxDotCount=100;
+const NSInteger maxDotCount=20;
 const CGFloat safeZoneRadius=32;
 
 @interface GameScene()
@@ -154,6 +154,7 @@ const CGFloat safeZoneRadius=32;
     }
     
     for (WeaponNode* wea in weapons) {
+        [wea actionWithTargets:dots];
         for (DotNode* dot in dots) {
             if ([wea intersectsNode:dot]) {
                 [dot beKilledByWeapon:wea];

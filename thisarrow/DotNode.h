@@ -10,6 +10,7 @@
 #import "WeaponNode.h"
 #import "MegaBombNode.h"
 #import "RailGunNode.h"
+#import "MissileTrackNode.h"
 
 @interface DotNode : ZZSpriteNode
 

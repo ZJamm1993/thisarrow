@@ -8,24 +8,27 @@
 
 #import "MissileTrackNode.h"
 
-const CGFloat speed=100;
-const CGFloat explosionDuration=5;
+const CGFloat speed=100/60.0;
+const CGFloat explosionDuration=10;
+const CGFloat turnAngle=M_PI/60;
 
 @implementation MissileTrackNode
 
 +(instancetype)defaultNode
 {
-    MissileTrackNode* mi=[MissileTrackNode spriteNodeWithColor:[UIColor blueColor] size:CGSizeMake(10, 10)];
-    
-    [mi performSelector:@selector(selfExplosion) withObject:nil afterDelay:explosionDuration];
+    MissileTrackNode* mi=[MissileTrackNode spriteNodeWithColor:[UIColor blueColor] size:CGSizeMake(6, 10)];
+    ZZSpriteNode* nod=[ZZSpriteNode spriteNodeWithColor:[UIColor blueColor] size:CGSizeMake(4, 4)];
+    nod.position=CGPointMake(0, 7);
+    [mi addChild:nod];
+    [mi performSelector:@selector(explosion) withObject:nil afterDelay:explosionDuration];
     return mi;
 }
 
 -(void)actionWithTargets:(NSArray *)targets
 {
-    if (_isHit) {
-        return;
-    }
+//    if (_isHit) {
+//        return;
+//    }
     CGPoint targetPosition=self.position;
     CGFloat minDistance=MAXFLOAT;
     for (ZZSpriteNode* tar in targets) {
@@ -34,26 +37,44 @@ const CGFloat explosionDuration=5;
         CGFloat distance=dx*dx+dy*dy;
         if (distance<minDistance) {
             minDistance=distance;
-            targetPosition=tar.position;
+            targetPosition=CGPointMake(dx, dy);
         }
     }
+    CGFloat tarRad=-atan2f(targetPosition.x, targetPosition.y);
+    CGFloat selRad=self.zRotation;
+    CGFloat deltaRad=tarRad-selRad;
     
+    CGFloat sinDt=sinf(deltaRad);
+    
+//    NSLog(@"%f,",sinDt);
+    
+    self.zRotation=self.zRotation+(sinDt>0?turnAngle:-turnAngle);
+    CGFloat sx=speed*(sin(-self.zRotation));
+    CGFloat sy=speed*(cos(-self.zRotation));
+    self.position=CGPointMake(self.position.x+sx, self.position.y+sy);
 }
 
 -(BOOL)intersectsNode:(SKNode *)node
 {
-    BOOL inter=[super intersectsNode:node];
+    CGRect r1=self.frame;
+    CGRect r2=node.frame;
+    BOOL inter=CGRectIntersectsRect(r1, r2);
     if (inter) {
+        [self explosion];
         _isHit=YES;
     }
     return inter;
 }
 
--(void)selfExplosion
+-(void)explosion
 {
-    [self canPerformAction:@selector(selfExplosion) withSender:self];
-    
-    [self removeFromParent];
+    if (_isHit) {
+        return;
+    }
+    [self canPerformAction:@selector(explosion) withSender:self];
+    self.texture=nil;
+    self.color=[UIColor clearColor];
+    [self performSelector:@selector(removeFromParent) withObject:nil afterDelay:0.25];
 }
 
 @end

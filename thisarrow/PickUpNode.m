@@ -9,6 +9,7 @@
 #import "PickUpNode.h"
 #import "MegaBombNode.h"
 #import "RailGunNode.h"
+#import "MissileTrackNode.h"
 
 const CGFloat speedRate=0.25;
 const NSString* rotationActionKey=@"rotationActionKey";
@@ -152,7 +153,13 @@ const NSString* rotationActionKey=@"rotationActionKey";
     }
     else if(self.type==PickUpTypeYellow)
     {
-        
+        int count=6;
+        for (int i=0; i<count; i++) {
+            MissileTrackNode* miss=[MissileTrackNode defaultNode];
+            miss.zRotation=i*M_PI*2/count;
+            miss.position=self.position;
+            [node.parent addChild:miss];
+        }
     }
     [self removeFromParent];
 }

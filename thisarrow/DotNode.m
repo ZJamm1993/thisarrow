@@ -8,7 +8,7 @@
 
 #import "DotNode.h"
 
-const CGFloat defaultFollowSpeed=10/60.0;
+const CGFloat defaultFollowSpeed=16/60.0;
 
 @implementation DotNode
 
@@ -37,6 +37,10 @@ const CGFloat defaultFollowSpeed=10/60.0;
 
 -(void)actionWithTarget:(SKNode *)node
 {
+    if (node.parent==nil) {
+        [self removeFromParent];
+        return;
+    }
     if (_isDead||!_isAwake) {
         return;
     }
@@ -64,7 +68,7 @@ const CGFloat defaultFollowSpeed=10/60.0;
         burn.position=self.position;
         [self.parent addChild:burn];
         
-        [burn runAction:[SKAction animateWithTextures:[MyTextureAtlas burnUpTextures] timePerFrame:0.025] completion:^{
+        [burn runAction:[SKAction animateWithTextures:[MyTextureAtlas burnUpTextures] timePerFrame:0.02] completion:^{
             [burn removeFromParent];
         }];
     }
@@ -79,6 +83,14 @@ const CGFloat defaultFollowSpeed=10/60.0;
     }
     
     [self removeFromParent];
+}
+
+-(BOOL)intersectsNode:(SKNode *)node
+{
+    if (_isDead||!_isAwake) {
+        return NO;
+    }
+    return [super intersectsNode:node];
 }
 
 @end

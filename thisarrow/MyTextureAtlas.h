@@ -12,6 +12,8 @@
 
 +(instancetype)sharedTextureAtlas;
 
++(NSDictionary*)sharedTextureDictionary;
+
 +(SKTexture*)textureNamed:(NSString*)name;
 
 +(NSArray*)burnUpTextures;

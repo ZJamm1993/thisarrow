@@ -19,6 +19,7 @@
     // Override point for customization after application launch.
     NSLog(@"%@",[NSBundle mainBundle]);
     [MyTextureAtlas sharedTextureAtlas];
+    [MyTextureAtlas sharedTextureDictionary];
     return YES;
 }
 

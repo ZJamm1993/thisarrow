@@ -9,7 +9,7 @@
 #import "MyTextureAtlas.h"
 
 static NSArray* burnUpTextureArray;
-
+static NSDictionary* textureDictionary;
 static MyTextureAtlas* sharedTextureAtlasInstancetype;
 
 @implementation MyTextureAtlas
@@ -22,9 +22,25 @@ static MyTextureAtlas* sharedTextureAtlasInstancetype;
     return sharedTextureAtlasInstancetype;
 }
 
++(NSDictionary*)sharedTextureDictionary
+{
+    if (textureDictionary==nil) {
+        NSMutableDictionary* dict=[NSMutableDictionary dictionary];
+        NSArray* names=[MyTextureAtlas sharedTextureAtlas].textureNames;
+        for (NSString* na in names) {
+            NSArray* compos=[na componentsSeparatedByString:@"@"];
+            SKTexture* texture=[[MyTextureAtlas sharedTextureAtlas]textureNamed:na];
+            [dict setValue:texture forKey:[compos firstObject]];
+        }
+        textureDictionary=[NSDictionary dictionaryWithDictionary:dict];
+    }
+    return textureDictionary;
+}
+
 +(SKTexture*)textureNamed:(NSString *)name
 {
-    SKTexture* texture=[[MyTextureAtlas sharedTextureAtlas]textureNamed:name];
+    SKTexture* texture=[[MyTextureAtlas sharedTextureDictionary]valueForKey:name];
+    //[[MyTextureAtlas sharedTextureAtlas]textureNamed:name];
     return texture;
 }
 

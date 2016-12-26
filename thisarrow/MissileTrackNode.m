@@ -9,17 +9,22 @@
 #import "MissileTrackNode.h"
 
 const CGFloat speed=100/60.0;
-const CGFloat explosionDuration=10;
-const CGFloat turnAngle=M_PI/60;
+const CGFloat explosionDuration=4;
+const CGFloat turnAngle=speed/24;
+const NSInteger tailNodesCount=24;
 
 @implementation MissileTrackNode
+{
+    NSMutableArray* tailNodes;
+}
 
 +(instancetype)defaultNode
 {
-    MissileTrackNode* mi=[MissileTrackNode spriteNodeWithColor:[UIColor blueColor] size:CGSizeMake(6, 10)];
-    ZZSpriteNode* nod=[ZZSpriteNode spriteNodeWithColor:[UIColor blueColor] size:CGSizeMake(4, 4)];
-    nod.position=CGPointMake(0, 7);
-    [mi addChild:nod];
+    MissileTrackNode* mi=[MissileTrackNode spriteNodeWithTexture:[MyTextureAtlas textureNamed:@"yellowDiamond"]];
+    mi.xScale=0.7;
+//    ZZSpriteNode* nod=[ZZSpriteNode spriteNodeWithColor:[UIColor blueColor] size:CGSizeMake(4, 4)];
+//    nod.position=CGPointMake(0, 7);
+//    [mi addChild:nod];
     [mi performSelector:@selector(explosion) withObject:nil afterDelay:explosionDuration];
     return mi;
 }
@@ -52,6 +57,7 @@ const CGFloat turnAngle=M_PI/60;
     CGFloat sx=speed*(sin(-self.zRotation));
     CGFloat sy=speed*(cos(-self.zRotation));
     self.position=CGPointMake(self.position.x+sx, self.position.y+sy);
+    [self showTail];
 }
 
 -(BOOL)intersectsNode:(SKNode *)node
@@ -74,7 +80,41 @@ const CGFloat turnAngle=M_PI/60;
     [self canPerformAction:@selector(explosion) withSender:self];
     self.texture=nil;
     self.color=[UIColor clearColor];
+    for (SKNode* tn in tailNodes) {
+        [tn removeFromParent];
+    }
+    ZZSpriteNode* ball=[ZZSpriteNode spriteNodeWithTexture:[MyTextureAtlas textureNamed:@"yellowBall"]];
+    ball.position=self.position;
+    [self.parent addChild:ball];
+    [ball runAction:[SKAction scaleTo:0 duration:0.25] completion:^{
+        [ball removeFromParent];
+    }];
     [self performSelector:@selector(removeFromParent) withObject:nil afterDelay:0.25];
+}
+
+-(void)showTail
+{
+    if (tailNodes.count==0) {
+        tailNodes=[NSMutableArray array];
+        int count=tailNodesCount;
+        CGFloat width=self.size.width*self.xScale;
+        for (int i=0; i<count; i++) {
+            CGFloat w=width*i/count;
+            ZZSpriteNode* tn=[ZZSpriteNode spriteNodeWithColor:[SKColor colorWithRed:1 green:0.6+(0.4*i)/count blue:0 alpha:1  ] size:CGSizeMake(w, w)];
+            tn.position=self.position;
+            tn.zPosition=self.zPosition-1;
+            [self.parent addChild:tn];
+            [tailNodes addObject:tn];
+        }
+    }
+    NSInteger cou=tailNodes.count;
+    for (int i=0; i<cou-1; i++) {
+        ZZSpriteNode* tn1=[tailNodes objectAtIndex:i];
+        ZZSpriteNode* tn2=[tailNodes objectAtIndex:i+1];
+        tn1.position=tn2.position;
+    }
+    ZZSpriteNode* tnLast=[tailNodes lastObject];
+    tnLast.position=self.position;
 }
 
 @end

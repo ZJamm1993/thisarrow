@@ -14,8 +14,8 @@
 
 const CFTimeInterval frequentPickUp=0.1;
 const CFTimeInterval pickUpLifeTime=8;
-const NSInteger maxPickUpCount=10;
-const NSInteger maxDotCount=20;
+const NSInteger maxPickUpCount=4;
+const NSInteger maxDotCount=10;
 const CGFloat safeZoneRadius=32;
 
 @interface GameScene()
@@ -31,7 +31,7 @@ const CGFloat safeZoneRadius=32;
 
 -(void)didMoveToView:(SKView *)view {
     
-    self.backgroundColor=[SKColor cyanColor];
+    self.backgroundColor=[SKColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1];
     arrow=[ArrowNode defaultNode];
     arrow.position=CGPointMake(self.size.width/2, self.size.height/2);
     arrow.zPosition=Arrow_Z_Position;

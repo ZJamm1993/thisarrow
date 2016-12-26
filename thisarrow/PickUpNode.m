@@ -34,7 +34,7 @@ const NSString* rotationActionKey=@"rotationActionKey";
      + (UIColor *)brownColor;      // 0.6, 0.4, 0.2 RGB
      */
     
-    PickUpType ran=arc4random()%PickUpTypeNothing;
+    PickUpType ran=PickUpTypeYellow;//arc4random()%PickUpTypeNothing;
     SKColor* randomColor;
     SKTexture* texture;
     if (ran==PickUpTypeOrange) {
@@ -61,6 +61,28 @@ const NSString* rotationActionKey=@"rotationActionKey";
         chi.position=CGPointMake(5, 5);
         [node addChild:chi];
     }
+    else if(ran==PickUpTypeYellow)
+    {
+        NSArray* positions=[NSArray arrayWithObjects:
+                            [NSValue valueWithCGPoint:CGPointMake(3, 4)],
+                            [NSValue valueWithCGPoint:CGPointMake(4, -3)],
+                            [NSValue valueWithCGPoint:CGPointMake(-3, 4)],
+                            [NSValue valueWithCGPoint:CGPointMake(-4, -5)],
+                            [NSValue valueWithCGPoint:CGPointMake(-5, 1)],
+                            nil];
+        CGFloat maxW=5;
+        SKAction* scales=[SKAction repeatActionForever:[SKAction sequence:[NSArray arrayWithObjects:[SKAction resizeToWidth:maxW height:maxW  duration:0.6],[SKAction resizeToWidth:0 height:0  duration:0.6], nil]]];
+        for (int i=0;i<positions.count;i++) {
+            NSValue* va=[positions objectAtIndex:i];
+            CGPoint p=va.CGPointValue;
+            ZZSpriteNode* spot=[ZZSpriteNode spriteNodeWithTexture:[MyTextureAtlas textureNamed:@"orangeDot"]];
+            spot.position=p;
+            spot.size=CGSizeMake(0, 0);
+            [spot runAction:[SKAction sequence:[NSArray arrayWithObjects:[SKAction waitForDuration:i*0.4],scales, nil]]];
+            [node addChild:spot];
+        }
+    }
+    
     node.speedX=ZZRandom_1_0_1()*2;
     node.speedY=ZZRandom_1_0_1()*2;
     

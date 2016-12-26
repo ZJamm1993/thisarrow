@@ -68,11 +68,12 @@
 {
     if (tailNodes.count==0) {
         tailNodes=[NSMutableArray array];
-        int count=500;
+        int count=20;
         for (int i=0; i<count; i++) {
             CGFloat w=self.size.width*0.4*i/count;
             ZZSpriteNode* tn=[ZZSpriteNode spriteNodeWithColor:[SKColor purpleColor] size:CGSizeMake(w, w)];
             tn.position=self.position;
+            tn.zPosition=self.zPosition-1;
             [self.parent addChild:tn];
             [tailNodes addObject:tn];
         }

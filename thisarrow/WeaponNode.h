@@ -11,6 +11,8 @@
 @interface WeaponNode : ZZSpriteNode
 
 +(instancetype)defaultNode;
+
+-(void)actionWithTargets:(NSArray*)targets;
 -(void)disappear;
 
 @end

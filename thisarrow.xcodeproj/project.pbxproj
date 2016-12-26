@@ -21,6 +21,7 @@
 		BBDBD8161DFF7DD2001C5F4A /* ArrowNode.m in Sources */ = {isa = PBXBuildFile; fileRef = BBDBD8151DFF7DD2001C5F4A /* ArrowNode.m */; };
 		BBDBD81A1DFF85AA001C5F4A /* texture.atlas in Resources */ = {isa = PBXBuildFile; fileRef = BBDBD8191DFF85AA001C5F4A /* texture.atlas */; };
 		BBDBD81D1DFF8921001C5F4A /* MyTextureAtlas.m in Sources */ = {isa = PBXBuildFile; fileRef = BBDBD81C1DFF8921001C5F4A /* MyTextureAtlas.m */; };
+		BBEB62811E10E0A500DED9F4 /* MissileTrackNode.m in Sources */ = {isa = PBXBuildFile; fileRef = BBEB62801E10E0A500DED9F4 /* MissileTrackNode.m */; };
 		BBF89D5F1E0A0D8100AC0E80 /* WeaponNode.m in Sources */ = {isa = PBXBuildFile; fileRef = BBF89D5E1E0A0D8100AC0E80 /* WeaponNode.m */; };
 		BBF89D671E0A2C0F00AC0E80 /* MegaBombNode.m in Sources */ = {isa = PBXBuildFile; fileRef = BBF89D661E0A2C0F00AC0E80 /* MegaBombNode.m */; };
 		BBF89D6A1E0A7EAC00AC0E80 /* RailGunNode.m in Sources */ = {isa = PBXBuildFile; fileRef = BBF89D691E0A7EAC00AC0E80 /* RailGunNode.m */; };
@@ -52,6 +53,8 @@
 		BBDBD81B1DFF8921001C5F4A /* MyTextureAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTextureAtlas.h; sourceTree = "<group>"; };
 		BBDBD81C1DFF8921001C5F4A /* MyTextureAtlas.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTextureAtlas.m; sourceTree = "<group>"; };
 		BBDBD81E1DFF8A6E001C5F4A /* pch.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pch.pch; sourceTree = "<group>"; };
+		BBEB627F1E10E0A500DED9F4 /* MissileTrackNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MissileTrackNode.h; sourceTree = "<group>"; };
+		BBEB62801E10E0A500DED9F4 /* MissileTrackNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MissileTrackNode.m; sourceTree = "<group>"; };
 		BBF89D5D1E0A0D8100AC0E80 /* WeaponNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeaponNode.h; sourceTree = "<group>"; };
 		BBF89D5E1E0A0D8100AC0E80 /* WeaponNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeaponNode.m; sourceTree = "<group>"; };
 		BBF89D651E0A2C0F00AC0E80 /* MegaBombNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MegaBombNode.h; sourceTree = "<group>"; };
@@ -121,6 +124,8 @@
 				39099BAC1E0CC03700A7B385 /* Launch Screen.xib */,
 				390113591E0E01360005EB3D /* DotNode.h */,
 				3901135A1E0E01360005EB3D /* DotNode.m */,
+				BBEB627F1E10E0A500DED9F4 /* MissileTrackNode.h */,
+				BBEB62801E10E0A500DED9F4 /* MissileTrackNode.m */,
 			);
 			path = thisarrow;
 			sourceTree = "<group>";
@@ -211,6 +216,7 @@
 				BB0B1AE41E08FF66004DB73E /* ZZSpriteNode.m in Sources */,
 				398312F21DFE82B700BB4306 /* AppDelegate.m in Sources */,
 				3901135B1E0E01360005EB3D /* DotNode.m in Sources */,
+				BBEB62811E10E0A500DED9F4 /* MissileTrackNode.m in Sources */,
 				BBDBD81D1DFF8921001C5F4A /* MyTextureAtlas.m in Sources */,
 				BBF89D6A1E0A7EAC00AC0E80 /* RailGunNode.m in Sources */,
 				3975367B1E07FCD8000A44D6 /* PickUpNode.m in Sources */,

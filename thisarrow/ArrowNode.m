@@ -50,7 +50,7 @@
         CGPoint newP=CGPointMake(sx, sy);
         self.position=newP;
     }
-    [self showTail];
+//    [self showTail];
 }
 
 -(void)actionWithPoint:(CGPoint)point
@@ -61,31 +61,31 @@
     CGFloat distance=sqrtf(dx*dx+dy*dy);
     [self runAction:[SKAction rotateToAngle:rotation duration:0.1 shortestUnitArc:YES]];
     [self runAction:[SKAction moveTo:point duration:distance/90]];
-    [self showTail];
+//    [self showTail];
 }
 
 -(void)showTail
 {
-    if (tailNodes.count==0) {
-        tailNodes=[NSMutableArray array];
-        int count=20;
-        for (int i=0; i<count; i++) {
-            CGFloat w=self.size.width*0.4*i/count;
-            ZZSpriteNode* tn=[ZZSpriteNode spriteNodeWithColor:[SKColor purpleColor] size:CGSizeMake(w, w)];
-            tn.position=self.position;
-            tn.zPosition=self.zPosition-1;
-            [self.parent addChild:tn];
-            [tailNodes addObject:tn];
-        }
-    }
-    NSInteger cou=tailNodes.count;
-    for (int i=0; i<cou-1; i++) {
-        ZZSpriteNode* tn1=[tailNodes objectAtIndex:i];
-        ZZSpriteNode* tn2=[tailNodes objectAtIndex:i+1];
-        tn1.position=tn2.position;
-    }
-    ZZSpriteNode* tnLast=[tailNodes lastObject];
-    tnLast.position=self.position;
+//    if (tailNodes.count==0) {
+//        tailNodes=[NSMutableArray array];
+//        int count=20;
+//        for (int i=0; i<count; i++) {
+//            CGFloat w=self.size.width*0.4*i/count;
+//            ZZSpriteNode* tn=[ZZSpriteNode spriteNodeWithColor:[SKColor purpleColor] size:CGSizeMake(w, w)];
+//            tn.position=self.position;
+//            tn.zPosition=self.zPosition-1;
+//            [self.parent addChild:tn];
+//            [tailNodes addObject:tn];
+//        }
+//    }
+//    NSInteger cou=tailNodes.count;
+//    for (int i=0; i<cou-1; i++) {
+//        ZZSpriteNode* tn1=[tailNodes objectAtIndex:i];
+//        ZZSpriteNode* tn2=[tailNodes objectAtIndex:i+1];
+//        tn1.position=tn2.position;
+//    }
+//    ZZSpriteNode* tnLast=[tailNodes lastObject];
+//    tnLast.position=self.position;
 }
 
 @end

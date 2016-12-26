@@ -45,7 +45,12 @@ const NSString* rotationActionKey=@"rotationActionKey";
         randomColor=[SKColor purpleColor];
         texture=[MyTextureAtlas textureNamed:@"purplePickUp"];
     }
-    PickUpNode* node=texture?[PickUpNode spriteNodeWithTexture:texture]:[PickUpNode spriteNodeWithColor:randomColor size:CGSizeMake(20,20)];
+    else if(ran==PickUpTypeYellow)
+    {
+        randomColor=[SKColor yellowColor];
+        texture=[MyTextureAtlas textureNamed:@"yellowPickUp"];
+    }
+    PickUpNode* node=texture?[PickUpNode spriteNodeWithTexture:texture]:[PickUpNode spriteNodeWithColor:randomColor size:CGSizeMake(23,23)];
     
     node.zPosition=Pick_Z_Position;
     
@@ -55,8 +60,8 @@ const NSString* rotationActionKey=@"rotationActionKey";
         chi.position=CGPointMake(5, 5);
         [node addChild:chi];
     }
-    node.speedX=ZZRandom_1_0_1();
-    node.speedY=ZZRandom_1_0_1();
+    node.speedX=ZZRandom_1_0_1()*2;
+    node.speedY=ZZRandom_1_0_1()*2;
     
     [node showUp];
     
@@ -117,16 +122,16 @@ const NSString* rotationActionKey=@"rotationActionKey";
     BOOL isTouchRight=position.x+w2>=pSize.width;
     BOOL isTouchLeft=position.x-w2<=0;
     if (isTouchTop) {
-        self.speedY=-fabsf(self.speedY);
+        self.speedY=-fabs(self.speedY);
     }
     if (isTouchBottom) {
-        self.speedY=fabsf(self.speedY);
+        self.speedY=fabs(self.speedY);
     }
     if (isTouchRight) {
-        self.speedX=-fabsf(self.speedX);
+        self.speedX=-fabs(self.speedX);
     }
     if (isTouchLeft) {
-        self.speedX=fabsf(self.speedX);
+        self.speedX=fabs(self.speedX);
     }
     gloss.zRotation=-self.zRotation;
     self.position=CGPointMake(position.x+self.speedX*speedRate, position.y+self.speedY*speedRate);
@@ -144,6 +149,10 @@ const NSString* rotationActionKey=@"rotationActionKey";
     {
         RailGunNode* rail=[RailGunNode defaultNode];
         [rail loadedToGun:node];
+    }
+    else if(self.type==PickUpTypeYellow)
+    {
+        
     }
     [self removeFromParent];
 }

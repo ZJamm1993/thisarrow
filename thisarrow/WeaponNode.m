@@ -12,7 +12,7 @@
 
 +(instancetype)defaultNode
 {
-    return [[WeaponNode alloc]initWithColor:[SKColor redColor] size:CGSizeMake(10, 10)];
+    return [[WeaponNode alloc]initWithColor:[SKColor blueColor] size:CGSizeMake(10, 10)];
 }
 
 -(instancetype)initWithTexture:(SKTexture *)texture
@@ -22,6 +22,21 @@
         self.zPosition=Weapon_Z_Position;
     }
     return self;
+}
+
+-(instancetype)initWithColor:(UIColor *)color size:(CGSize)size
+{
+    self=[super initWithColor:color size:size];
+    if(self)
+    {
+        self.zPosition=Weapon_Z_Position;
+    }
+    return self;
+}
+
+-(void)actionWithTargets:(NSArray *)targets
+{
+    
 }
 
 -(void)disappear

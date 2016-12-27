@@ -15,7 +15,7 @@
 const CFTimeInterval frequentPickUp=0.1;
 const CFTimeInterval pickUpLifeTime=8;
 const NSInteger maxPickUpCount=4;
-const NSInteger maxDotCount=10;
+const NSInteger maxDotCount=100;
 const CGFloat safeZoneRadius=32;
 
 @interface GameScene()
@@ -95,8 +95,8 @@ const CGFloat safeZoneRadius=32;
     {
         CGPoint p=CGPointMake(r+x, r+y);
         dot.position=p;
-        [dot wakeUp];
         [self addChild:dot];
+        [dot wakeUp];
     }
 }
 

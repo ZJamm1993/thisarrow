@@ -11,12 +11,26 @@
 const CGFloat defaultFollowSpeed=16/60.0;
 
 @implementation DotNode
+{
+    ZZSpriteNode* shadow;
+}
 
 +(instancetype)defaultNode
 {
-    DotNode* dot=[DotNode spriteNodeWithColor:[SKColor redColor] size:CGSizeMake(10, 10)];
-    dot.zPosition=Dot_Z_Position;
+    DotNode* dot=[DotNode spriteNodeWithTexture:[MyTextureAtlas textureNamed:@"redDot"]];
     return dot;
+}
+
+-(instancetype)initWithTexture:(SKTexture *)texture
+{
+    self=[super initWithTexture:texture];
+    if (self) {
+        self.zPosition=Dot_Z_Position;
+        shadow=[ZZSpriteNode spriteNodeWithTexture:[MyTextureAtlas textureNamed:@"dotShadow"]];
+        shadow.position=self.position;
+        shadow.zPosition=self.zPosition-1;
+    }
+    return self;
 }
 
 +(instancetype)groupingNode
@@ -29,7 +43,8 @@ const CGFloat defaultFollowSpeed=16/60.0;
 -(void)wakeUp
 {
     self.yScale=0;
-    SKAction* scales=[SKAction sequence:[NSArray arrayWithObjects:[SKAction scaleYTo:1 duration:0.2],[SKAction scaleYTo:0.5 duration:0.2],[SKAction scaleYTo:1 duration:0.2], nil]];
+    
+    SKAction* scales=[SKAction sequence:[NSArray arrayWithObjects:[SKAction scaleYTo:1 duration:0.25],[SKAction scaleYTo:0.6 duration:0.25],[SKAction scaleYTo:1 duration:0.25], nil]];
     [self runAction:scales completion:^{
         _isAwake=YES;
     }];
@@ -40,6 +55,9 @@ const CGFloat defaultFollowSpeed=16/60.0;
     if (node.parent==nil) {
         [self removeFromParent];
         return;
+    }
+    if (self.parent&&(shadow.parent==nil)) {
+        [self.parent addChild:shadow];
     }
     if (_isDead||!_isAwake) {
         return;
@@ -55,6 +73,12 @@ const CGFloat defaultFollowSpeed=16/60.0;
             self.position=CGPointMake(self.position.x+newDx, self.position.y+newDy);
         }
     }
+}
+
+-(void)setPosition:(CGPoint)position
+{
+    [super setPosition:position];
+    shadow.position=position;
 }
 
 -(void)beKilledByWeapon:(WeaponNode *)weapon
@@ -97,7 +121,7 @@ const CGFloat defaultFollowSpeed=16/60.0;
             [ball removeFromParent];
         }];
     }
-    
+    [shadow removeFromParent];
     [self removeFromParent];
 }
 

@@ -10,14 +10,20 @@
 #import "GameScene.h"
 
 @implementation GameViewController
-
+{
+    SKView* skView;
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
     
     // Configure the view.
-    SKView * skView = [[SKView alloc]initWithFrame:self.view.bounds];
+    
+    CGFloat w=self.view.frame.size.width;
+    CGFloat h=self.view.frame.size.height;
+    
+    skView = [[SKView alloc]initWithFrame:CGRectMake(0, 0, w>h?w:h, w<h?w:h)];
     [self.view addSubview:skView];
     
     skView.showsFPS = YES;
@@ -27,7 +33,7 @@
     skView.ignoresSiblingOrder = YES;
     
     // Create and configure the scene.
-    GameScene *scene = [GameScene sceneWithSize:self.view.frame.size];
+    GameScene *scene = [GameScene sceneWithSize:skView.frame.size];
     scene.scaleMode = SKSceneScaleModeResizeFill;
     
     // Present the scene.
@@ -38,7 +44,7 @@
 //{
 //    return YES;
 //}
-//
+////
 //- (UIInterfaceOrientationMask)supportedInterfaceOrientations
 //{
 //    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {

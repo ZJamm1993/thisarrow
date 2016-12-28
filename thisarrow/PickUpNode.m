@@ -35,8 +35,8 @@ const NSString* rotationActionKey=@"rotationActionKey";
      */
     
     PickUpType ran=
-        PickUpTypeYellow;
-//        arc4random()%PickUpTypeNothing;
+//        PickUpTypeYellow;
+        arc4random()%PickUpTypeNothing;
     SKColor* randomColor;
     SKTexture* texture;
     if (ran==PickUpTypeOrange) {
@@ -72,7 +72,7 @@ const NSString* rotationActionKey=@"rotationActionKey";
                             [NSValue valueWithCGPoint:CGPointMake(-4, -5)],
                             [NSValue valueWithCGPoint:CGPointMake(-5, 1)],
                             nil];
-        CGFloat maxW=5;
+        CGFloat maxW=6;
         SKAction* scales=[SKAction repeatActionForever:[SKAction sequence:[NSArray arrayWithObjects:[SKAction resizeToWidth:maxW height:maxW  duration:0.6],[SKAction resizeToWidth:0 height:0  duration:0.6], nil]]];
         for (int i=0;i<positions.count;i++) {
             NSValue* va=[positions objectAtIndex:i];

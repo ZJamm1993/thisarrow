@@ -14,8 +14,8 @@
 
 const CFTimeInterval frequentPickUp=0.25;
 const CFTimeInterval pickUpLifeTime=8;
-const NSInteger maxPickUpCount=30;
-const NSInteger maxDotCount=1;
+const NSInteger maxPickUpCount=3;
+const NSInteger maxDotCount=50;
 //const CGFloat safeZoneRadius=32;
 
 @interface GameScene()
@@ -112,10 +112,15 @@ const NSInteger maxDotCount=1;
     CGFloat x=(arc4random()%(int)(sep-2*r));
     CGFloat y=(arc4random()%(int)(bgNode.size.height-2*r));
     
-    if (num==0) {
-//        statements
+    num=num+(rand()%2==0?-1:1);
+    if (num>=sepNum) {
+        num=0;
     }
-    
+    else if(num<0)
+    {
+        num=sepNum-1;
+    }
+    x=x+num*sep;
     
 //    CGFloat dx=x-arrow.position.x;
 //    CGFloat dy=y-arrow.position.y;

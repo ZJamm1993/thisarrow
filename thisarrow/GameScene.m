@@ -12,28 +12,31 @@
 #import "WeaponNode.h"
 #import "DotNode.h"
 
-const CFTimeInterval frequentPickUp=0.1;
+const CFTimeInterval frequentPickUp=0.25;
 const CFTimeInterval pickUpLifeTime=8;
-const NSInteger maxPickUpCount=1;
-const NSInteger maxDotCount=10;
+const NSInteger maxPickUpCount=3;
+const NSInteger maxDotCount=1000;
 const CGFloat safeZoneRadius=32;
 
 @interface GameScene()
-
 @end
 
 @implementation GameScene
 {
     CMMotionManager* _motionManager;
     ArrowNode* arrow;
+    ZZSpriteNode* bgNode;
     CFTimeInterval currentTimeInterval;
 }
 
 -(void)didMoveToView:(SKView *)view {
     
     self.backgroundColor=[SKColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1];
+    
+    CGPoint centerPoint=CGPointMake(self.size.width/2, self.size.height/2);
+    
     arrow=[ArrowNode defaultNode];
-    arrow.position=CGPointMake(self.size.width/2, self.size.height/2);
+    arrow.position=centerPoint;
     arrow.zPosition=Arrow_Z_Position;
     [self addChild:arrow];
     
@@ -41,6 +44,46 @@ const CGFloat safeZoneRadius=32;
     [_motionManager startAccelerometerUpdates];
     [_motionManager setAccelerometerUpdateInterval:1/60.0];
     
+//        SKTexture* roundCornerRect=[MyTextureAtlas textureNamed:@"roundCornerRect"];
+//        ZZSpriteNode* bgRect=[ZZSpriteNode spriteNodeWithTexture:roundCornerRect];
+//        bgRect.centerRect=CGRectMake(0.45, 0.45, 0.1,0.1);
+//        bgRect.xScale=bgNode.size.width/bgRect.size.width;
+//        bgRect.yScale=bgNode.size.height/bgRect.size.height;
+//        bgRect.position=CGPointMake(bgNode.size.width/2, bgNode.size.height/2);
+//        bgRect.zPosition=Background_Z_Position;
+//        [bgNode addChild:bgRect];
+}
+
+-(void)addChild:(SKNode *)node
+{
+    if (bgNode.parent==nil) {
+//        CGPoint centerPoint=CGPointMake(self.size.width/2, self.size.height/2);
+        
+        CGFloat mx=10;
+        CGFloat my=20;
+
+//        bgNode=[SKScene sceneWithSize:CGSizeMake(self.size.width-2*mx, self.size.height-2*my)];
+        bgNode=[ZZSpriteNode spriteNodeWithColor:[SKColor clearColor] size:CGSizeMake(self.size.width-2*mx, self.size.height-2*my)];
+//        bgNode.anchorPoint=CGPointMake(-bgNode.size.width/2, -bgNode.size.height/2);
+        bgNode.position=CGPointMake(mx, my);
+        bgNode.zPosition=Background_Z_Position;
+        [super addChild:bgNode];
+//        
+        SKTexture* roundCornerRect=[MyTextureAtlas textureNamed:@"roundCornerRect"];
+        ZZSpriteNode* bgRect=[ZZSpriteNode spriteNodeWithTexture:roundCornerRect];
+        bgRect.centerRect=CGRectMake(0.45, 0.45, 0.1,0.1);
+        bgRect.xScale=bgNode.size.width/bgRect.size.width;
+        bgRect.yScale=bgNode.size.height/bgRect.size.height;
+        bgRect.position=CGPointMake(bgNode.size.width/2, bgNode.size.height/2);
+        bgRect.zPosition=Background_Z_Position;
+        [bgNode addChild:bgRect];
+    }
+    [bgNode addChild:node];
+}
+
+-(NSArray*)children
+{
+    return bgNode.children;
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -53,7 +96,7 @@ const CGFloat safeZoneRadius=32;
     if(![_motionManager isAccelerometerAvailable])
     {
         UITouch* touch=[touches anyObject];
-        CGPoint p=[touch locationInNode:self];
+        CGPoint p=[touch locationInNode:bgNode];
         [arrow actionWithPoint:p];
     }
 }
@@ -63,8 +106,8 @@ const CGFloat safeZoneRadius=32;
     PickUpNode* pick=[PickUpNode randomNode];
     pick.createTime=currentTimeInterval+ZZRandom_0_1()*5;
     CGFloat r=pick.size.width/2;
-    CGFloat x=(arc4random()%(int)(self.size.width-2*r));
-    CGFloat y=(arc4random()%(int)(self.size.height-2*r));
+    CGFloat x=(arc4random()%(int)(bgNode.size.width-2*r));
+    CGFloat y=(arc4random()%(int)(bgNode.size.height-2*r));
     CGFloat dx=x-arrow.position.x;
     CGFloat dy=y-arrow.position.y;
     CGFloat duration=sqrtf(dx*dx+dy*dy);
@@ -83,8 +126,8 @@ const CGFloat safeZoneRadius=32;
 {
     DotNode* dot=[DotNode defaultNode];
     CGFloat r=dot.size.width/2;
-    CGFloat x=(arc4random()%(int)(self.size.width-2*r));
-    CGFloat y=(arc4random()%(int)(self.size.height-2*r));
+    CGFloat x=(arc4random()%(int)(bgNode.size.width-2*r));
+    CGFloat y=(arc4random()%(int)(bgNode.size.height-2*r));
     CGFloat dx=x-arrow.position.x;
     CGFloat dy=y-arrow.position.y;
     CGFloat duration=sqrtf(dx*dx+dy*dy);
@@ -124,17 +167,15 @@ const CGFloat safeZoneRadius=32;
     
     //add something if need
     
-    currentTimeInterval=currentTime;
-    if (pickUps.count<maxPickUpCount) {
-        [self addPickUp];
+    if (currentTime-currentTimeInterval>=frequentPickUp) {
+        currentTimeInterval=currentTime;
+        if (pickUps.count<maxPickUpCount) {
+            [self addPickUp];
+        }
+        if (dots.count<maxDotCount) {
+            [self addDot];
+        }
     }
-    if (dots.count<maxDotCount) {
-        [self addDot];
-    }
-    
-//    if (currentTime-currentTimeInterval>=frequentPickUp) {
-//        
-//    }
     
     for (PickUpNode * pic in pickUps) {
         [pic movingAround];

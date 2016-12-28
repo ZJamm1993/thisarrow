@@ -15,8 +15,11 @@
 {
     [super viewDidLoad];
 
+    
     // Configure the view.
-    SKView * skView = (SKView *)self.view;
+    SKView * skView = [[SKView alloc]initWithFrame:self.view.bounds];
+    [self.view addSubview:skView];
+    
     skView.showsFPS = YES;
     skView.showsNodeCount = YES;
     skView.showsDrawCount=YES;

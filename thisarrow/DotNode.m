@@ -27,8 +27,9 @@ const CGFloat defaultFollowSpeed=16/60.0;
     if (self) {
         self.zPosition=Dot_Z_Position;
         shadow=[ZZSpriteNode spriteNodeWithTexture:[MyTextureAtlas textureNamed:@"dotShadow"]];
+        shadow.size=CGSizeMake(shadow.size.width+2, shadow.size.height+2);
         shadow.position=self.position;
-        shadow.zPosition=self.zPosition-1;
+        shadow.zPosition=Shadow_Z_Position;
     }
     return self;
 }

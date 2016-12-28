@@ -34,7 +34,8 @@ const NSString* rotationActionKey=@"rotationActionKey";
      + (UIColor *)brownColor;      // 0.6, 0.4, 0.2 RGB
      */
     
-    PickUpType ran=PickUpTypeYellow;//arc4random()%PickUpTypeNothing;
+    PickUpType ran=//PickUpTypeYellow;
+        arc4random()%PickUpTypeNothing;
     SKColor* randomColor;
     SKTexture* texture;
     if (ran==PickUpTypeOrange) {
@@ -83,8 +84,9 @@ const NSString* rotationActionKey=@"rotationActionKey";
         }
     }
     
-    node.speedX=ZZRandom_1_0_1()*2;
-    node.speedY=ZZRandom_1_0_1()*2;
+    CGFloat sp=2;
+    node.speedX=ZZRandom_1_0_1()*sp;
+    node.speedY=ZZRandom_1_0_1()*sp;
     
     [node showUp];
     

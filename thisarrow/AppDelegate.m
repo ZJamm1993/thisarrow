@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "GameViewController.h"
 
 @interface AppDelegate ()
 //
@@ -20,6 +21,11 @@
     NSLog(@"%@",[NSBundle mainBundle]);
     [MyTextureAtlas sharedTextureAtlas];
     [MyTextureAtlas sharedTextureDictionary];
+    
+    self.window=[[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
+    [self.window makeKeyAndVisible];
+    self.window.rootViewController=[[GameViewController alloc]init];
+    
     return YES;
 }
 

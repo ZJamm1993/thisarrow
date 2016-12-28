@@ -8,14 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		3901135B1E0E01360005EB3D /* DotNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 3901135A1E0E01360005EB3D /* DotNode.m */; };
-		39099BAD1E0CC03700A7B385 /* Launch Screen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39099BAC1E0CC03700A7B385 /* Launch Screen.xib */; };
 		392D5C0A1DFE85BF009DD396 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 392D5C091DFE85BF009DD396 /* CoreMotion.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		3975367B1E07FCD8000A44D6 /* PickUpNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 3975367A1E07FCD8000A44D6 /* PickUpNode.m */; };
 		398312EF1DFE82B700BB4306 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 398312EE1DFE82B700BB4306 /* main.m */; };
 		398312F21DFE82B700BB4306 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 398312F11DFE82B700BB4306 /* AppDelegate.m */; };
 		398312F51DFE82B700BB4306 /* GameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 398312F41DFE82B700BB4306 /* GameScene.m */; };
 		398312FA1DFE82B700BB4306 /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 398312F91DFE82B700BB4306 /* GameViewController.m */; };
-		398312FD1DFE82B700BB4306 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 398312FB1DFE82B700BB4306 /* Main.storyboard */; };
 		398312FF1DFE82B700BB4306 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 398312FE1DFE82B700BB4306 /* Assets.xcassets */; };
 		BB0B1AE41E08FF66004DB73E /* ZZSpriteNode.m in Sources */ = {isa = PBXBuildFile; fileRef = BB0B1AE31E08FF66004DB73E /* ZZSpriteNode.m */; };
 		BBDBD8161DFF7DD2001C5F4A /* ArrowNode.m in Sources */ = {isa = PBXBuildFile; fileRef = BBDBD8151DFF7DD2001C5F4A /* ArrowNode.m */; };
@@ -30,7 +28,6 @@
 /* Begin PBXFileReference section */
 		390113591E0E01360005EB3D /* DotNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DotNode.h; sourceTree = "<group>"; };
 		3901135A1E0E01360005EB3D /* DotNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DotNode.m; sourceTree = "<group>"; };
-		39099BAC1E0CC03700A7B385 /* Launch Screen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "Launch Screen.xib"; sourceTree = "<group>"; };
 		392D5C091DFE85BF009DD396 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		397536791E07FCD8000A44D6 /* PickUpNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickUpNode.h; sourceTree = "<group>"; };
 		3975367A1E07FCD8000A44D6 /* PickUpNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PickUpNode.m; sourceTree = "<group>"; };
@@ -42,7 +39,6 @@
 		398312F41DFE82B700BB4306 /* GameScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameScene.m; sourceTree = "<group>"; };
 		398312F81DFE82B700BB4306 /* GameViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameViewController.h; sourceTree = "<group>"; };
 		398312F91DFE82B700BB4306 /* GameViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameViewController.m; sourceTree = "<group>"; };
-		398312FC1DFE82B700BB4306 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		398312FE1DFE82B700BB4306 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		398313031DFE82B700BB4306 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BB0B1AE21E08FF66004DB73E /* ZZSpriteNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZZSpriteNode.h; sourceTree = "<group>"; };
@@ -95,6 +91,9 @@
 		398312EC1DFE82B700BB4306 /* thisarrow */ = {
 			isa = PBXGroup;
 			children = (
+				398312FE1DFE82B700BB4306 /* Assets.xcassets */,
+				398313031DFE82B700BB4306 /* Info.plist */,
+				398312ED1DFE82B700BB4306 /* Supporting Files */,
 				BBDBD8191DFF85AA001C5F4A /* texture.atlas */,
 				398312F01DFE82B700BB4306 /* AppDelegate.h */,
 				398312F11DFE82B700BB4306 /* AppDelegate.m */,
@@ -113,15 +112,10 @@
 				398312F91DFE82B700BB4306 /* GameViewController.m */,
 				BBF89D5D1E0A0D8100AC0E80 /* WeaponNode.h */,
 				BBF89D5E1E0A0D8100AC0E80 /* WeaponNode.m */,
-				398312FB1DFE82B700BB4306 /* Main.storyboard */,
-				398312FE1DFE82B700BB4306 /* Assets.xcassets */,
-				398313031DFE82B700BB4306 /* Info.plist */,
-				398312ED1DFE82B700BB4306 /* Supporting Files */,
 				BBF89D651E0A2C0F00AC0E80 /* MegaBombNode.h */,
 				BBF89D661E0A2C0F00AC0E80 /* MegaBombNode.m */,
 				BBF89D681E0A7EAC00AC0E80 /* RailGunNode.h */,
 				BBF89D691E0A7EAC00AC0E80 /* RailGunNode.m */,
-				39099BAC1E0CC03700A7B385 /* Launch Screen.xib */,
 				390113591E0E01360005EB3D /* DotNode.h */,
 				3901135A1E0E01360005EB3D /* DotNode.m */,
 				BBEB627F1E10E0A500DED9F4 /* MissileTrackNode.h */,
@@ -197,9 +191,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BBDBD81A1DFF85AA001C5F4A /* texture.atlas in Resources */,
-				39099BAD1E0CC03700A7B385 /* Launch Screen.xib in Resources */,
 				398312FF1DFE82B700BB4306 /* Assets.xcassets in Resources */,
-				398312FD1DFE82B700BB4306 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -227,17 +219,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		398312FB1DFE82B700BB4306 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				398312FC1DFE82B700BB4306 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		398313041DFE82B700BB4306 /* Debug */ = {

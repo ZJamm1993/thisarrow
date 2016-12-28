@@ -34,34 +34,42 @@ const NSInteger tailNodesCount=24;
 //    if (_isHit) {
 //        return;
 //    }
-    CGPoint targetPosition=self.position;
-    CGFloat minDistance=MAXFLOAT;
-    for (ZZSpriteNode* tar in targets) {
-        CGFloat dx=tar.position.x-self.position.x;
-        CGFloat dy=tar.position.y-self.position.y;
-        CGFloat distance=dx*dx+dy*dy;
-        if (distance<minDistance) {
-            minDistance=distance;
-            targetPosition=CGPointMake(dx, dy);
+    BOOL left=NO;
+    CGFloat turnAngle=maxTurnAngle;
+    
+    if (targets.count>0) {
+        CGPoint targetPosition=self.position;
+        CGFloat minDistance=MAXFLOAT;
+        for (ZZSpriteNode* tar in targets) {
+            CGFloat dx=tar.position.x-self.position.x;
+            CGFloat dy=tar.position.y-self.position.y;
+            CGFloat distance=dx*dx+dy*dy;
+            if (distance<minDistance) {
+                minDistance=distance;
+                targetPosition=CGPointMake(dx, dy);
+            }
         }
+        CGFloat tarRad=-atan2f(targetPosition.x, targetPosition.y);
+        CGFloat selRad=self.zRotation;
+        CGFloat deltaRad=tarRad-selRad;
+        
+        CGFloat sinDt=sinf(deltaRad);
+        left=sinDt>0;
+        
+        // this sinDt means turn left or right is larger than 0
+        //    NSLog(@"%f,",sinDt);
+        
+        CGFloat countedAngle=acosf(cosf(deltaRad));
+        // this countedAngle means real deltaAngle
+        
+        CGFloat insideAngle=M_PI_2-countedAngle;
+        CGFloat radius=sqrtf(minDistance)/2/cos(insideAngle);
+        turnAngle=speed/radius;
     }
-    CGFloat tarRad=-atan2f(targetPosition.x, targetPosition.y);
-    CGFloat selRad=self.zRotation;
-    CGFloat deltaRad=tarRad-selRad;
     
-    CGFloat sinDt=sinf(deltaRad);
-    // this sinDt means turn left or right is larger than 0
-//    NSLog(@"%f,",sinDt);
-    
-    CGFloat countedAngle=acosf(cosf(deltaRad));
-    // this countedAngle means real deltaAngle
-    
-    CGFloat insideAngle=M_PI_2-countedAngle;
-    CGFloat radius=sqrtf(minDistance)/2/cos(insideAngle);
-    CGFloat turnAngle=speed/radius;
     turnAngle=turnAngle>maxTurnAngle?maxTurnAngle:turnAngle;
     
-    self.zRotation=self.zRotation+(sinDt>0?turnAngle:-turnAngle);
+    self.zRotation=self.zRotation+(left?turnAngle:-turnAngle);
     CGFloat sx=speed*(sin(-self.zRotation));
     CGFloat sy=speed*(cos(-self.zRotation));
     self.position=CGPointMake(self.position.x+sx, self.position.y+sy);

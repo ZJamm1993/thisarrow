@@ -14,9 +14,9 @@
 
 const CFTimeInterval frequentPickUp=0.25;
 const CFTimeInterval pickUpLifeTime=8;
-const NSInteger maxPickUpCount=3;
-const NSInteger maxDotCount=1000;
-const CGFloat safeZoneRadius=32;
+const NSInteger maxPickUpCount=30;
+const NSInteger maxDotCount=1;
+//const CGFloat safeZoneRadius=32;
 
 @interface GameScene()
 @end
@@ -103,23 +103,32 @@ const CGFloat safeZoneRadius=32;
 
 -(void)addPickUp
 {
+    int sepNum=3;
+    CGFloat sep=bgNode.size.width/sepNum;
+    int num=(int)arrow.position.x/sep;
     PickUpNode* pick=[PickUpNode randomNode];
     pick.createTime=currentTimeInterval+ZZRandom_0_1()*5;
     CGFloat r=pick.size.width/2;
-    CGFloat x=(arc4random()%(int)(bgNode.size.width-2*r));
+    CGFloat x=(arc4random()%(int)(sep-2*r));
     CGFloat y=(arc4random()%(int)(bgNode.size.height-2*r));
-    CGFloat dx=x-arrow.position.x;
-    CGFloat dy=y-arrow.position.y;
-    CGFloat duration=sqrtf(dx*dx+dy*dy);
-    if (duration<safeZoneRadius) {
-        [self addPickUp];
+    
+    if (num==0) {
+//        statements
     }
-    else
-    {
+    
+    
+//    CGFloat dx=x-arrow.position.x;
+//    CGFloat dy=y-arrow.position.y;
+//    CGFloat duration=sqrtf(dx*dx+dy*dy);
+//    if (duration<safeZoneRadius) {
+//        [self addPickUp];
+//    }
+//    else
+//    {
         CGPoint p=CGPointMake(r+x, r+y);
         pick.position=p;
         [self addChild:pick];
-    }
+//    }
 }
 
 -(void)addDot
@@ -128,19 +137,19 @@ const CGFloat safeZoneRadius=32;
     CGFloat r=dot.size.width/2;
     CGFloat x=(arc4random()%(int)(bgNode.size.width-2*r));
     CGFloat y=(arc4random()%(int)(bgNode.size.height-2*r));
-    CGFloat dx=x-arrow.position.x;
-    CGFloat dy=y-arrow.position.y;
-    CGFloat duration=sqrtf(dx*dx+dy*dy);
-    if (duration<safeZoneRadius) {
-        [self addPickUp];
-    }
-    else
-    {
+//    CGFloat dx=x-arrow.position.x;
+//    CGFloat dy=y-arrow.position.y;
+//    CGFloat duration=sqrtf(dx*dx+dy*dy);
+//    if (duration<safeZoneRadius) {
+//        [self addPickUp];
+//    }
+//    else
+//    {
         CGPoint p=CGPointMake(r+x, r+y);
         dot.position=p;
         [self addChild:dot];
         [dot wakeUp];
-    }
+//    }
 }
 
 -(void)update:(CFTimeInterval)currentTime {

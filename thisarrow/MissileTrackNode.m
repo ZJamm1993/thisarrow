@@ -60,6 +60,9 @@ const NSInteger tailNodesCount=24;
         //    NSLog(@"%f,",sinDt);
         
         CGFloat countedAngle=acosf(cosf(deltaRad));
+        if (countedAngle>M_PI_2) {
+            countedAngle=M_PI_2;
+        }
         // this countedAngle means real deltaAngle
         
         CGFloat insideAngle=M_PI_2-countedAngle;

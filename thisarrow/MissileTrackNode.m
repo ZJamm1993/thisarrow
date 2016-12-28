@@ -10,7 +10,7 @@
 
 const CGFloat speed=100/60.0;
 const CGFloat explosionDuration=4;
-const CGFloat turnAngle=speed/24;
+const CGFloat maxTurnAngle=speed/24;
 const NSInteger tailNodesCount=24;
 
 @implementation MissileTrackNode
@@ -50,8 +50,16 @@ const NSInteger tailNodesCount=24;
     CGFloat deltaRad=tarRad-selRad;
     
     CGFloat sinDt=sinf(deltaRad);
-    
+    // this sinDt means turn left or right is larger than 0
 //    NSLog(@"%f,",sinDt);
+    
+    CGFloat countedAngle=acosf(cosf(deltaRad));
+    // this countedAngle means real deltaAngle
+    
+    CGFloat insideAngle=M_PI_2-countedAngle;
+    CGFloat radius=sqrtf(minDistance)/2/cos(insideAngle);
+    CGFloat turnAngle=speed/radius;
+    turnAngle=turnAngle>maxTurnAngle?maxTurnAngle:turnAngle;
     
     self.zRotation=self.zRotation+(sinDt>0?turnAngle:-turnAngle);
     CGFloat sx=speed*(sin(-self.zRotation));
@@ -100,7 +108,7 @@ const NSInteger tailNodesCount=24;
         CGFloat width=self.size.width*self.xScale;
         for (int i=0; i<count; i++) {
             CGFloat w=width*i/count;
-            ZZSpriteNode* tn=[ZZSpriteNode spriteNodeWithColor:[SKColor colorWithRed:1 green:0.6+(0.4*i)/count blue:0 alpha:1  ] size:CGSizeMake(w, w)];
+            ZZSpriteNode* tn=[ZZSpriteNode spriteNodeWithColor:[SKColor colorWithRed:1 green:0.6+(0.4*i)/count blue:0 alpha:1  ] size:CGSizeMake(w, width)];
             tn.position=self.position;
             tn.zPosition=self.zPosition-1;
             [self.parent addChild:tn];
@@ -112,9 +120,11 @@ const NSInteger tailNodesCount=24;
         ZZSpriteNode* tn1=[tailNodes objectAtIndex:i];
         ZZSpriteNode* tn2=[tailNodes objectAtIndex:i+1];
         tn1.position=tn2.position;
+        tn1.zRotation=tn2.zRotation;
     }
     ZZSpriteNode* tnLast=[tailNodes lastObject];
     tnLast.position=self.position;
+    tnLast.zRotation=self.zRotation;
 }
 
 @end

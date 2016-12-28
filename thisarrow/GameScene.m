@@ -14,8 +14,8 @@
 
 const CFTimeInterval frequentPickUp=0.1;
 const CFTimeInterval pickUpLifeTime=8;
-const NSInteger maxPickUpCount=4;
-const NSInteger maxDotCount=100;
+const NSInteger maxPickUpCount=1;
+const NSInteger maxDotCount=10;
 const CGFloat safeZoneRadius=32;
 
 @interface GameScene()
@@ -124,15 +124,17 @@ const CGFloat safeZoneRadius=32;
     
     //add something if need
     
-    if (currentTime-currentTimeInterval>=frequentPickUp) {
-        currentTimeInterval=currentTime;
-        if (pickUps.count<maxPickUpCount) {
-            [self addPickUp];
-        }
-        if (dots.count<maxDotCount) {
-            [self addDot];
-        }
+    currentTimeInterval=currentTime;
+    if (pickUps.count<maxPickUpCount) {
+        [self addPickUp];
     }
+    if (dots.count<maxDotCount) {
+        [self addDot];
+    }
+    
+//    if (currentTime-currentTimeInterval>=frequentPickUp) {
+//        
+//    }
     
     for (PickUpNode * pic in pickUps) {
         [pic movingAround];

@@ -18,6 +18,8 @@ const CGFloat defaultFollowSpeed=16/60.0;
 +(instancetype)defaultNode
 {
     DotNode* dot=[DotNode spriteNodeWithTexture:[MyTextureAtlas textureNamed:@"redDot"]];
+    dot.followSpeed=defaultFollowSpeed;
+    dot.groupType=DotGroupTypeNothing;
     return dot;
 }
 
@@ -27,25 +29,57 @@ const CGFloat defaultFollowSpeed=16/60.0;
     if (self) {
         self.zPosition=Dot_Z_Position;
         shadow=[ZZSpriteNode spriteNodeWithTexture:[MyTextureAtlas textureNamed:@"dotShadow"]];
-        shadow.size=CGSizeMake(shadow.size.width+2, shadow.size.height+2);
         shadow.position=self.position;
         shadow.zPosition=Shadow_Z_Position;
     }
     return self;
 }
 
-+(instancetype)groupingNode
++(NSArray*)randomGroupNodeWithDots:(NSArray *)dots target:(SKNode *)target
 {
-    DotNode* dot=[DotNode defaultNode];
-    dot.isGrouping=YES;
-    return dot;
+    //dont add child here.
+    
+    DotGroupType ranType=arc4random()%DotGroupTypeNothing;
+    
+    NSMutableArray* newDots=[NSMutableArray array];
+    
+    CGSize bound=target.parent.frame.size;
+    
+    if (ranType==DotGroupTypeSurround) {
+        CGFloat r=bound.height*0.5*0.9;
+        int count=16;
+        for (int i=0; i<count; i++) {
+            CGFloat rad=M_PI*2*i/count;
+            CGFloat x=target.position.x+r*sin(rad);
+            CGFloat y=target.position.y+r*cos(rad);
+            if (x<0||x>bound.width) {
+                continue;
+            }
+            if (y<0||y>bound.height) {
+                continue;
+            }
+            DotNode* dot=[DotNode defaultNode];
+            dot.position=CGPointMake(x, y);
+            dot.followSpeed=defaultFollowSpeed*1.3;
+            [dot wakeUp];
+            [newDots addObject:dot];
+        }
+    }
+    
+    return newDots;
 }
 
 -(void)wakeUp
 {
     self.yScale=0;
+    shadow.yScale=0;
+    shadow.xScale=0;
     
-    SKAction* scales=[SKAction sequence:[NSArray arrayWithObjects:[SKAction scaleYTo:1 duration:0.25],[SKAction scaleYTo:0.6 duration:0.25],[SKAction scaleYTo:1 duration:0.25], nil]];
+    CFTimeInterval waitTime=0.25;
+    
+    [shadow runAction:[SKAction scaleTo:1.1 duration:waitTime]];
+    
+    SKAction* scales=[SKAction sequence:[NSArray arrayWithObjects:[SKAction waitForDuration:waitTime],[SKAction scaleYTo:1 duration:0.25],[SKAction scaleYTo:0.6 duration:0.25],[SKAction scaleYTo:1 duration:0.25], nil]];
     [self runAction:scales completion:^{
         _isAwake=YES;
     }];
@@ -63,14 +97,14 @@ const CGFloat defaultFollowSpeed=16/60.0;
     if (_isDead||!_isAwake) {
         return;
     }
-    if (!_isGrouping) {
+    if (self.groupType==DotGroupTypeNothing) {
         if ([node isKindOfClass:[ZZSpriteNode class]]) {
             ZZSpriteNode* z=(ZZSpriteNode*)node;
             CGFloat dx=z.position.x-self.position.x;
             CGFloat dy=z.position.y-self.position.y;
             CGFloat rad=atan2f(dx, dy);
-            CGFloat newDx=defaultFollowSpeed*sin(rad);
-            CGFloat newDy=defaultFollowSpeed*cos(rad);
+            CGFloat newDx=self.followSpeed*sin(rad);
+            CGFloat newDy=self.followSpeed*cos(rad);
             self.position=CGPointMake(self.position.x+newDx, self.position.y+newDy);
         }
     }

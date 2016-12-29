@@ -12,14 +12,21 @@
 #import "RailGunNode.h"
 #import "MissileTrackNode.h"
 
+typedef NS_ENUM(NSInteger,DotGroupType)
+{
+    DotGroupTypeSurround,
+    DotGroupTypeNothing,  // default
+};
+
 @interface DotNode : ZZSpriteNode
 
-@property (nonatomic,assign) BOOL isGrouping;
 @property (nonatomic,assign) BOOL isDead;
 @property (nonatomic,assign) BOOL isAwake;
+@property (nonatomic,assign) CGFloat followSpeed;
+@property (nonatomic,assign) DotGroupType groupType;
 
 +(instancetype)defaultNode;
-+(instancetype)groupingNode;
++(NSArray*)randomGroupNodeWithDots:(NSArray*)dots target:(SKNode*)target;
 
 -(void)actionWithTarget:(SKNode*)node;
 -(void)wakeUp;

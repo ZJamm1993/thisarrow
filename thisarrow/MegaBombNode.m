@@ -90,6 +90,7 @@ const NSString* defaultActionKey=@"defaultActionKey";
     [self runAction:rep];
     
     ZZSpriteNode* shockWave=[ZZSpriteNode spriteNodeWithTexture:[MyTextureAtlas textureNamed:@"shockWave"]];
+    shockWave.alpha=0.4;
     shockWave.position=self.position;
     shockWave.zPosition=self.zPosition-1;
     [self.parent addChild:shockWave];

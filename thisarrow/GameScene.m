@@ -59,8 +59,8 @@ const NSInteger maxDotCount=50;
     if (bgNode.parent==nil) {
 //        CGPoint centerPoint=CGPointMake(self.size.width/2, self.size.height/2);
         
-        CGFloat mx=10;
-        CGFloat my=20;
+        CGFloat mx=5;
+        CGFloat my=25;
 
 //        bgNode=[SKScene sceneWithSize:CGSizeMake(self.size.width-2*mx, self.size.height-2*my)];
         bgNode=[ZZSpriteNode spriteNodeWithColor:[SKColor clearColor] size:CGSizeMake(self.size.width-2*mx, self.size.height-2*my)];

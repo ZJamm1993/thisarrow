@@ -12,13 +12,15 @@
 
 -(BOOL)intersectsNode:(SKNode *)node
 {
-    CGFloat scaleRate=0.8;
-    CGRect r1=self.frame;
-    CGRect r2=node.frame;
-    CGRect newR1=[self rect:r1 Scale:scaleRate];
-    CGRect newR2=[self rect:r2 Scale:scaleRate];
-    BOOL intersects=CGRectIntersectsRect(newR1, newR2);
-    return intersects;
+//    CGFloat scaleRate=0.8;
+//    CGRect r1=self.frame;
+//    CGRect r2=node.frame;
+//    CGRect newR1=[self rect:r1 Scale:scaleRate];
+//    CGRect newR2=[self rect:r2 Scale:scaleRate];
+//    BOOL intersects=CGRectIntersectsRect(newR1, newR2);
+//    return intersects;
+    
+    return [super intersectsNode:node];
 }
 
 -(CGRect)rect:(CGRect)rect Scale:(CGFloat)rate

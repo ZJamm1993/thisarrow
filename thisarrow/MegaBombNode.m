@@ -12,8 +12,8 @@ const NSString* defaultActionKey=@"defaultActionKey";
 
 @implementation MegaBombNode
 {
-    WeaponNode* light1;
-    WeaponNode* light2;
+    ZZSpriteNode* light1;
+    ZZSpriteNode* light2;
 }
 
 +(instancetype)defaultNode
@@ -37,16 +37,18 @@ const NSString* defaultActionKey=@"defaultActionKey";
     
     CGFloat offSetRate=0.25;
     
-    light1=[WeaponNode spriteNodeWithTexture:[MyTextureAtlas textureNamed:@"lightning1"]];
+    light1=[ZZSpriteNode spriteNodeWithTexture:[MyTextureAtlas textureNamed:@"lightning1"]];
     light1.position=CGPointMake(center.x+size.width*offSetRate, center.y+size.height*offSetRate);
     light1.alpha=0;
+    light1.zPosition=self.zPosition;
     light1.xScale=0.7;
     light1.yScale=light1.xScale;
     [self.parent addChild:light1];
     
-    light2=[WeaponNode spriteNodeWithTexture:[MyTextureAtlas textureNamed:@"lightning2"]];
+    light2=[ZZSpriteNode spriteNodeWithTexture:[MyTextureAtlas textureNamed:@"lightning2"]];
     light2.position=CGPointMake(center.x-size.width*offSetRate, center.y-size.height*offSetRate);
     light2.alpha=light1.alpha;
+    light2.zPosition=self.zPosition;
     light2.xScale=light1.xScale;
     light2.yScale=light2.yScale;
     [self.parent addChild:light2];
@@ -81,9 +83,19 @@ const NSString* defaultActionKey=@"defaultActionKey";
     [light1 runAction:blick1];
     [light2 runAction:blick2];
     
+    self.xScale=0.3;
+    self.yScale=self.xScale;
     SKAction* scales=[SKAction sequence:[NSArray arrayWithObjects:[SKAction scaleTo:1.05 duration:0.25],[SKAction scaleTo:1 duration:0.25], nil]];
     SKAction* rep=[SKAction repeatAction:scales count:3];
     [self runAction:rep];
+    
+    ZZSpriteNode* shockWave=[ZZSpriteNode spriteNodeWithTexture:[MyTextureAtlas textureNamed:@"shockWave"]];
+    shockWave.position=self.position;
+    shockWave.zPosition=self.zPosition-1;
+    [self.parent addChild:shockWave];
+    [shockWave runAction:[SKAction scaleTo:6 duration:0.2] completion:^{
+        [shockWave removeFromParent];
+    }];
 }
 
 -(BOOL)intersectsNode:(SKNode *)node
@@ -99,7 +111,7 @@ const NSString* defaultActionKey=@"defaultActionKey";
 
 -(void)disappear
 {
-    WeaponNode* spark=[WeaponNode spriteNodeWithTexture:[MyTextureAtlas textureNamed:@"spark"]];
+    ZZSpriteNode* spark=[ZZSpriteNode spriteNodeWithTexture:[MyTextureAtlas textureNamed:@"spark"]];
     spark.position=self.position;
     [self.parent addChild:spark];
     spark.alpha=0;
@@ -108,8 +120,8 @@ const NSString* defaultActionKey=@"defaultActionKey";
         [spark removeFromParent];
     }];
     
-    [light1 disappear];
-    [light2 disappear];
+    [light1 removeFromParent];
+    [light2 removeFromParent];
     [super disappear];
 }
 

@@ -102,13 +102,24 @@ const NSInteger tailNodesCount=24;
     for (SKNode* tn in tailNodes) {
         [tn removeFromParent];
     }
-    ZZSpriteNode* ball=[ZZSpriteNode spriteNodeWithTexture:[MyTextureAtlas textureNamed:@"yellowBall"]];
-    ball.position=self.position;
-    [self.parent addChild:ball];
-    [ball runAction:[SKAction scaleTo:0 duration:0.25] completion:^{
-        [ball removeFromParent];
-    }];
-    [self performSelector:@selector(removeFromParent) withObject:nil afterDelay:0.25];
+    for(int i=0;i<3;i++)
+    {
+        ZZSpriteNode* ball=[ZZSpriteNode spriteNodeWithTexture:[MyTextureAtlas textureNamed:@"yellowBall"]];
+        if (i==0) {
+            ball.position=self.position;
+        }
+        else
+        {
+            ball.position=CGPointMake(self.position.x+ZZRandom_1_0_1()*3, self.position.y+ZZRandom_1_0_1()*3);
+            ball.xScale=0.6;
+            ball.yScale=ball.xScale;
+        }
+        [self.parent addChild:ball];
+        [ball runAction:[SKAction sequence:[NSArray arrayWithObjects:[SKAction waitForDuration:i*0.1],[SKAction scaleTo:0 duration:0.25],nil]] completion:^{
+            [ball removeFromParent];
+        }];
+    }
+    [self performSelector:@selector(removeFromParent) withObject:nil afterDelay:0.35];
 }
 
 -(void)showTail

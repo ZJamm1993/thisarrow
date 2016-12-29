@@ -165,6 +165,10 @@ const NSInteger maxDotCount=200;
 
 -(void)update:(CFTimeInterval)currentTime {
     
+    if (self.paused) {
+        return;
+    }
+    
     if ([_motionManager isAccelerometerAvailable]) {
         [arrow actionWithAcceleration:_motionManager.accelerometerData.acceleration];
     }

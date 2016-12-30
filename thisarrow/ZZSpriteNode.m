@@ -36,6 +36,26 @@
     return newRect;
 }
 
+-(BOOL)touchBottomBound
+{
+    return (self.frame.origin.y<0);
+}
+
+-(BOOL)touchTopBound
+{
+    return (CGRectGetMaxY(self.frame)>self.parent.frame.size.height);
+}
+
+-(BOOL)touchLeftBound
+{
+    return (self.frame.origin.x<0);
+}
+
+-(BOOL)touchRightBound
+{
+    return (CGRectGetMaxX(self.frame)>self.parent.frame.size.width);
+}
+
 -(CGPoint)rotateVector:(CGPoint)vec rotation:(CGFloat)rad
 {
     CGFloat x=vec.x*cos(rad)-vec.y*sin(rad);

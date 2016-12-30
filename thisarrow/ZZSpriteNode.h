@@ -13,6 +13,10 @@
 @property (nonatomic,assign) CGFloat speedX;
 @property (nonatomic,assign) CGFloat speedY;
 
+@property (nonatomic,assign,readonly) BOOL touchTopBound;
+@property (nonatomic,assign,readonly) BOOL touchBottomBound;
+@property (nonatomic,assign,readonly) BOOL touchLeftBound;
+@property (nonatomic,assign,readonly) BOOL touchRightBound;
 
 /**
  counterclockwise rotation

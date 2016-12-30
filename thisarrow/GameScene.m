@@ -14,11 +14,11 @@
 
 const CFTimeInterval frequentPickUp=0.25;
 const CFTimeInterval frequentDot=0.1;
-const CFTimeInterval frequentDotGroup=1;
+const CFTimeInterval frequentDotGroup=10;
 const CFTimeInterval pickUpLifeTime=60;
-const NSInteger dotIncreasingCount=0;
+const NSInteger dotIncreasingCount=1;
 const NSInteger maxPickUpCount=3;
-const NSInteger maxDotCount=40;
+const NSInteger maxDotCount=500;
 //const CGFloat safeZoneRadius=32;
 
 @interface GameScene()

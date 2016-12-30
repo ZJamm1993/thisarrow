@@ -18,7 +18,7 @@
 #import "ZZSpriteNode.h"
 #import "GameScene.h"
 
-#define ZZRandom_1_0_1() ((CGFloat)(rand()/(CGFloat)RAND_MAX)*(rand()%2==0?1:-1))
-#define ZZRandom_0_1() ((CGFloat)(rand()/(CGFloat)RAND_MAX))
+#define ZZRandom_1_0_1() ((CGFloat)(arc4random()/(CGFloat)RAND_MAX)*(arc4random()%2==0?1:-1))
+#define ZZRandom_0_1() ((CGFloat)(arc4random()/(CGFloat)RAND_MAX))
 
 #endif /* pch_pch */

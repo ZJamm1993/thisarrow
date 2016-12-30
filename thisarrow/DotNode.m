@@ -9,6 +9,7 @@
 #import "DotNode.h"
 
 const CGFloat defaultFollowSpeed=16/60.0;
+const CGFloat defaultSlowDownRate=0.9;
 
 @implementation DotNode
 {
@@ -18,8 +19,17 @@ const CGFloat defaultFollowSpeed=16/60.0;
 +(instancetype)defaultNode
 {
     DotNode* dot=[DotNode spriteNodeWithTexture:[MyTextureAtlas textureNamed:@"redDot"]];
-    dot.followSpeed=defaultFollowSpeed;
-    dot.groupType=DotGroupTypeNothing;
+    return dot;
+}
+
++(instancetype)randomPositionNodeOnSize:(CGSize)size
+{
+    DotNode* dot=[DotNode defaultNode];
+    CGFloat r=dot.size.width/2;
+    CGFloat x=(arc4random()%(int)(size.width-2*r));
+    CGFloat y=(arc4random()%(int)(size.height-2*r));
+    CGPoint p=CGPointMake(r+x, r+y);
+    dot.position=p;
     return dot;
 }
 
@@ -28,9 +38,14 @@ const CGFloat defaultFollowSpeed=16/60.0;
     self=[super initWithTexture:texture];
     if (self) {
         self.zPosition=Dot_Z_Position;
+        self.followSpeed=defaultFollowSpeed;
+        self.groupType=DotGroupTypeNothing;
+        
         shadow=[ZZSpriteNode spriteNodeWithTexture:[MyTextureAtlas textureNamed:@"dotShadow"]];
-        shadow.position=self.position;
-        shadow.zPosition=Shadow_Z_Position;
+        shadow.xScale=1.1;
+        shadow.yScale=shadow.xScale;
+        shadow.zPosition=-1;
+        [self addChild:shadow];
     }
     return self;
 }
@@ -39,7 +54,9 @@ const CGFloat defaultFollowSpeed=16/60.0;
 {
     //dont add child here.
     
-    DotGroupType ranType=arc4random()%DotGroupTypeNothing;
+    DotGroupType ranType=
+    DotGroupTypePointer;
+//    arc4random()%DotGroupTypeNothing;
     
     NSMutableArray* newDots=[NSMutableArray array];
     
@@ -48,41 +65,173 @@ const CGFloat defaultFollowSpeed=16/60.0;
     if (ranType==DotGroupTypeSurround) {
         CGFloat r=bound.height*0.5*0.9;
         int count=16;
+        int numCircle=arc4random()%3+1;
         for (int i=0; i<count; i++) {
-            CGFloat rad=M_PI*2*i/count;
-            CGFloat x=target.position.x+r*sin(rad);
-            CGFloat y=target.position.y+r*cos(rad);
-            if (x<0||x>bound.width) {
-                continue;
+            for(int j=0;j<numCircle;j++)
+            {
+                CGFloat rr=r-12*j;
+                CGFloat rad=M_PI*2*i/count;
+                CGFloat x=target.position.x+rr*sin(rad);
+                CGFloat y=target.position.y+rr*cos(rad);
+                if (x<0||x>bound.width) {
+                    continue;
+                }
+                if (y<0||y>bound.height) {
+                    continue;
+                }
+                DotNode* dot=[DotNode defaultNode];
+                dot.position=CGPointMake(x, y);
+                dot.followSpeed=defaultFollowSpeed*1.3;
+                [dot wakeUp];
+                [newDots addObject:dot];
             }
-            if (y<0||y>bound.height) {
-                continue;
-            }
-            DotNode* dot=[DotNode defaultNode];
-            dot.position=CGPointMake(x, y);
-            dot.followSpeed=defaultFollowSpeed*1.3;
-            [dot wakeUp];
-            [newDots addObject:dot];
         }
+    }
+    
+    else if(ranType==DotGroupTypePointer)
+    {
+        int numPointer=//1;
+        arc4random()%3+1;
+        NSMutableArray* freeDots=[NSMutableArray array];
+        
+        //find those who is no grouping, and group them
+        for (DotNode* d in dots) {
+            if (d.groupType==DotGroupTypeNothing) {
+                [freeDots addObject:d];
+            }
+        }
+        
+        //i guess x dots is enough to shape a pointer
+        NSInteger pointerDotCount=34;
+        NSInteger totalCount=pointerDotCount*numPointer;
+        while (freeDots.count<totalCount) {
+            DotNode* d=[DotNode randomPositionNodeOnSize:bound];
+            [freeDots addObject:d];
+        }
+        
+        //remove if need
+        for (DotNode* d in freeDots) {
+            d.groupType=DotGroupTypePointer;
+            d.isAwake=NO;
+            if (d.parent) {
+                [d removeFromParent];
+            }
+        }
+        
+        NSMutableArray* origins=[NSMutableArray array];
+        if (numPointer==1)
+        {
+            [origins addObject:[NSValue valueWithCGPoint:CGPointMake(bound.width*0.5, bound.height*0.5)]];
+        }
+        else if(numPointer==2)
+        {
+            [origins addObject:[NSValue valueWithCGPoint:CGPointMake(bound.width*0.33, bound.height*0.33)]];
+            [origins addObject:[NSValue valueWithCGPoint:CGPointMake(bound.width*0.66, bound.height*0.66)]];
+        }
+        else if(numPointer==3)
+        {
+            [origins addObject:[NSValue valueWithCGPoint:CGPointMake(bound.width*0.5, bound.height*0.75)]];
+            [origins addObject:[NSValue valueWithCGPoint:CGPointMake(bound.width*0.25, bound.height*0.25)]];
+            [origins addObject:[NSValue valueWithCGPoint:CGPointMake(bound.width*0.75, bound.height*0.25)]];
+        }
+        else
+        {
+            for (int i=0; i<10; i++) {
+                [origins addObject:[NSValue valueWithCGPoint:CGPointZero]];
+            }
+        }
+        
+        for(int i=0;i<numPointer;i++)
+        {
+            NSArray* dotsGroup=[freeDots subarrayWithRange:NSMakeRange(i*pointerDotCount, pointerDotCount)];
+            CGPoint ori=[[origins objectAtIndex:i]CGPointValue];
+            [DotNode buildPointerShaperWithDots:dotsGroup origin:ori];
+        }
+        
+        [newDots addObjectsFromArray:freeDots];
     }
     
     return newDots;
 }
 
++(NSArray*)buildPointerShaperWithDots:(NSArray*)dots origin:(CGPoint)ori
+{
+    for (int i=0; i<dots.count; i++) {
+        DotNode* d=[dots objectAtIndex:i];
+        CGFloat w=d.size.width/2;
+        CGFloat dx=0;
+        CGFloat dy=0;
+        dx=i%3*(w)-w;
+        dy=i/3*(w)-(w*4);
+        
+        int la=dots.count-1-i;
+        if (la==0) {
+            dx=0;
+            dy=w*5;
+        }
+        else if(la==1)
+        {
+            dx=-w*2;
+            dy=w*3;
+        }
+        else if(la==2)
+        {
+            dx=w*2;
+            dy=w*3;
+        }
+        else if(la==3)
+        {
+            dx=-w*2;
+            dy=w*2;
+        }
+        else if(la==4)
+        {
+            dx=w*2;
+            dy=w*2;
+        }
+        else if(la==5)
+        {
+            dx=-w*3;
+            dy=w*2;
+        }
+        else if(la==6)
+        {
+            dx=w*3;
+            dy=w*2;
+        }
+        
+        d.originPoint=CGPointMake(-dx, -dy);
+        CFTimeInterval shapingTime=3;
+        CGPoint newP=CGPointMake(ori.x+dx, ori.y+dy);
+        [d runAction:[SKAction group:[NSArray arrayWithObjects:
+                       [SKAction moveTo:newP duration:shapingTime],
+                       [SKAction sequence:[NSArray arrayWithObjects:[SKAction scaleTo:0.5 duration:shapingTime/2],[SKAction scaleTo:1 duration:shapingTime/2], nil]],
+                                      nil]] completion:^{
+            d.isAwake=YES;
+            [d performSelector:@selector(shootPointer) withObject:nil afterDelay:shapingTime+2];
+        }];
+    }
+    return dots;
+}
+
 -(void)wakeUp
 {
+    _isAwake=NO;
+    
+    self.xScale=0;
     self.yScale=0;
-    shadow.yScale=0;
-    shadow.xScale=0;
     
-    CFTimeInterval waitTime=0.25;
+    CFTimeInterval blinkTime=0.25;
     
-    [shadow runAction:[SKAction scaleTo:1.1 duration:waitTime]];
-    
-    SKAction* scales=[SKAction sequence:[NSArray arrayWithObjects:[SKAction waitForDuration:waitTime],[SKAction scaleYTo:1 duration:0.25],[SKAction scaleYTo:0.6 duration:0.25],[SKAction scaleYTo:1 duration:0.25], nil]];
+    SKAction* scales=[SKAction sequence:[NSArray arrayWithObjects:[SKAction scaleTo:1 duration:blinkTime*2],[SKAction scaleTo:0.5 duration:blinkTime],[SKAction scaleTo:1 duration:blinkTime], nil]];
     [self runAction:scales completion:^{
         _isAwake=YES;
     }];
+}
+
+-(void)shootPointer
+{
+    self.originPoint=CGPointZero;
 }
 
 -(void)actionWithTarget:(SKNode *)node
@@ -91,29 +240,76 @@ const CGFloat defaultFollowSpeed=16/60.0;
         [self removeFromParent];
         return;
     }
-    if (self.parent&&(shadow.parent==nil)) {
-        [self.parent addChild:shadow];
-    }
+    
     if (_isDead||!_isAwake) {
         return;
     }
+
+    self.position=CGPointMake(self.position.x+self.speedX, self.position.y+self.speedY);
+    self.speedX=self.speedX*defaultSlowDownRate;
+    self.speedY=self.speedY*defaultSlowDownRate;
+    
     if (self.groupType==DotGroupTypeNothing) {
-        if ([node isKindOfClass:[ZZSpriteNode class]]) {
-            ZZSpriteNode* z=(ZZSpriteNode*)node;
-            CGFloat dx=z.position.x-self.position.x;
-            CGFloat dy=z.position.y-self.position.y;
-            CGFloat rad=atan2f(dx, dy);
-            CGFloat newDx=self.followSpeed*sin(rad);
-            CGFloat newDy=self.followSpeed*cos(rad);
-            self.position=CGPointMake(self.position.x+newDx, self.position.y+newDy);
-        }
+        CGFloat dx=node.position.x-self.position.x;
+        CGFloat dy=node.position.y-self.position.y;
+        CGFloat rad=atan2f(dx, dy);
+        CGFloat newDx=self.followSpeed*sin(rad);
+        CGFloat newDy=self.followSpeed*cos(rad);
+        self.position=CGPointMake(self.position.x+newDx, self.position.y+newDy);
+    }
+    else if(self.groupType==DotGroupTypePointer)
+    {
+        CGPoint deltaOrigin=[self rotateVector:self.originPoint rotation:self.zRotation];
+        CGPoint realOrigin=CGPointMake(deltaOrigin.x+self.position.x, deltaOrigin.y+self.position.y);
+        CGFloat dx=node.position.x-realOrigin.x;
+        CGFloat dy=node.position.y-realOrigin.y;
+        CGFloat rad=-atan2f(dx, dy);
+//        CGFloat delta=rad-self.zRotation;
+//        CGFloat sinDelta=sinf(delta);
+//        self.zRotation=self.zRotation+(sinDelta>0?defalutFollowRotatin:-defalutFollowRotatin);
+        self.zRotation=rad;
     }
 }
 
--(void)setPosition:(CGPoint)position
+-(void)setZRotation:(CGFloat)zRotation
 {
-    [super setPosition:position];
-    shadow.position=position;
+    if (self.groupType==DotGroupTypePointer) {
+        CGPoint deltaOrigin=[self rotateVector:self.originPoint rotation:self.zRotation];
+        CGPoint realOrigin=CGPointMake(deltaOrigin.x+self.position.x, deltaOrigin.y+self.position.y);
+        
+        CGPoint dotsRotatedPosition=[self rotatePoint:self.position origin:realOrigin rotation:(zRotation-self.zRotation)];
+        self.position=dotsRotatedPosition;
+        
+//        ZZSpriteNode* originNode=[ZZSpriteNode spriteNodeWithColor:[SKColor cyanColor] size:CGSizeMake(2, 2)];
+//        originNode.position=realOrigin;
+//        originNode.zPosition=Arrow_Z_Position;
+//        [self.parent addChild:originNode];
+//        [originNode runAction:[SKAction fadeAlphaTo:0.1 duration:0.1] completion:^{
+//            [originNode removeFromParent];
+//        }];
+    }
+    
+    [super setZRotation:zRotation];
+}
+
+-(CGPoint)originPoint
+{
+    if (self.groupType==DotGroupTypePointer) {
+        return _originPoint;
+    }
+    else
+    {
+        return self.position;
+    }
+}
+
+-(void)setGroupType:(DotGroupType)groupType
+{
+    _groupType=groupType;
+    if (groupType!=DotGroupTypePointer) {
+        self.originPoint=CGPointZero;
+        self.zRotation=0;
+    }
 }
 
 -(void)beKilledByWeapon:(WeaponNode *)weapon
@@ -156,7 +352,6 @@ const CGFloat defaultFollowSpeed=16/60.0;
             [ball removeFromParent];
         }];
     }
-    [shadow removeFromParent];
     [self removeFromParent];
 }
 
@@ -166,6 +361,11 @@ const CGFloat defaultFollowSpeed=16/60.0;
         return NO;
     }
     return [super intersectsNode:node];
+}
+
+-(void)removeFromParent
+{
+    [super removeFromParent];
 }
 
 @end

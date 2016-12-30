@@ -15,6 +15,7 @@
 typedef NS_ENUM(NSInteger,DotGroupType)
 {
     DotGroupTypeSurround,
+    DotGroupTypePointer,
     DotGroupTypeNothing,  // default
 };
 
@@ -24,12 +25,15 @@ typedef NS_ENUM(NSInteger,DotGroupType)
 @property (nonatomic,assign) BOOL isAwake;
 @property (nonatomic,assign) CGFloat followSpeed;
 @property (nonatomic,assign) DotGroupType groupType;
+@property (nonatomic,assign) CGPoint originPoint;
 
 +(instancetype)defaultNode;
++(instancetype)randomPositionNodeOnSize:(CGSize)size;
 +(NSArray*)randomGroupNodeWithDots:(NSArray*)dots target:(SKNode*)target;
 
 -(void)actionWithTarget:(SKNode*)node;
 -(void)wakeUp;
 -(void)beKilledByWeapon:(WeaponNode*)weapon;
+-(void)shootPointer;
 
 @end

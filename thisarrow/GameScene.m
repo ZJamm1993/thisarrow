@@ -14,11 +14,11 @@
 
 const CFTimeInterval frequentPickUp=0.25;
 const CFTimeInterval frequentDot=0.1;
-const CFTimeInterval frequentDotGroup=10;
+const CFTimeInterval frequentDotGroup=1;
 const CFTimeInterval pickUpLifeTime=60;
-const NSInteger dotIncreasingCount=5;
+const NSInteger dotIncreasingCount=0;
 const NSInteger maxPickUpCount=3;
-const NSInteger maxDotCount=200;
+const NSInteger maxDotCount=40;
 //const CGFloat safeZoneRadius=32;
 
 @interface GameScene()
@@ -120,39 +120,15 @@ const NSInteger maxDotCount=200;
     }
     x=x+num*sep;
     
-//    CGFloat dx=x-arrow.position.x;
-//    CGFloat dy=y-arrow.position.y;
-//    CGFloat duration=sqrtf(dx*dx+dy*dy);
-//    if (duration<safeZoneRadius) {
-//        [self addPickUp];
-//    }
-//    else
-//    {
-        CGPoint p=CGPointMake(r+x, r+y);
-        pick.position=p;
-        [self addChild:pick];
-//    }
-}
+    CGPoint p=CGPointMake(r+x, r+y);
+    pick.position=p;
+    [self addChild:pick];}
 
 -(void)addDot
 {
-    DotNode* dot=[DotNode defaultNode];
-    CGFloat r=dot.size.width/2;
-    CGFloat x=(arc4random()%(int)(bgNode.size.width-2*r));
-    CGFloat y=(arc4random()%(int)(bgNode.size.height-2*r));
-//    CGFloat dx=x-arrow.position.x;
-//    CGFloat dy=y-arrow.position.y;
-//    CGFloat duration=sqrtf(dx*dx+dy*dy);
-//    if (duration<safeZoneRadius) {
-//        [self addPickUp];
-//    }
-//    else
-//    {
-        CGPoint p=CGPointMake(r+x, r+y);
-        dot.position=p;
-        [self addChild:dot];
-        [dot wakeUp];
-//    }
+    DotNode* dot=[DotNode randomPositionNodeOnSize:bgNode.size];
+    [self addChild:dot];
+    [dot wakeUp];
 }
 
 -(void)addRandomGroupingDots:(NSArray*)dots

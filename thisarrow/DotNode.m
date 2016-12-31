@@ -24,6 +24,11 @@ const CGFloat defaultPointerSpeed=160/60.0;
     return dot;
 }
 
++(CGFloat)defaultWidth
+{
+    return [DotNode defaultNode].size.width;
+}
+
 +(instancetype)randomPositionNodeOnSize:(CGSize)size
 {
     DotNode* dot=[DotNode defaultNode];
@@ -57,7 +62,7 @@ const CGFloat defaultPointerSpeed=160/60.0;
     //dont add child here.
     
     DotGroupType ranType=
-//    DotGroupTypePointer;
+//    DotGroupTypeQueue;
     arc4random()%DotGroupTypeNothing;
     
     NSMutableArray* newDots=[NSMutableArray array];
@@ -94,7 +99,7 @@ const CGFloat defaultPointerSpeed=160/60.0;
                 DotNode* dot=[DotNode defaultNode];
                 dot.groupType=DotGroupTypeSurround;
                 dot.position=CGPointMake(x, y);
-                dot.followSpeed=defaultFollowSpeed*2;
+                dot.followSpeed=defaultFollowSpeed*1.5;
                 [dot wakeUp];
                 [newDots addObject:dot];
             }
@@ -103,8 +108,61 @@ const CGFloat defaultPointerSpeed=160/60.0;
     
     else if(ranType==DotGroupTypeQueue)
     {
-        BOOL vertical=arc4random()%2==0;
-#warning did not finish queue
+        
+        CGFloat w=[DotNode defaultWidth];
+        BOOL vertical=
+        //NO;
+        arc4random()%2==0;
+        if (vertical) {
+            int queueCount=20;
+            CGFloat interval=bound.width/queueCount;
+            for(int i=0;i<queueCount;i++)
+            {
+                CGFloat x=interval/2+i*interval;
+                for (int j=0; j<2; j++) {
+                    BOOL isB=j==0;
+                    CGFloat y=isB?w/2:bound.height-w/2;
+                    DotNode* d=[DotNode defaultNode];
+                    d.position=CGPointMake(x, y);
+                    d.groupType=DotGroupTypeQueue;
+                    d.speedY=isB?defaultFollowSpeed:-defaultFollowSpeed;
+                    [newDots addObject:d];
+                    
+                    d.xScale=0;
+                    d.yScale=0;
+                    
+                    CFTimeInterval fre=0.1;
+                    CFTimeInterval waitTime=fre*queueCount;
+                    [d runAction:[SKAction waitForDuration:i*fre] completion:^{
+                        CFTimeInterval blinkTime=0.25;
+                        SKAction* scales=[SKAction sequence:[NSArray arrayWithObjects:[SKAction scaleTo:1 duration:blinkTime*2],[SKAction scaleTo:0.5 duration:blinkTime],[SKAction scaleTo:1 duration:blinkTime], nil]];
+                        [d runAction:scales completion:^{
+                            [d runAction:[SKAction waitForDuration:waitTime-i*fre]
+                             completion:^{
+                                 d.isAwake=YES;
+                             }];
+                        }];
+                    }];
+                }
+            }
+        }
+        else
+        {
+            int em=2;
+            int queueCount=bound.height/w-em*2;
+            BOOL isL=arc4random()%2==0;
+            CGFloat x=isL?w/2:bound.width-w/2;
+            CGFloat speedX=2*defaultFollowSpeed*(isL?1:-1);
+            for (int i=0; i<queueCount; i++) {
+                CGFloat y=em*w+w/2+i*w;
+                DotNode* d=[DotNode defaultNode];
+                d.position=CGPointMake(x, y);
+                d.groupType=DotGroupTypeQueue;
+                d.speedX=speedX;
+                [newDots addObject:d];
+                [d wakeUp];
+            }
+        }
     }
     
     else if(ranType==DotGroupTypePointer)
@@ -291,29 +349,23 @@ const CGFloat defaultPointerSpeed=160/60.0;
 
     self.position=CGPointMake(self.position.x+self.speedX, self.position.y+self.speedY);
     
-    if (self.groupType!=DotGroupTypePointer||self.groupType!=DotGroupTypeQueue) {
+    if (self.groupType!=DotGroupTypePointer&&self.groupType!=DotGroupTypeQueue) {
         self.speedX=self.speedX*defaultSlowDownRate;
         self.speedY=self.speedY*defaultSlowDownRate;
     }
     
     if (self.touchTopBound) {
-        self.speedY=-fabsf(self.speedY)*ZZRandom_0_1()*defaultReboundRate;
-        self.speedX=defaultPointerSpeed*ZZRandom_1_0_1()*defaultReboundRate;
+        self.speedY=-fabsf(self.speedY);
     }
     if (self.touchBottomBound) {
-        self.speedY=fabsf(self.speedY)*ZZRandom_0_1()*defaultReboundRate;
-        self.speedX=defaultPointerSpeed*ZZRandom_1_0_1()*defaultReboundRate;
+        self.speedY=fabsf(self.speedY);
     }
     if (self.touchLeftBound) {
-        self.speedX=fabsf(self.speedX)*ZZRandom_0_1()*defaultReboundRate;
-        self.speedY=defaultPointerSpeed*ZZRandom_1_0_1()*defaultReboundRate;
+        self.speedX=fabsf(self.speedX);
     }
     if (self.touchRightBound) {
-        self.speedX=-fabsf(self.speedX)*ZZRandom_0_1()*defaultReboundRate;
-        self.speedY=defaultPointerSpeed*ZZRandom_1_0_1()*defaultReboundRate;
+        self.speedX=-fabsf(self.speedX);
     }
-    
-    
     
     if (self.groupType==DotGroupTypeNothing||self.groupType==DotGroupTypeSurround) {
         CGFloat dx=node.position.x-self.position.x;
@@ -331,6 +383,23 @@ const CGFloat defaultPointerSpeed=160/60.0;
         CGFloat dy=node.position.y-realOrigin.y;
         CGFloat rad=-atan2f(dx, dy);
         self.zRotation=rad;
+        
+        if (self.touchTopBound) {
+            self.speedY=-fabsf(self.speedY)*ZZRandom_0_1()*defaultReboundRate;
+            self.speedX=defaultPointerSpeed*ZZRandom_1_0_1()*defaultReboundRate;
+        }
+        if (self.touchBottomBound) {
+            self.speedY=fabsf(self.speedY)*ZZRandom_0_1()*defaultReboundRate;
+            self.speedX=defaultPointerSpeed*ZZRandom_1_0_1()*defaultReboundRate;
+        }
+        if (self.touchLeftBound) {
+            self.speedX=fabsf(self.speedX)*ZZRandom_0_1()*defaultReboundRate;
+            self.speedY=defaultPointerSpeed*ZZRandom_1_0_1()*defaultReboundRate;
+        }
+        if (self.touchRightBound) {
+            self.speedX=-fabsf(self.speedX)*ZZRandom_0_1()*defaultReboundRate;
+            self.speedY=defaultPointerSpeed*ZZRandom_1_0_1()*defaultReboundRate;
+        }
         
         if(self.touchBottomBound||self.touchLeftBound||self.touchRightBound||self.touchTopBound)
         {
@@ -379,6 +448,9 @@ const CGFloat defaultPointerSpeed=160/60.0;
 
 -(void)beKilledByWeapon:(WeaponNode *)weapon
 {
+    if (self.xScale==0||self.yScale==0) {
+        return;
+    }
     [self removeAllActions];
     _isDead=YES;
     if ([weapon isKindOfClass:[MegaBombNode class]])

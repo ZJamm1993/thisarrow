@@ -14,11 +14,11 @@
 
 const CFTimeInterval frequentPickUp=0.25;
 const CFTimeInterval frequentDot=0.1;
-const CFTimeInterval frequentDotGroup=10;
+const CFTimeInterval frequentDotGroup=5;
 const CFTimeInterval pickUpLifeTime=60;
 const NSInteger dotIncreasingCount=1;
 const NSInteger maxPickUpCount=3;
-const NSInteger maxDotCount=500;
+const NSInteger maxDotCount=200;
 //const CGFloat safeZoneRadius=32;
 
 @interface GameScene()
@@ -99,24 +99,56 @@ const NSInteger maxDotCount=500;
     }
 }
 
--(void)addPickUp
+-(void)addPickUpWithPickUps:(NSArray*)picks
 {
     int sepNum=3;
     CGFloat sep=bgNode.size.width/sepNum;
-    int num=(int)arrow.position.x/sep;
     PickUpNode* pick=[PickUpNode randomNode];
     pick.createTime=pickUpTimeInterval+ZZRandom_0_1()*5;
     CGFloat r=pick.size.width/2;
     CGFloat x=(arc4random()%(int)(sep-2*r));
     CGFloat y=(arc4random()%(int)(bgNode.size.height-2*r));
     
-    num=num+(rand()%2==0?-1:1);
-    if (num>=sepNum) {
+//    num=num+(rand()%2==0?-1:1);
+//    if (num>=sepNum) {
+//        num=0;
+//    }
+//    else if(num<0)
+//    {
+//        num=sepNum-1;
+//    }
+//    x=x+num*sep;
+    
+    BOOL le=NO;
+    BOOL ri=NO;
+    BOOL mi=NO;
+    
+    for (SKNode* nod in picks) {
+        CGFloat px=nod.position.x;
+        if (px<=sep) {
+            le=YES;
+        }
+        else if(px>=2*sep)
+        {
+            ri=YES;
+        }
+        else
+        {
+            mi=YES;
+        }
+    }
+    
+    int num=0;
+    if (!mi) {
+        num=1;
+    }
+    else if(!le)
+    {
         num=0;
     }
-    else if(num<0)
+    else if(!ri)
     {
-        num=sepNum-1;
+        num=2;
     }
     x=x+num*sep;
     
@@ -140,6 +172,13 @@ const NSInteger maxDotCount=500;
 }
 
 -(void)update:(CFTimeInterval)currentTime {
+//    
+//    CGFloat ran=ZZRandom_1_0_1();
+//    NSLog(@"ran:%f",ran);
+//    if (ran>1||ran<-1) {
+//        NSLog(@"ran wrong");
+//    }
+//
     
     if (self.paused) {
         return;
@@ -171,7 +210,7 @@ const NSInteger maxDotCount=500;
     if (currentTime-pickUpTimeInterval>=frequentPickUp) {
         pickUpTimeInterval=currentTime;
         if (pickUps.count<maxPickUpCount) {
-            [self addPickUp];
+            [self addPickUpWithPickUps:pickUps];
         }
     }
     

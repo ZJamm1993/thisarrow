@@ -11,7 +11,7 @@
 const CGFloat defaultFollowSpeed=16/60.0;
 const CGFloat defaultSlowDownRate=0.98;
 const CGFloat defaultReboundRate=0.4;
-const CGFloat defaultPointerSpeed=120/60.0;
+const CGFloat defaultPointerSpeed=160/60.0;
 
 @implementation DotNode
 {
@@ -67,7 +67,17 @@ const CGFloat defaultPointerSpeed=120/60.0;
     if (ranType==DotGroupTypeSurround) {
         CGFloat r=bound.height*0.5*0.9;
         int count=16;
-        int numCircle=arc4random()%3+1;
+        int ran=arc4random()%100;
+        int numCircle=0;
+        if (ran<50) {
+            numCircle=1;
+        }else if(ran<75)
+        {
+            numCircle=2;
+        }
+        else {
+            numCircle=3;
+        }
         for (int i=0; i<count; i++) {
             for(int j=0;j<numCircle;j++)
             {
@@ -84,11 +94,17 @@ const CGFloat defaultPointerSpeed=120/60.0;
                 DotNode* dot=[DotNode defaultNode];
                 dot.groupType=DotGroupTypeSurround;
                 dot.position=CGPointMake(x, y);
-                dot.followSpeed=defaultFollowSpeed*1.3;
+                dot.followSpeed=defaultFollowSpeed*2;
                 [dot wakeUp];
                 [newDots addObject:dot];
             }
         }
+    }
+    
+    else if(ranType==DotGroupTypeQueue)
+    {
+        BOOL vertical=arc4random()%2==0;
+#warning did not finish queue
     }
     
     else if(ranType==DotGroupTypePointer)
@@ -99,7 +115,8 @@ const CGFloat defaultPointerSpeed=120/60.0;
         
         //find those who is no grouping, and group them
         for (DotNode* d in dots) {
-            if (d.groupType==DotGroupTypeNothing) {
+            if ((d.groupType==DotGroupTypeNothing)&&(arc4random()%10==0))
+            {
                 [freeDots addObject:d];
             }
         }
@@ -119,13 +136,17 @@ const CGFloat defaultPointerSpeed=120/60.0;
             [freeDots removeLastObject];
         }
         
-        //remove if need
+        for (int i=0; i<freeDots.count; i++) {
+            int ran=arc4random()%(int)freeDots.count;
+            NSObject* obj=[freeDots objectAtIndex:ran];
+            [freeDots removeObjectAtIndex:ran];
+            [freeDots addObject:obj];
+        }
+        
+        //init again
         for (DotNode* d in freeDots) {
             d.groupType=DotGroupTypePointer;
             d.isAwake=NO;
-//            if (d.parent) {
-//                [d removeFromParent];
-//            }
         }
         
         NSMutableArray* origins=[NSMutableArray array];
@@ -270,7 +291,7 @@ const CGFloat defaultPointerSpeed=120/60.0;
 
     self.position=CGPointMake(self.position.x+self.speedX, self.position.y+self.speedY);
     
-    if (self.groupType!=DotGroupTypePointer) {
+    if (self.groupType!=DotGroupTypePointer||self.groupType!=DotGroupTypeQueue) {
         self.speedX=self.speedX*defaultSlowDownRate;
         self.speedY=self.speedY*defaultSlowDownRate;
     }
@@ -346,14 +367,13 @@ const CGFloat defaultPointerSpeed=120/60.0;
     }
     else
     {
-        return self.position;
+        return CGPointZero;
     }
 }
 
 -(void)setGroupType:(DotGroupType)groupType
 {
     _groupType=groupType;
-    self.originPoint=CGPointZero;
     self.zRotation=0;
 }
 
@@ -368,7 +388,7 @@ const CGFloat defaultPointerSpeed=120/60.0;
         burn.position=self.position;
         [self.parent addChild:burn];
         NSArray* burnTextures=[MyTextureAtlas burnUpTextures];
-        CFTimeInterval timePer=0.02;
+        CFTimeInterval timePer=0.02+0.01*ZZRandom_1_0_1();
         CGFloat dx=burn.position.x-weapon.position.x;
         CGFloat dy=burn.position.y-weapon.position.y;
         CGFloat rad=atan2f(dx, dy);
@@ -384,7 +404,7 @@ const CGFloat defaultPointerSpeed=120/60.0;
         ZZSpriteNode* ball=[ZZSpriteNode spriteNodeWithTexture:[MyTextureAtlas textureNamed:@"purpleBall"]];
         ball.position=self.position;
         [self.parent addChild:ball];
-        [ball runAction:[SKAction scaleTo:0 duration:0.5] completion:^{
+        [ball runAction:[SKAction scaleTo:0 duration:0.3+0.2*ZZRandom_1_0_1()] completion:^{
             [ball removeFromParent];
         }];
     }
@@ -393,7 +413,7 @@ const CGFloat defaultPointerSpeed=120/60.0;
         ZZSpriteNode* ball=[ZZSpriteNode spriteNodeWithTexture:[MyTextureAtlas textureNamed:@"yellowBall"]];
         ball.position=self.position;
         [self.parent addChild:ball];
-        [ball runAction:[SKAction scaleTo:0 duration:0.5] completion:^{
+        [ball runAction:[SKAction scaleTo:0 duration:0.5+0.2*ZZRandom_1_0_1()] completion:^{
             [ball removeFromParent];
         }];
     }

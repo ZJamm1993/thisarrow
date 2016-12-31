@@ -14,8 +14,10 @@
 
 typedef NS_ENUM(NSInteger,DotGroupType)
 {
+    DotGroupTypeQueue,
     DotGroupTypeSurround,
     DotGroupTypePointer,
+//    DotGroupType
     DotGroupTypeNothing,  // default
 };
 

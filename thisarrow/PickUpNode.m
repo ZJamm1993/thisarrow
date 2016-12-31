@@ -11,7 +11,7 @@
 #import "RailGunNode.h"
 #import "MissileTrackNode.h"
 
-const CGFloat speedRate=0.25;
+const CGFloat speedRate=1/60.0;
 const NSString* rotationActionKey=@"rotationActionKey";
 
 @implementation PickUpNode

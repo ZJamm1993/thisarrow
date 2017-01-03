@@ -10,6 +10,8 @@
 
 @interface GreenCoverNode : WeaponNode
 
+@property (nonatomic,assign) BOOL blowedUp;
+
 -(void)addMovingTrack;
 
 @end

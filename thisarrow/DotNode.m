@@ -478,6 +478,9 @@ const CGFloat defaultPointerSpeed=240/60.0;
         }];
     }
     else if ([weapon isKindOfClass:[GreenCoverNode class]]) {
+        if (self.isAwake==NO) {
+            return;
+        }
         MegaBombNode* mega=[MegaBombNode defaultNode];
         mega.position=weapon.position;
         mega.texture=[MyTextureAtlas textureNamed:@"megabombGreen"];

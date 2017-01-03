@@ -13,22 +13,26 @@
 +(instancetype)defaultNode
 {
     GreenCoverNode* nod=[GreenCoverNode spriteNodeWithImageNamed:@"greenCover"];
+    [nod runAction:[SKAction repeatActionForever:[SKAction sequence:[NSArray arrayWithObjects:[SKAction waitForDuration:0.1],[SKAction performSelector:@selector(addMovingTrack) onTarget:nod], nil]]] completion:^{
+        
+    }];
     return nod;
 }
 
 -(void)actionWithHero:(SKNode *)hero
 {
     self.position=hero.position;
-    if (arc4random()%2==0) {
-        return;
-    }
+}
+
+-(void)addMovingTrack
+{
     ZZSpriteNode* cir=[ZZSpriteNode spriteNodeWithImageNamed:@"yellowCircle"];
-    [hero.parent addChild:cir];
-    cir.xScale=0.9;
+    [self.parent addChild:cir];
+    cir.xScale=0.98;
     cir.yScale=cir.xScale;
     cir.zPosition=Background_Z_Position;
     cir.position=self.position;
-    [cir runAction:[SKAction scaleTo:0 duration:1] completion:^{
+    [cir runAction:[SKAction scaleTo:0.2 duration:1] completion:^{
         [cir removeFromParent];
     }];
 }

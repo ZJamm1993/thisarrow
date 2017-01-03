@@ -10,4 +10,6 @@
 
 @interface GreenCoverNode : WeaponNode
 
+-(void)addMovingTrack;
+
 @end

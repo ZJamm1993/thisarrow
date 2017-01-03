@@ -20,6 +20,7 @@
     self=[super initWithTexture:texture];
     if (self) {
         self.zPosition=Weapon_Z_Position;
+//        self.blendMode=SKBlendModeAdd;
     }
     return self;
 }

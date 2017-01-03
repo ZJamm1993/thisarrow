@@ -191,6 +191,7 @@ const NSInteger maxDotCount=200;
     NSArray* children=[NSArray arrayWithArray:self.children];
     NSMutableArray* pickUps=[NSMutableArray array];
     NSMutableArray* dots=[NSMutableArray array];
+    NSMutableArray* nothingDots=[NSMutableArray array];
     NSMutableArray* weapons=[NSMutableArray array];
     
     for (SKNode* node in children) {
@@ -202,6 +203,10 @@ const NSInteger maxDotCount=200;
         }
         else if([node isKindOfClass:[DotNode class]]) {
             [dots addObject:node];
+            DotNode* dot=(DotNode*)node;
+            if (dot.groupType==DotGroupTypeNothing) {
+                [nothingDots addObject:dot];
+            }
         }
     }
     
@@ -216,7 +221,7 @@ const NSInteger maxDotCount=200;
     
     if (currentTime-dotTimeInterval>=frequentDot) {
         dotTimeInterval=currentTime;
-        if (dots.count<currentMaxDotCount) {
+        if (nothingDots.count<currentMaxDotCount) {
             [self addDot];
         }
     }
@@ -253,6 +258,11 @@ const NSInteger maxDotCount=200;
     
     for (DotNode* dot in dots) {
         [dot actionWithTarget:arrow];
+        if ([dot intersectsNode:arrow]) {
+//            arrow.color=[SKColor redColor];
+//            arrow.colorBlendFactor=1;
+//            [arrow runAction:[SKAction colorizeWithColor:[SKColor whiteColor] colorBlendFactor:1 duration:0.2]];
+        }
     }
     
     for (WeaponNode* wea in weapons) {

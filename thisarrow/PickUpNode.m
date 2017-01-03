@@ -178,7 +178,7 @@ const NSString* rotationActionKey=@"rotationActionKey";
     }
     else if(self.type==PickUpTypeYellow)
     {
-        int count=6;
+        int count=5;
         CGFloat ranRad=M_PI*ZZRandom_0_1();
         for (int i=0; i<count; i++) {
             MissileTrackNode* miss=[MissileTrackNode defaultNode];

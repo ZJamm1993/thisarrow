@@ -21,8 +21,10 @@
 /**
  counterclockwise rotation
  */
-
--(CGPoint)rotatePoint:(CGPoint)poi origin:(CGPoint)ori rotation:(CGFloat)rad;
--(CGPoint)rotateVector:(CGPoint)vec rotation:(CGFloat)rad;
++(CGRect)resizeRect:(CGRect)rect Scale:(CGFloat)rate;
++(CGPoint)rotatePoint:(CGPoint)poi origin:(CGPoint)ori rotation:(CGFloat)rad;
++(CGPoint)rotateVector:(CGPoint)vec rotation:(CGFloat)rad;
++(CGPoint)randomPositionInRect:(CGRect)rect;
++(CGRect)rectWithCenter:(CGPoint)center width:(CGFloat)width height:(CGFloat)height;
 
 @end

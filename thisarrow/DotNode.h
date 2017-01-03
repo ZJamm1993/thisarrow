@@ -34,6 +34,7 @@ typedef NS_ENUM(NSInteger,DotGroupType)
 +(NSArray*)randomGroupNodeWithDots:(NSArray*)dots target:(SKNode*)target;
 
 -(void)actionWithTarget:(SKNode*)node;
++(SKAction*)wakeUpAction;
 -(void)wakeUp;
 -(void)beKilledByWeapon:(WeaponNode*)weapon;
 -(void)shootPointer;

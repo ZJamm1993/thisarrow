@@ -58,7 +58,7 @@ const CGFloat gainTime=1;
     WeaponNode* head=[WeaponNode spriteNodeWithTexture:[MyTextureAtlas textureNamed:@"purpleRailHead"]];
     head.position=CGPointMake(0, head.size.height*0.25);//self.size.height);//+head.size.height*0.4);
     head.yScale=0;
-    [head runAction:[SKAction repeatActionForever:[SKAction sequence:[NSArray arrayWithObjects:[SKAction scaleYTo:1.1 duration:0.2],[SKAction scaleYTo:0.9 duration:0.2], nil]]]];
+    [head runAction:[SKAction repeatActionForever:[SKAction sequence:[NSArray arrayWithObjects:[SKAction scaleYTo:1.3 duration:0.2],[SKAction scaleYTo:0.8 duration:0.2], nil]]]];
     [self addChild:head];
     
     self.texture=nil;
@@ -122,7 +122,7 @@ const CGFloat gainTime=1;
     NSArray*  children=self.children;
     for (ZZSpriteNode* n in children) {
         if (n.userData.count>0) {
-            CGPoint or=[self rotateVector:n.position rotation:self.zRotation];
+            CGPoint or=[ZZSpriteNode rotateVector:n.position rotation:self.zRotation];
             CGPoint positionInScene=CGPointMake(self.position.x+or.x, self.position.y+or.y);
             //[n convertPoint:n.position toNode:self.parent]; //it's not so accurate;
             CGRect rectInScene=n.frame;

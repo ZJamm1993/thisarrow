@@ -21,4 +21,5 @@ typedef NS_ENUM(NSInteger, SpriteZPosition)
 
 @interface GameScene : SKScene
 
+
 @end

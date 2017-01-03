@@ -91,7 +91,7 @@ const NSString* rotationActionKey=@"rotationActionKey";
         }
     }
     
-    CGFloat sp=2;
+    CGFloat sp=10;
     node.speedX=ZZRandom_1_0_1()*sp;
     node.speedY=ZZRandom_1_0_1()*sp;
     

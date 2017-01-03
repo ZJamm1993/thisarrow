@@ -13,7 +13,9 @@
 +(instancetype)defaultNode
 {
     GreenCoverNode* nod=[GreenCoverNode spriteNodeWithImageNamed:@"greenCover"];
-    [nod runAction:[SKAction repeatActionForever:[SKAction sequence:[NSArray arrayWithObjects:[SKAction waitForDuration:0.1],[SKAction performSelector:@selector(addMovingTrack) onTarget:nod], nil]]] completion:^{
+    nod.xScale=0;
+    nod.yScale=nod.xScale;
+    [nod runAction:[SKAction sequence:[NSArray arrayWithObjects:[SKAction scaleTo:1 duration:0.25],[SKAction repeatActionForever:[SKAction sequence:[NSArray arrayWithObjects:[SKAction waitForDuration:0.1],[SKAction performSelector:@selector(addMovingTrack) onTarget:nod], nil]]],nil]] completion:^{
         
     }];
     return nod;

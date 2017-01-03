@@ -62,8 +62,8 @@ const CGFloat defaultPointerSpeed=240/60.0;
     //dont add child here.
     
     DotGroupType ranType=
-    DotGroupTypePointer;
-//    arc4random()%DotGroupTypeNothing;
+//    DotGroupTypePointer;
+    arc4random()%DotGroupTypeNothing;
     
     NSMutableArray* newDots=[NSMutableArray array];
     
@@ -477,6 +477,14 @@ const CGFloat defaultPointerSpeed=240/60.0;
             [burn removeFromParent];
         }];
     }
+    else if ([weapon isKindOfClass:[GreenCoverNode class]]) {
+        MegaBombNode* mega=[MegaBombNode defaultNode];
+        mega.position=weapon.position;
+        mega.texture=[MyTextureAtlas textureNamed:@"megabombGreen"];
+        [self.parent addChild:mega];
+        
+        [weapon removeFromParent];
+    }    
     else if([weapon isKindOfClass:[RailGunNode class]])
     {
         ZZSpriteNode* ball=[ZZSpriteNode spriteNodeWithTexture:[MyTextureAtlas textureNamed:@"purpleBall"]];

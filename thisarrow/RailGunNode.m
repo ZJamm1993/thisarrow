@@ -21,12 +21,6 @@ const CGFloat gainTime=1;
 -(void)loadedToGun:(SKNode *)node
 {
     if (node) {
-        for (SKNode* child in node.children) {
-            if ([child isKindOfClass:[self class]]) {
-                [self removeFromParent];
-                return;
-            }
-        }
         [node addChild:self];
         [self runAction:[SKAction sequence:[NSArray arrayWithObjects:[SKAction scaleTo:0 duration:0],[SKAction scaleTo:1 duration:0.5], nil]]];
         self.position=CGPointMake(0, node.frame.size.height/2);

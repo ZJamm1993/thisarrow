@@ -13,6 +13,7 @@
 +(instancetype)defaultNode;
 
 -(void)actionWithTargets:(NSArray*)targets;
+-(void)actionWithHero:(SKNode*)hero;
 -(void)disappear;
 
 @end

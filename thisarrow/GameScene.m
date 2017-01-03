@@ -243,7 +243,7 @@ const NSInteger maxDotCount=200;
     
     for (PickUpNode * pic in pickUps) {
         [pic movingAround];
-        if (pic.type==PickUpTypePurple) {
+        if (pic.type==PickUpTypePurple||pic.type==PickUpTypeGreen) {
             [pic runAction:[SKAction rotateToAngle:-arrow.zRotation+M_PI_2 duration:0.1 shortestUnitArc:YES]];
         }
         if ([arrow intersectsNode:pic]) {
@@ -267,6 +267,7 @@ const NSInteger maxDotCount=200;
     
     for (WeaponNode* wea in weapons) {
         [wea actionWithTargets:dots];
+        [wea actionWithHero:arrow];
         for (DotNode* dot in dots) {
             if ([wea intersectsNode:dot]) {
                 [dot beKilledByWeapon:wea];

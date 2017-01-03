@@ -11,6 +11,7 @@
 #import "MegaBombNode.h"
 #import "RailGunNode.h"
 #import "MissileTrackNode.h"
+#import "GreenCoverNode.h"
 
 typedef NS_ENUM(NSInteger,DotGroupType)
 {

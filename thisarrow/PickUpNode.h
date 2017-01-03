@@ -12,7 +12,7 @@ typedef NS_ENUM(NSInteger,PickUpType){
     PickUpTypeOrange,
     PickUpTypePurple,
     PickUpTypeYellow,
-//    PickUpTypeBlue,
+    PickUpTypeGreen,
     PickUpTypeNothing
 };
 

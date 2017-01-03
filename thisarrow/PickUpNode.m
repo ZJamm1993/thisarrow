@@ -10,6 +10,7 @@
 #import "MegaBombNode.h"
 #import "RailGunNode.h"
 #import "MissileTrackNode.h"
+#import "GreenCoverNode.h"
 
 const CGFloat speedRate=1/60.0;
 const NSString* rotationActionKey=@"rotationActionKey";
@@ -35,8 +36,8 @@ const NSString* rotationActionKey=@"rotationActionKey";
      */
     
     PickUpType ran=
-//        PickUpTypeYellow;
-        arc4random()%PickUpTypeNothing;
+        PickUpTypeGreen;
+//        arc4random()%PickUpTypeNothing;
     SKColor* randomColor;
     SKTexture* texture;
     if (ran==PickUpTypeOrange) {
@@ -52,6 +53,11 @@ const NSString* rotationActionKey=@"rotationActionKey";
     {
         randomColor=[SKColor yellowColor];
         texture=[MyTextureAtlas textureNamed:@"yellowPickUp"];
+    }
+    else if(ran==PickUpTypeGreen)
+    {
+        randomColor=[SKColor greenColor];
+        texture=[MyTextureAtlas textureNamed:@"greenPickUp"];
     }
     PickUpNode* node=texture?[PickUpNode spriteNodeWithTexture:texture]:[PickUpNode spriteNodeWithColor:randomColor size:CGSizeMake(23,23)];
     
@@ -173,6 +179,12 @@ const NSString* rotationActionKey=@"rotationActionKey";
     }
     else if(self.type==PickUpTypePurple)
     {
+        for (SKNode* child in node.children) {
+            if ([child isKindOfClass:[RailGunNode class]]) {
+                [self removeFromParent];
+                return;
+            }
+        }
         RailGunNode* rail=[RailGunNode defaultNode];
         [rail loadedToGun:node];
     }
@@ -186,6 +198,18 @@ const NSString* rotationActionKey=@"rotationActionKey";
             miss.position=self.position;
             [node.parent addChild:miss];
         }
+    }
+    else if(self.type==PickUpTypeGreen)
+    {
+        for (SKNode* child in node.parent.children) {
+            if ([child isKindOfClass:[GreenCoverNode class]]) {
+                [self removeFromParent];
+                return;
+            }
+        }
+        GreenCoverNode* cover=[GreenCoverNode defaultNode];
+        cover.position=node.position;
+        [node.parent addChild:cover];
     }
     [self removeFromParent];
 }

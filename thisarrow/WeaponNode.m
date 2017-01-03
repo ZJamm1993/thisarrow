@@ -40,6 +40,11 @@
     
 }
 
+-(void)actionWithHero:(SKNode *)hero
+{
+    
+}
+
 -(void)disappear
 {
     [self runAction:[SKAction group:[NSArray arrayWithObjects:[SKAction scaleTo:0.1 duration:0.25],[SKAction fadeAlphaTo:0 duration:0.25],nil]] completion:^{

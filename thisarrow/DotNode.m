@@ -457,8 +457,8 @@ const CGFloat defaultPointerSpeed=240/60.0;
     if (self.xScale==0||self.yScale==0) {
         return;
     }
-    [self removeAllActions];
-    _isDead=YES;
+//    [self removeAllActions];
+//    _isDead=YES;
     if ([weapon isKindOfClass:[MegaBombNode class]])
     {
         ZZSpriteNode* burn=[ZZSpriteNode spriteNodeWithTexture:[MyTextureAtlas textureNamed:@"burnup1"]];

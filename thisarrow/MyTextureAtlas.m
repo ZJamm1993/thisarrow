@@ -9,6 +9,8 @@
 #import "MyTextureAtlas.h"
 
 static NSArray* burnUpTextureArray;
+static NSArray* bloodWhiteTextureArray;
+static NSArray* bloodRedTextureArray;
 static NSDictionary* textureDictionary;
 static MyTextureAtlas* sharedTextureAtlasInstancetype;
 
@@ -56,6 +58,34 @@ static MyTextureAtlas* sharedTextureAtlasInstancetype;
         burnUpTextureArray=[NSArray arrayWithArray:textures];
     }
     return burnUpTextureArray;
+}
+
++(NSArray*)bloodRedTextures
+{
+    if (bloodRedTextureArray==nil) {
+        NSMutableArray* textures=[NSMutableArray array];
+        for (int i=1; i<=5; i++) {
+            NSString* name=[NSString stringWithFormat:@"bloodRed%d",i];
+            SKTexture* text=[MyTextureAtlas textureNamed:name];
+            [textures addObject:text];
+        }
+        bloodRedTextureArray=[NSArray arrayWithArray:textures];
+    }
+    return bloodRedTextureArray;
+}
+
++(NSArray*)bloodWhiteTextures
+{
+    if (bloodWhiteTextureArray==nil) {
+        NSMutableArray* textures=[NSMutableArray array];
+        for (int i=1; i<=5; i++) {
+            NSString* name=[NSString stringWithFormat:@"bloodWhite%d",i];
+            SKTexture* text=[MyTextureAtlas textureNamed:name];
+            [textures addObject:text];
+        }
+        bloodWhiteTextureArray=[NSArray arrayWithArray:textures];
+    }
+    return bloodWhiteTextureArray;
 }
 
 @end

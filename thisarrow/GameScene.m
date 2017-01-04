@@ -14,7 +14,7 @@
 
 const CFTimeInterval frequentPickUp=0.25;
 const CFTimeInterval frequentDot=0.1;
-const CFTimeInterval frequentDotGroup=10;
+const CFTimeInterval frequentDotGroup=3;
 const CFTimeInterval pickUpLifeTime=60;
 const NSInteger dotIncreasingCount=3;
 const NSInteger maxPickUpCount=3;
@@ -187,9 +187,8 @@ const NSInteger maxDotCount=200;
     for (SKNode* chil in children) {
         [chil removeAllActions];
         if ([chil isKindOfClass:[DotNode class]]) {
-            [chil runAction:[SKAction sequence:[NSArray arrayWithObjects:[SKAction scaleTo:1.1 duration:0.05],[SKAction scaleTo:0 duration:0.05],nil]] completion:^{
-                [chil removeFromParent];
-            }];
+            [(DotNode*)chil bleeding];
+            [chil removeFromParent];
         }
     }
     

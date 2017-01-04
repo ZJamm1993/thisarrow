@@ -11,6 +11,7 @@
 #import "RailGunNode.h"
 #import "MissileTrackNode.h"
 #import "GreenCoverNode.h"
+#import "ElectricSawNode.h"
 
 const CGFloat speedRate=1/60.0;
 const NSString* rotationActionKey=@"rotationActionKey";
@@ -36,8 +37,8 @@ const NSString* rotationActionKey=@"rotationActionKey";
      */
     
     PickUpType ran=
-//        PickUpTypeGreen;
-        arc4random()%PickUpTypeNothing;
+        PickUpTypeBlue;
+//        arc4random()%PickUpTypeNothing;
     SKColor* randomColor;
     SKTexture* texture;
     if (ran==PickUpTypeOrange) {
@@ -59,7 +60,12 @@ const NSString* rotationActionKey=@"rotationActionKey";
         randomColor=[SKColor greenColor];
         texture=[MyTextureAtlas textureNamed:@"greenPickUp"];
     }
-    PickUpNode* node=texture?[PickUpNode spriteNodeWithTexture:texture]:[PickUpNode spriteNodeWithColor:randomColor size:CGSizeMake(23,23)];
+    else if(ran==PickUpTypeBlue)
+    {
+        randomColor=[SKColor blueColor];
+        texture=[MyTextureAtlas textureNamed:@"bluePickUp"];
+    }
+    PickUpNode* node=texture?[PickUpNode spriteNodeWithTexture:texture]:[PickUpNode spriteNodeWithColor:randomColor size:CGSizeMake(24,24)];
     
     node.zPosition=Pick_Z_Position;
     
@@ -89,6 +95,10 @@ const NSString* rotationActionKey=@"rotationActionKey";
             [spot runAction:[SKAction sequence:[NSArray arrayWithObjects:[SKAction waitForDuration:i*0.4],scales, nil]]];
             [node addChild:spot];
         }
+    }
+    else if(ran==PickUpTypeBlue)
+    {
+        
     }
     
     CGFloat sp=10;
@@ -208,6 +218,18 @@ const NSString* rotationActionKey=@"rotationActionKey";
             }
         }
         GreenCoverNode* cover=[GreenCoverNode defaultNode];
+        cover.position=node.position;
+        [node.parent addChild:cover];
+    }
+    else if(self.type==PickUpTypeBlue)
+    {
+        for (SKNode* child in node.parent.children) {
+            if ([child isKindOfClass:[ElectricSawNode class]]) {
+                [self removeFromParent];
+                return;
+            }
+        }
+        ElectricSawNode* cover=[ElectricSawNode defaultNode];
         cover.position=node.position;
         [node.parent addChild:cover];
     }

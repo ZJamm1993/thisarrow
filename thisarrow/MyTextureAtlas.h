@@ -18,4 +18,8 @@
 
 +(NSArray*)burnUpTextures;
 
++(NSArray*)bloodWhiteTextures;
+
++(NSArray*)bloodRedTextures;
+
 @end

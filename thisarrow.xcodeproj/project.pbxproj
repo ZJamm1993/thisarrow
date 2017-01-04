@@ -21,6 +21,7 @@
 		BBDBD81A1DFF85AA001C5F4A /* texture.atlas in Resources */ = {isa = PBXBuildFile; fileRef = BBDBD8191DFF85AA001C5F4A /* texture.atlas */; };
 		BBDBD81D1DFF8921001C5F4A /* MyTextureAtlas.m in Sources */ = {isa = PBXBuildFile; fileRef = BBDBD81C1DFF8921001C5F4A /* MyTextureAtlas.m */; };
 		BBEB62811E10E0A500DED9F4 /* MissileTrackNode.m in Sources */ = {isa = PBXBuildFile; fileRef = BBEB62801E10E0A500DED9F4 /* MissileTrackNode.m */; };
+		BBF69AAF1E1CE63200CDCD07 /* ElectricSawNode.m in Sources */ = {isa = PBXBuildFile; fileRef = BBF69AAE1E1CE63200CDCD07 /* ElectricSawNode.m */; };
 		BBF89D5F1E0A0D8100AC0E80 /* WeaponNode.m in Sources */ = {isa = PBXBuildFile; fileRef = BBF89D5E1E0A0D8100AC0E80 /* WeaponNode.m */; };
 		BBF89D671E0A2C0F00AC0E80 /* MegaBombNode.m in Sources */ = {isa = PBXBuildFile; fileRef = BBF89D661E0A2C0F00AC0E80 /* MegaBombNode.m */; };
 		BBF89D6A1E0A7EAC00AC0E80 /* RailGunNode.m in Sources */ = {isa = PBXBuildFile; fileRef = BBF89D691E0A7EAC00AC0E80 /* RailGunNode.m */; };
@@ -54,6 +55,8 @@
 		BBDBD81E1DFF8A6E001C5F4A /* pch.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pch.pch; sourceTree = "<group>"; };
 		BBEB627F1E10E0A500DED9F4 /* MissileTrackNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MissileTrackNode.h; sourceTree = "<group>"; };
 		BBEB62801E10E0A500DED9F4 /* MissileTrackNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MissileTrackNode.m; sourceTree = "<group>"; };
+		BBF69AAD1E1CE63200CDCD07 /* ElectricSawNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ElectricSawNode.h; sourceTree = "<group>"; };
+		BBF69AAE1E1CE63200CDCD07 /* ElectricSawNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ElectricSawNode.m; sourceTree = "<group>"; };
 		BBF89D5D1E0A0D8100AC0E80 /* WeaponNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeaponNode.h; sourceTree = "<group>"; };
 		BBF89D5E1E0A0D8100AC0E80 /* WeaponNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeaponNode.m; sourceTree = "<group>"; };
 		BBF89D651E0A2C0F00AC0E80 /* MegaBombNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MegaBombNode.h; sourceTree = "<group>"; };
@@ -125,6 +128,8 @@
 				BBEB62801E10E0A500DED9F4 /* MissileTrackNode.m */,
 				BB2D9EA41E1B892F00C43E53 /* GreenCoverNode.h */,
 				BB2D9EA51E1B892F00C43E53 /* GreenCoverNode.m */,
+				BBF69AAD1E1CE63200CDCD07 /* ElectricSawNode.h */,
+				BBF69AAE1E1CE63200CDCD07 /* ElectricSawNode.m */,
 			);
 			path = thisarrow;
 			sourceTree = "<group>";
@@ -207,6 +212,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BBF69AAF1E1CE63200CDCD07 /* ElectricSawNode.m in Sources */,
 				BBDBD8161DFF7DD2001C5F4A /* ArrowNode.m in Sources */,
 				BBF89D5F1E0A0D8100AC0E80 /* WeaponNode.m in Sources */,
 				398312FA1DFE82B700BB4306 /* GameViewController.m in Sources */,

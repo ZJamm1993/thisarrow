@@ -12,6 +12,7 @@
 #import "RailGunNode.h"
 #import "MissileTrackNode.h"
 #import "GreenCoverNode.h"
+#import "ElectricSawNode.h"
 
 typedef NS_ENUM(NSInteger,DotGroupType)
 {
@@ -39,5 +40,6 @@ typedef NS_ENUM(NSInteger,DotGroupType)
 -(void)wakeUp;
 -(void)beKilledByWeapon:(WeaponNode*)weapon;
 -(void)shootPointer;
+-(void)bleeding;
 
 @end

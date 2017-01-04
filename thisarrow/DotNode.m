@@ -64,8 +64,8 @@ const CGFloat defaultPointerSpeed=240/60.0;
     //dont add child here.
     
     DotGroupType ranType=
-//    DotGroupTypePointer;
-    arc4random()%DotGroupTypeNothing;
+    DotGroupTypePointer;
+//    arc4random()%DotGroupTypeNothing;
     
     NSMutableArray* newDots=[NSMutableArray array];
     
@@ -167,7 +167,7 @@ const CGFloat defaultPointerSpeed=240/60.0;
     
     else if(ranType==DotGroupTypePointer)
     {
-        int catchDotBound=bound.height;
+        int catchDotBound=160;
         
         int numPointer=1;
         int raa=arc4random()%100;
@@ -241,6 +241,9 @@ const CGFloat defaultPointerSpeed=240/60.0;
                 [arr removeLastObject];
             }
             
+            CFTimeInterval shapingTime=2+0.5*ZZRandom_1_0_1();
+            CFTimeInterval reshapingTime=1+0.5*ZZRandom_1_0_1();
+            
             for (int j=0;j<arr.count;j++) {
                 DotNode* d=[arr objectAtIndex:j];
                 d.groupType=DotGroupTypePointer;
@@ -286,15 +289,13 @@ const CGFloat defaultPointerSpeed=240/60.0;
                 d.speedX=0;
                 d.speedY=0;
                 
-                CFTimeInterval shapingTime=2;
-                
-                SKAction* reshape=[SKAction moveTo:CGPointMake(nx+p.x, ny+p.y) duration:1];
+                SKAction* reshape=[SKAction moveTo:CGPointMake(nx+p.x, ny+p.y) duration:reshapingTime];
                 d.originPoint=CGPointMake(-nx, -ny);
                 CGPoint newP=CGPointMake(p.x+dx, p.y+dy);
                 [d runAction:[SKAction group:[NSArray arrayWithObjects:
                                               [SKAction moveTo:newP duration:shapingTime],
                                               [SKAction sequence:[NSArray arrayWithObjects:
-                                                                  [SKAction scaleTo:0.5 duration:shapingTime/2],
+                                                                  [SKAction scaleTo:0.0 duration:shapingTime/2],
                                                                   [SKAction scaleTo:1 duration:shapingTime/2], nil]],
                                               nil]] completion:^{
                     [d runAction:[SKAction sequence:[NSArray arrayWithObjects:[SKAction waitForDuration:0.1],reshape, nil]] completion:^{
@@ -360,16 +361,16 @@ const CGFloat defaultPointerSpeed=240/60.0;
     }
     
     if (self.touchTopBound) {
-        self.speedY=-fabsf(self.speedY);
+        self.speedY=-fabsf((float)self.speedY);
     }
     if (self.touchBottomBound) {
-        self.speedY=fabsf(self.speedY);
+        self.speedY=fabsf((float)self.speedY);
     }
     if (self.touchLeftBound) {
-        self.speedX=fabsf(self.speedX);
+        self.speedX=fabsf((float)self.speedX);
     }
     if (self.touchRightBound) {
-        self.speedX=-fabsf(self.speedX);
+        self.speedX=-fabsf((float)self.speedX);
     }
     
     if (self.groupType==DotGroupTypeNothing||self.groupType==DotGroupTypeSurround) {
@@ -463,8 +464,6 @@ const CGFloat defaultPointerSpeed=240/60.0;
     if (self.xScale==0||self.yScale==0) {
         return;
     }
-//    [self removeAllActions];
-//    _isDead=YES;
     if ([weapon isKindOfClass:[MegaBombNode class]])
     {
         ZZSpriteNode* burn=[ZZSpriteNode spriteNodeWithTexture:[MyTextureAtlas textureNamed:@"burnup1"]];
@@ -514,8 +513,31 @@ const CGFloat defaultPointerSpeed=240/60.0;
             [ball removeFromParent];
         }];
     }
+    else if([weapon isKindOfClass:[ElectricSawNode class]])
+    {
+        [self bleeding];
+    }
     self.isDead=YES;
     [self removeFromParent];
+}
+
+-(void)bleeding
+{
+    CFTimeInterval timePer=0.02+0.01*ZZRandom_1_0_1();
+    
+    ZZSpriteNode* blood=[ZZSpriteNode spriteNodeWithTexture:[MyTextureAtlas textureNamed:@"bloodRed1"]];
+    blood.zPosition=Arrow_Z_Position;
+    blood.position=ccp(self.position.x-blood.size.width/2+self.size.width/2, self.position.y-blood.size.height/2+self.size.height/2);
+    [self.parent addChild:blood];
+    
+    ZZSpriteNode* bloodWhite=[ZZSpriteNode spriteNodeWithTexture:[MyTextureAtlas textureNamed:@"bloodWhite1"]];
+    bloodWhite.zPosition=-1;
+    [blood addChild:bloodWhite];
+    [bloodWhite runAction:[SKAction animateWithTextures:[MyTextureAtlas bloodWhiteTextures] timePerFrame:timePer]];
+    
+    [blood runAction:[SKAction sequence:[NSArray arrayWithObjects:[SKAction animateWithTextures:[MyTextureAtlas bloodRedTextures] timePerFrame:timePer],[SKAction fadeAlphaTo:0 duration:0.1],nil]] completion:^{
+        [blood removeFromParent];
+    }];
 }
 
 -(BOOL)intersectsNode:(SKNode *)node

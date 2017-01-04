@@ -9,7 +9,9 @@
 #import "DotNode.h"
 
 const CGFloat defaultFollowSpeed=16/60.0;
+const CGFloat defaultTopSpeed=48/60.0;
 const CGFloat defaultSlowDownRate=0.98;
+const CGFloat defaultFastUpRate=2.0-defaultSlowDownRate;
 const CGFloat defaultReboundRate=0.4;
 const CGFloat defaultPointerSpeed=240/60.0;
 
@@ -165,7 +167,7 @@ const CGFloat defaultPointerSpeed=240/60.0;
     
     else if(ranType==DotGroupTypePointer)
     {
-        int catchDotBound=160;
+        int catchDotBound=bound.height;
         
         int numPointer=1;
         int raa=arc4random()%100;
@@ -247,14 +249,12 @@ const CGFloat defaultPointerSpeed=240/60.0;
                 CGFloat w=d.size.width/2;
                 CGFloat dx=0;
                 CGFloat dy=0;
-                dx=0;
-                dy=j*w-5*w;
+                dx=w*2*ZZRandom_1_0_1();
+                dy=w*2*ZZRandom_1_0_1();
                 
                 NSInteger la=arr.count-1-j;
-                
-                SKAction* reshape=[SKAction waitForDuration:0.5];
                 CGFloat nx=0;
-                CGFloat ny=0;
+                CGFloat ny=j*w-5*w;
                 if (la==0) {
                     nx=-w;
                     ny=3*w;
@@ -282,15 +282,14 @@ const CGFloat defaultPointerSpeed=240/60.0;
                     d.yScale=0;
                 }
                 [d removeFromParent];
-                d.originPoint=CGPointMake(-dx, -dy);
-                if (la<4) {
-                    reshape=[SKAction moveTo:CGPointMake(nx+p.x, ny+p.y) duration:0.5];
-                    d.originPoint=CGPointMake(-nx, -ny);
-                }
                 
                 d.speedX=0;
                 d.speedY=0;
+                
                 CFTimeInterval shapingTime=2;
+                
+                SKAction* reshape=[SKAction moveTo:CGPointMake(nx+p.x, ny+p.y) duration:1];
+                d.originPoint=CGPointMake(-nx, -ny);
                 CGPoint newP=CGPointMake(p.x+dx, p.y+dy);
                 [d runAction:[SKAction group:[NSArray arrayWithObjects:
                                               [SKAction moveTo:newP duration:shapingTime],
@@ -298,7 +297,7 @@ const CGFloat defaultPointerSpeed=240/60.0;
                                                                   [SKAction scaleTo:0.5 duration:shapingTime/2],
                                                                   [SKAction scaleTo:1 duration:shapingTime/2], nil]],
                                               nil]] completion:^{
-                    [d runAction:reshape completion:^{
+                    [d runAction:[SKAction sequence:[NSArray arrayWithObjects:[SKAction waitForDuration:0.1],reshape, nil]] completion:^{
                         d.isAwake=YES;
                         [d runAction:[SKAction waitForDuration:1.5] completion:^{
                             [d shootPointer];
@@ -379,6 +378,13 @@ const CGFloat defaultPointerSpeed=240/60.0;
         CGFloat rad=atan2f(dx, dy);
         CGFloat newDx=self.followSpeed*sin(rad);
         CGFloat newDy=self.followSpeed*cos(rad);
+        if (self.followSpeed<defaultTopSpeed) {
+            if (self.groupType==DotGroupTypeNothing) {
+                if (arc4random()%5==0) {
+                    self.followSpeed=self.followSpeed*defaultFastUpRate;
+                }
+            }
+        }
         self.position=CGPointMake(self.position.x+newDx, self.position.y+newDy);
     }
     else if(self.groupType==DotGroupTypePointer)
@@ -402,7 +408,7 @@ const CGFloat defaultPointerSpeed=240/60.0;
         
         if(self.touchBottomBound||self.touchLeftBound||self.touchRightBound||self.touchTopBound)
         {
-            self.groupType=DotGroupTypeNothing;
+            self.groupType=DotGroupTypeSurround;
         }
         
         CGPoint deltaOrigin=[ZZSpriteNode rotateVector:self.originPoint rotation:self.zRotation];
@@ -508,6 +514,7 @@ const CGFloat defaultPointerSpeed=240/60.0;
             [ball removeFromParent];
         }];
     }
+    self.isDead=YES;
     [self removeFromParent];
 }
 
@@ -517,7 +524,7 @@ const CGFloat defaultPointerSpeed=240/60.0;
         return NO;
     }
     CGRect r1=[ZZSpriteNode resizeRect:self.frame Scale:0.8];
-    CGRect r2=[ZZSpriteNode resizeRect:node.frame Scale:0.5];
+    CGRect r2=[ZZSpriteNode resizeRect:node.frame Scale:0.25];
     return CGRectIntersectsRect(r1, r2);
 }
 

@@ -14,7 +14,7 @@
 
 const CFTimeInterval frequentPickUp=0.25;
 const CFTimeInterval frequentDot=0.1;
-const CFTimeInterval frequentDotGroup=5;
+const CFTimeInterval frequentDotGroup=10;
 const CFTimeInterval pickUpLifeTime=60;
 const NSInteger dotIncreasingCount=3;
 const NSInteger maxPickUpCount=3;
@@ -33,11 +33,14 @@ const NSInteger maxDotCount=200;
     CFTimeInterval dotTimeInterval;
     CFTimeInterval dotGroupTimeTnterval;
     NSInteger currentMaxDotCount;
+    BOOL gameOver;
 }
 
 -(void)didMoveToView:(SKView *)view {
     
     currentMaxDotCount=1;
+    
+    self.size=view.frame.size;
     
     self.backgroundColor=[SKColor colorWithWhite:0.4 alpha:1];
     
@@ -171,16 +174,49 @@ const NSInteger maxDotCount=200;
     }
 }
 
--(void)update:(CFTimeInterval)currentTime {
-//    
-//    CGFloat ran=ZZRandom_1_0_1();
-//    NSLog(@"ran:%f",ran);
-//    if (ran>1||ran<-1) {
-//        NSLog(@"ran wrong");
-//    }
-//
+-(void)gameIsOver
+{
+    gameOver=YES;
+    ZZSpriteNode* smashedArrow=[ZZSpriteNode spriteNodeWithTexture:[MyTextureAtlas textureNamed:@"arrowSmashed"]];
+    smashedArrow.xScale=0.0;
+    smashedArrow.yScale=smashedArrow.xScale;
+    smashedArrow.position=arrow.position;
+    smashedArrow.zPosition=Arrow_Z_Position;
     
-    if (self.paused) {
+    NSArray* children=[NSArray arrayWithArray:self.children];
+    for (SKNode* chil in children) {
+        [chil removeAllActions];
+        if ([chil isKindOfClass:[DotNode class]]) {
+            [chil runAction:[SKAction sequence:[NSArray arrayWithObjects:[SKAction scaleTo:1.1 duration:0.05],[SKAction scaleTo:0 duration:0.05],nil]] completion:^{
+                [chil removeFromParent];
+            }];
+        }
+    }
+    
+    [self addChild:smashedArrow];
+    
+    SKAction* scale=[SKAction scaleTo:1 duration:0.35];
+    scale.timingMode=SKActionTimingEaseOut;
+    
+    [smashedArrow runAction:[SKAction sequence:[NSArray arrayWithObjects:
+                                                [SKAction waitForDuration:1],
+                                                [SKAction performSelector:@selector(removeFromParent) onTarget:arrow],
+                                                scale
+                                                , nil]] completion:^{
+        [self performSelector:@selector(restartGame) withObject:nil afterDelay:3];
+    }];
+}
+
+-(void)restartGame
+{
+    GameScene *scene = [GameScene sceneWithSize:self.view.frame.size];
+    scene.scaleMode = SKSceneScaleModeResizeFill;
+    [self.view presentScene:scene];
+}
+
+-(void)update:(CFTimeInterval)currentTime {
+
+    if (self.paused||gameOver) {
         return;
     }
     
@@ -256,15 +292,6 @@ const NSInteger maxDotCount=200;
         }
     }
     
-    for (DotNode* dot in dots) {
-        [dot actionWithTarget:arrow];
-        if ([dot intersectsNode:arrow]) {
-//            arrow.color=[SKColor redColor];
-//            arrow.colorBlendFactor=1;
-//            [arrow runAction:[SKAction colorizeWithColor:[SKColor whiteColor] colorBlendFactor:1 duration:0.2]];
-        }
-    }
-    
     for (WeaponNode* wea in weapons) {
         [wea actionWithTargets:dots];
         [wea actionWithHero:arrow];
@@ -274,6 +301,16 @@ const NSInteger maxDotCount=200;
             }
         }
     }
+    
+    for (DotNode* dot in dots) {
+        [dot actionWithTarget:arrow];
+        if ([dot intersectsNode:arrow]) {
+//            [self gameIsOver];
+//            return;
+        }
+    }
+    
+    
 }
 
 @end

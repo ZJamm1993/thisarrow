@@ -17,7 +17,6 @@
 @property (nonatomic,assign,readonly) BOOL touchBottomBound;
 @property (nonatomic,assign,readonly) BOOL touchLeftBound;
 @property (nonatomic,assign,readonly) BOOL touchRightBound;
-
 /**
  counterclockwise rotation
  */

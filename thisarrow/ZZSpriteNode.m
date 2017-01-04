@@ -23,16 +23,27 @@
 //    return [super intersectsNode:node];
 }
 
+-(void)removeAllActions
+{
+    [NSObject cancelPreviousPerformRequestsWithTarget:self];
+    [super removeAllActions];
+    for (SKNode* child in self.children) {
+        [child removeAllActions];
+    }
+}
+
 +(CGRect)resizeRect:(CGRect)rect Scale:(CGFloat)rate
 {
     if (rate<=0) {
         return rect;
     }
-    CGFloat x=rect.origin.x;
-    CGFloat y=rect.origin.y;
+    
     CGFloat w=rect.size.width;
     CGFloat h=rect.size.height;
-    CGRect newRect=CGRectMake(x+w/2-(w*rate/2), y+h/2-(h*rate/2), w*rate, h*rate);
+    CGFloat cx=rect.origin.x+w/2;
+    CGFloat cy=rect.origin.y+h/2;
+    CGFloat wh=(w<h?w:h)*rate;
+    CGRect newRect=CGRectMake(cx-wh/2, cy-wh/2, wh, wh);
     return newRect;
 }
 

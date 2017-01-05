@@ -64,7 +64,7 @@ static MyTextureAtlas* sharedTextureAtlasInstancetype;
 {
     if (bloodRedTextureArray==nil) {
         NSMutableArray* textures=[NSMutableArray array];
-        for (int i=1; i<=5; i++) {
+        for (int i=1; i<=15; i++) {
             NSString* name=[NSString stringWithFormat:@"bloodRed%d",i];
             SKTexture* text=[MyTextureAtlas textureNamed:name];
             [textures addObject:text];
@@ -78,7 +78,7 @@ static MyTextureAtlas* sharedTextureAtlasInstancetype;
 {
     if (bloodWhiteTextureArray==nil) {
         NSMutableArray* textures=[NSMutableArray array];
-        for (int i=1; i<=5; i++) {
+        for (int i=1; i<=15; i++) {
             NSString* name=[NSString stringWithFormat:@"bloodWhite%d",i];
             SKTexture* text=[MyTextureAtlas textureNamed:name];
             [textures addObject:text];

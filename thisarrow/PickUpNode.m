@@ -37,9 +37,30 @@ const NSString* rotationActionKey=@"rotationActionKey";
      + (UIColor *)brownColor;      // 0.6, 0.4, 0.2 RGB
      */
     
-    PickUpType ran=
-//        PickUpTypeBlue;
-        arc4random()%PickUpTypeNothing;
+    int i=arc4random()%100;
+    
+    PickUpType ran=PickUpTypeOrange;
+    
+    if (i<30) {
+        ran=PickUpTypeOrange;
+    }
+    else if(i<55)
+    {
+        ran=PickUpTypePurple;
+    }
+    else if(i<80)
+    {
+        ran=PickUpTypeYellow;
+    }
+    else if(i<90)
+    {
+        ran=PickUpTypeGreen;
+    }
+    else
+    {
+        ran=PickUpTypeBlue;
+    }
+    
     SKColor* randomColor;
     SKTexture* texture;
     if (ran==PickUpTypeOrange) {
@@ -99,7 +120,21 @@ const NSString* rotationActionKey=@"rotationActionKey";
     }
     else if(ran==PickUpTypeBlue)
     {
-        
+        CFTimeInterval waitTime=1;
+        int count=8;
+        CFTimeInterval scaleTime=waitTime/count;
+        for(int i=0;i<count;i++)
+        {
+            CFTimeInterval w=waitTime*i/count;
+            CGFloat rotation=-M_PI*2/count*i;
+            ZZSpriteNode* sawTooth=[ZZSpriteNode spriteNodeWithTexture:[MyTextureAtlas textureNamed:@"sawToothTiny"]];
+            sawTooth.zRotation=rotation;
+            sawTooth.alpha=0;
+            [node addChild:sawTooth];
+            SKAction* wait=[SKAction waitForDuration:w];
+            SKAction* showAndHide=[SKAction repeatActionForever:[SKAction sequence:[NSArray arrayWithObjects:[SKAction fadeAlphaTo:1 duration:scaleTime],[SKAction waitForDuration:waitTime],[SKAction fadeAlphaTo:0 duration:scaleTime],[SKAction waitForDuration:waitTime-2*scaleTime], nil]]];
+            [sawTooth runAction:[SKAction sequence:[NSArray arrayWithObjects:wait,showAndHide, nil]]];
+        }
     }
     
     CGFloat sp=10;

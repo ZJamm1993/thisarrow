@@ -14,6 +14,7 @@
 #import "ElectricSawNode.h"
 
 const CGFloat speedRate=1/60.0;
+const CFTimeInterval pickUpLifeTime=60;
 const NSString* rotationActionKey=@"rotationActionKey";
 
 @implementation PickUpNode
@@ -37,8 +38,8 @@ const NSString* rotationActionKey=@"rotationActionKey";
      */
     
     PickUpType ran=
-        PickUpTypeBlue;
-//        arc4random()%PickUpTypeNothing;
+//        PickUpTypeBlue;
+        arc4random()%PickUpTypeNothing;
     SKColor* randomColor;
     SKTexture* texture;
     if (ran==PickUpTypeOrange) {
@@ -223,17 +224,35 @@ const NSString* rotationActionKey=@"rotationActionKey";
     }
     else if(self.type==PickUpTypeBlue)
     {
-        for (SKNode* child in node.parent.children) {
+        for (ZZSpriteNode* child in node.parent.children) {
             if ([child isKindOfClass:[ElectricSawNode class]]) {
-                [self removeFromParent];
-                return;
+                ElectricSawNode* saw=(ElectricSawNode*)child;
+                if (saw.disappearing) {
+                    [saw removeFromParent];
+                    break;
+                }
+                else
+                {
+                    [self removeFromParent];
+                    saw.createTime=self.currentTime;
+                    return;
+                }
             }
         }
         ElectricSawNode* cover=[ElectricSawNode defaultNode];
+        cover.createTime=self.currentTime;
         cover.position=node.position;
         [node.parent addChild:cover];
     }
     [self removeFromParent];
+}
+
+-(void)actionWithTimeInterval:(CFTimeInterval)timeInterval
+{
+    self.currentTime=timeInterval;
+    if (timeInterval-self.createTime>pickUpLifeTime) {
+        [self disappear];
+    }
 }
 
 @end

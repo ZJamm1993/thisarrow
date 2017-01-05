@@ -13,6 +13,9 @@
 @property (nonatomic,assign) CGFloat speedX;
 @property (nonatomic,assign) CGFloat speedY;
 
+@property (nonatomic,assign) CFTimeInterval createTime;
+@property (nonatomic,assign) CFTimeInterval currentTime;
+
 @property (nonatomic,assign,readonly) BOOL touchTopBound;
 @property (nonatomic,assign,readonly) BOOL touchBottomBound;
 @property (nonatomic,assign,readonly) BOOL touchLeftBound;
@@ -25,5 +28,7 @@
 +(CGPoint)rotateVector:(CGPoint)vec rotation:(CGFloat)rad;
 +(CGPoint)randomPositionInRect:(CGRect)rect;
 +(CGRect)rectWithCenter:(CGPoint)center width:(CGFloat)width height:(CGFloat)height;
+
+-(void)actionWithTimeInterval:(CFTimeInterval)timeInterval;
 
 @end

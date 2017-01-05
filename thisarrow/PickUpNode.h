@@ -8,6 +8,7 @@
 
 #import <SpriteKit/SpriteKit.h>
 
+
 typedef NS_ENUM(NSInteger,PickUpType){
     PickUpTypeOrange,
     PickUpTypePurple,
@@ -21,7 +22,6 @@ typedef NS_ENUM(NSInteger,PickUpType){
 
 @property (nonatomic,assign) BOOL shouldMoving;
 @property (nonatomic,assign) PickUpType type;
-@property (nonatomic,assign) CFTimeInterval createTime;
 @property (nonatomic,assign) BOOL disappearing;
 
 +(instancetype)randomNode;

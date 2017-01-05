@@ -10,4 +10,6 @@
 
 @interface ElectricSawNode : WeaponNode
 
+@property (nonatomic,assign) BOOL disappearing;
+
 @end

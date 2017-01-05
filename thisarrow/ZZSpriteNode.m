@@ -95,4 +95,9 @@
     return rect;
 }
 
+-(void)actionWithTimeInterval:(CFTimeInterval)timeInterval
+{
+    
+}
+
 @end

@@ -64,8 +64,8 @@ const CGFloat defaultPointerSpeed=240/60.0;
     //dont add child here.
     
     DotGroupType ranType=
-    DotGroupTypePointer;
-//    arc4random()%DotGroupTypeNothing;
+//    DotGroupTypePointer;
+    arc4random()%DotGroupTypeNothing;
     
     NSMutableArray* newDots=[NSMutableArray array];
     
@@ -515,7 +515,8 @@ const CGFloat defaultPointerSpeed=240/60.0;
     }
     else if([weapon isKindOfClass:[ElectricSawNode class]])
     {
-        [self bleeding];
+        CGFloat rotaion=-atan2f(self.position.x-weapon.position.x, self.position.y-weapon.position.y);
+        [self bleedingWithRotation:rotaion];
     }
     self.isDead=YES;
     [self removeFromParent];
@@ -523,19 +524,28 @@ const CGFloat defaultPointerSpeed=240/60.0;
 
 -(void)bleeding
 {
+    [self bleedingWithRotation:M_PI*2*ZZRandom_0_1()];
+}
+
+-(void)bleedingWithRotation:(CGFloat)rotation
+{
+    rotation=rotation+M_PI_4*ZZRandom_1_0_1();
     CFTimeInterval timePer=0.02+0.01*ZZRandom_1_0_1();
     
     ZZSpriteNode* blood=[ZZSpriteNode spriteNodeWithTexture:[MyTextureAtlas textureNamed:@"bloodRed1"]];
+    blood.zRotation=rotation;
     blood.zPosition=Arrow_Z_Position;
     blood.position=ccp(self.position.x-blood.size.width/2+self.size.width/2, self.position.y-blood.size.height/2+self.size.height/2);
     [self.parent addChild:blood];
+    
+    blood.position=[ZZSpriteNode rotatePoint:blood.position origin:self.position rotation:rotation];
     
     ZZSpriteNode* bloodWhite=[ZZSpriteNode spriteNodeWithTexture:[MyTextureAtlas textureNamed:@"bloodWhite1"]];
     bloodWhite.zPosition=-1;
     [blood addChild:bloodWhite];
     [bloodWhite runAction:[SKAction animateWithTextures:[MyTextureAtlas bloodWhiteTextures] timePerFrame:timePer]];
     
-    [blood runAction:[SKAction sequence:[NSArray arrayWithObjects:[SKAction animateWithTextures:[MyTextureAtlas bloodRedTextures] timePerFrame:timePer],[SKAction fadeAlphaTo:0 duration:0.1],nil]] completion:^{
+    [blood runAction:[SKAction sequence:[NSArray arrayWithObjects:[SKAction animateWithTextures:[MyTextureAtlas bloodRedTextures] timePerFrame:timePer],[SKAction waitForDuration:0.05],nil]] completion:^{
         [blood removeFromParent];
     }];
 }

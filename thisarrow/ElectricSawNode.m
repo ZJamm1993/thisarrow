@@ -8,11 +8,11 @@
 
 #import "ElectricSawNode.h"
 
-const CGFloat rotationRate=M_PI_4/10/60;
+const CFTimeInterval sawLifeTime=8;
+const NSString* rotationKey=@"rotationKey";
 
 @implementation ElectricSawNode
 {
-    CGFloat deltaRotation;
     BOOL shouldSpeedUp;
 }
 
@@ -22,57 +22,89 @@ const CGFloat rotationRate=M_PI_4/10/60;
     nod.xScale=0;
     nod.yScale=nod.xScale;
     [nod runAction:[SKAction sequence:[NSArray arrayWithObjects:[SKAction scaleTo:1 duration:0.25],nil]] completion:^{
-        
-        CFTimeInterval scaleTime=0.2;
+        CFTimeInterval waitTime=1;
         int count=8;
-        for (int i=0; i<count;i++) {
-            CGFloat rotation=M_PI*2/count*i;
-            CFTimeInterval wait2=i*scaleTime;
-            ZZSpriteNode* tooth=[ZZSpriteNode spriteNodeWithTexture:[MyTextureAtlas textureNamed:@"sawTooth"]];
-            tooth.zPosition=-1;
-            tooth.yScale=0;
-            [nod addChild:tooth];
-            tooth.zRotation=rotation;
-            [tooth runAction:[SKAction sequence:[NSArray arrayWithObjects:[SKAction waitForDuration:wait2],[SKAction scaleYTo:0.9 duration:scaleTime],nil]]];
+        CFTimeInterval scaleTime=waitTime/count;
+        for(int i=0;i<count;i++)
+        {
+            CFTimeInterval w=waitTime*i/count;
+            CGFloat rotation=-M_PI*2/count*i;
+            ZZSpriteNode* sawTooth=[ZZSpriteNode spriteNodeWithTexture:[MyTextureAtlas textureNamed:@"sawTooth"]];
+            sawTooth.zRotation=rotation;
+            sawTooth.zPosition=-1;
+            sawTooth.yScale=0;
+            sawTooth.xScale=sawTooth.yScale;
+            [nod addChild:sawTooth];
+            
+            [sawTooth runAction:[SKAction sequence:[NSArray arrayWithObjects:[SKAction waitForDuration:w],[SKAction scaleTo:0.9 duration:scaleTime], nil]]];
         }
-        CFTimeInterval waitTime=count*scaleTime;
-        [nod performSelector:@selector(speedUp) withObject:nil afterDelay:waitTime];
-        [nod performSelector:@selector(slowDown) withObject:nil afterDelay:8];
+        
+        NSMutableArray* rotationAction=[NSMutableArray arrayWithObject:[SKAction waitForDuration:waitTime+0.2]];
+        
+        CFTimeInterval deltaTime=0.1;
+        CFTimeInterval deltaRotation=M_PI_4;
+        for(int i=0;i<count;i++)
+        {
+            SKAction* ro=[SKAction rotateByAngle:deltaRotation*i/count duration:deltaTime];
+            if (i==count-1) {
+                ro=[SKAction repeatActionForever:ro];
+            }
+            [rotationAction addObject:ro];
+        }
+        [nod runAction:[SKAction sequence:rotationAction] withKey:[rotationKey description]];
     }];
     return nod;
-}
-
--(void)speedUp
-{
-    shouldSpeedUp=YES;
-}
-
--(void)slowDown
-{
-    shouldSpeedUp=NO;
 }
 
 -(void)actionWithHero:(SKNode *)hero
 {
     self.position=hero.position;
-    if (deltaRotation<0) {
+}
+
+-(void)actionWithTimeInterval:(CFTimeInterval)timeInterval
+{
+    if (timeInterval-self.createTime>sawLifeTime) {
+        [self disappear];
+    }
+}
+
+-(void)disappear
+{
+    if (self.disappearing) {
         return;
     }
-    if (shouldSpeedUp) {
-        if (deltaRotation<M_PI_4/10) {
-            deltaRotation+=rotationRate;
-        }
-    }
-    else
+    self.disappearing=YES;
+    
+    
+    NSMutableArray* rotationAction=[NSMutableArray array];
+    
+    CFTimeInterval deltaTime=0.1;
+    CFTimeInterval deltaRotation=M_PI_4;
+    int count=8;
+    for(int i=0;i<count;i++)
     {
-        if (deltaRotation>=0) {
-            deltaRotation-=rotationRate;
-        }
-        if (deltaRotation<0) {
-            [self disappear];
-        }
+        SKAction* ro=[SKAction rotateByAngle:deltaRotation*(count-i)/count duration:deltaTime];
+        [rotationAction addObject:ro];
     }
-    self.zRotation+=deltaRotation;
+    [rotationAction insertObject:[SKAction performSelector:@selector(removeOldRotaionAction) onTarget:self] atIndex:0];
+    [rotationAction insertObject:[SKAction repeatAction:[SKAction sequence:[NSArray arrayWithObjects:[SKAction fadeAlphaTo:0.4 duration:0],[SKAction waitForDuration:0.5],[SKAction fadeAlphaTo:1 duration:0],[SKAction waitForDuration:0.5], nil]] count:3] atIndex:0];
+    [self runAction:[SKAction sequence:rotationAction] completion:^{
+        [self removeAllActions];
+        SKAction* scales=[SKAction sequence:[NSArray arrayWithObjects:[SKAction scaleTo:1.2 duration:0.25],[SKAction scaleTo:0 duration:0.25],nil]];
+        for (ZZSpriteNode* nod in self.children) {
+            [nod runAction:scales];
+        }
+        [self runAction:[SKAction waitForDuration:0.6] completion:^{
+            [self runAction:scales completion:^{
+                [self removeFromParent];
+            }];
+        }];
+    }];
+}
+
+-(void)removeOldRotaionAction
+{
+    [self removeActionForKey:[rotationKey description]];
 }
 
 -(BOOL)intersectsNode:(SKNode *)node
@@ -82,7 +114,15 @@ const CGFloat rotationRate=M_PI_4/10/60;
     CGFloat dx=p0.x-p1.x;
     CGFloat dy=p0.y-p1.y;
     CGFloat distance=sqrtf(dx*dx+dy*dy);
-    BOOL inter=distance<self.frame.size.width/2+node.frame.size.width/2;
+    CGFloat selfWidth=self.size.width;
+    if(self.children.firstObject)
+    {
+        SKNode* nod=self.children.firstObject;
+        if (nod.frame.size.width>selfWidth) {
+            selfWidth=nod.frame.size.width;
+        }
+    }
+    BOOL inter=distance<selfWidth/2+node.frame.size.width/2;
     return inter;
 }
 

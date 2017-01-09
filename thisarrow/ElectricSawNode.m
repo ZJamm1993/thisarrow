@@ -99,7 +99,7 @@ const NSString* rotationKey=@"rotationKey";
             [nod runAction:scales];
         }
         [self runAction:[SKAction waitForDuration:0.6] completion:^{
-            [self runAction:scales completion:^{
+            [self runAction:[SKAction scaleTo:0 duration:0.3] completion:^{
                 [self removeFromParent];
             }];
         }];

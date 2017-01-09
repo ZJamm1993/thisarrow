@@ -41,14 +41,14 @@ const NSString* rotationActionKey=@"rotationActionKey";
     
     PickUpType ran=PickUpTypeOrange;
     
-    if (i<30) {
+    if (i<25) {
         ran=PickUpTypeOrange;
     }
-    else if(i<55)
+    else if(i<50)
     {
         ran=PickUpTypePurple;
     }
-    else if(i<80)
+    else if(i<75)
     {
         ran=PickUpTypeYellow;
     }
@@ -61,7 +61,7 @@ const NSString* rotationActionKey=@"rotationActionKey";
         ran=PickUpTypeBlue;
     }
     
-    ran=PickUpTypeBlue;
+//    ran=PickUpTypeGreen;
     
     SKColor* randomColor;
     SKTexture* texture;

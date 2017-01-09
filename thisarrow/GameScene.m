@@ -15,7 +15,7 @@
 const CFTimeInterval frequentPickUp=0.25;
 const CFTimeInterval frequentDot=0.1;
 const CFTimeInterval frequentDotGroup=10;
-const NSInteger dotIncreasingCount=3;
+const NSInteger dotIncreasingCount=10;
 const NSInteger maxPickUpCount=3;
 const NSInteger maxDotCount=200;
 
@@ -36,11 +36,11 @@ const NSInteger maxDotCount=200;
 
 -(void)didMoveToView:(SKView *)view {
     
-    currentMaxDotCount=1;
+    currentMaxDotCount=30;
     
     self.size=view.frame.size;
     
-    self.backgroundColor=[SKColor colorWithWhite:0.4 alpha:1];
+    self.backgroundColor=[SKColor colorWithRed:0.5 green:0 blue:0 alpha:1];
     
     CGPoint centerPoint=CGPointMake(self.size.width/2, self.size.height/2);
     
@@ -192,11 +192,11 @@ const NSInteger maxDotCount=200;
     
     [self addChild:smashedArrow];
     
-    SKAction* scale=[SKAction scaleTo:1 duration:0.35];
+    SKAction* scale=[SKAction scaleTo:1 duration:0.25];
     scale.timingMode=SKActionTimingEaseOut;
     
     [smashedArrow runAction:[SKAction sequence:[NSArray arrayWithObjects:
-                                                [SKAction waitForDuration:1],
+                                                [SKAction waitForDuration:0.7],
                                                 [SKAction performSelector:@selector(removeFromParent) onTarget:arrow],
                                                 scale
                                                 , nil]] completion:^{

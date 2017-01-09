@@ -8,8 +8,8 @@
 
 #import "DotNode.h"
 
-const CGFloat defaultFollowSpeed=16/60.0;
-const CGFloat defaultTopSpeed=48/60.0;
+const CGFloat defaultFollowSpeed=24/60.0;
+const CGFloat defaultTopSpeed=32/60.0;
 const CGFloat defaultSlowDownRate=0.98;
 const CGFloat defaultFastUpRate=2.0-defaultSlowDownRate;
 const CGFloat defaultReboundRate=0.4;

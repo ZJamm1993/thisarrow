@@ -28,13 +28,13 @@
 
 -(void)addMovingTrack
 {
-    ZZSpriteNode* cir=[ZZSpriteNode spriteNodeWithImageNamed:@"yellowCircle"];
+    ZZSpriteNode* cir=[ZZSpriteNode spriteNodeWithImageNamed:@"greenCircle"];
     [self.parent addChild:cir];
-    cir.xScale=0.98;
+    cir.xScale=0.99;
     cir.yScale=cir.xScale;
     cir.zPosition=Background_Z_Position;
     cir.position=self.position;
-    [cir runAction:[SKAction scaleTo:0.2 duration:1] completion:^{
+    [cir runAction:[SKAction group:[NSArray arrayWithObjects:[SKAction scaleTo:1.5 duration:1],[SKAction fadeAlphaTo:0 duration:1],nil]] completion:^{
         [cir removeFromParent];
     }];
 }

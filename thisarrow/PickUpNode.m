@@ -61,6 +61,8 @@ const NSString* rotationActionKey=@"rotationActionKey";
         ran=PickUpTypeBlue;
     }
     
+    ran=PickUpTypeBlue;
+    
     SKColor* randomColor;
     SKTexture* texture;
     if (ran==PickUpTypeOrange) {

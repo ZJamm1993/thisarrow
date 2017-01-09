@@ -87,7 +87,11 @@ const NSString* rotationKey=@"rotationKey";
         [rotationAction addObject:ro];
     }
     [rotationAction insertObject:[SKAction performSelector:@selector(removeOldRotaionAction) onTarget:self] atIndex:0];
-    [rotationAction insertObject:[SKAction repeatAction:[SKAction sequence:[NSArray arrayWithObjects:[SKAction fadeAlphaTo:0.4 duration:0],[SKAction waitForDuration:0.5],[SKAction fadeAlphaTo:1 duration:0],[SKAction waitForDuration:0.5], nil]] count:3] atIndex:0];
+    [rotationAction insertObject:[SKAction animateWithTextures:[NSArray arrayWithObjects:
+                                                                [MyTextureAtlas textureNamed:@"redCover"],[MyTextureAtlas textureNamed:@"blueCover"],
+                                                                [MyTextureAtlas textureNamed:@"redCover"],[MyTextureAtlas textureNamed:@"blueCover"],
+                                                                [MyTextureAtlas textureNamed:@"redCover"],[MyTextureAtlas textureNamed:@"blueCover"],
+                                                                [MyTextureAtlas textureNamed:@"redCover"],[MyTextureAtlas textureNamed:@"blueCover"], nil] timePerFrame:0.5] atIndex:0];
     [self runAction:[SKAction sequence:rotationAction] completion:^{
         [self removeAllActions];
         SKAction* scales=[SKAction sequence:[NSArray arrayWithObjects:[SKAction scaleTo:1.2 duration:0.25],[SKAction scaleTo:0 duration:0.25],nil]];

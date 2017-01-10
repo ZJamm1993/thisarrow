@@ -50,9 +50,7 @@ const CGFloat gainTime=1;
     
     
     WeaponNode* head=[WeaponNode spriteNodeWithTexture:[MyTextureAtlas textureNamed:@"purpleRailHead"]];
-    head.position=CGPointMake(0, head.size.height*0.25);//self.size.height);//+head.size.height*0.4);
-    head.yScale=0;
-    [head runAction:[SKAction repeatActionForever:[SKAction sequence:[NSArray arrayWithObjects:[SKAction scaleYTo:1.3 duration:0.2],[SKAction scaleYTo:0.8 duration:0.2], nil]]]];
+    head.position=CGPointMake(0, head.size.height*0.5);//self.size.height);//+head.size.height*0.4);
     [self addChild:head];
     
     self.texture=nil;
@@ -73,7 +71,7 @@ const CGFloat gainTime=1;
     {
         WeaponNode* leftNode=[WeaponNode spriteNodeWithColor:[UIColor clearColor] size:CGSizeMake(ww, ww)];
         leftNode.zPosition=1000;
-        leftNode.position=CGPointMake(ww/2+i*ww-ff, head.position.y+head.size.height*0.5-(i*ff));
+        leftNode.position=CGPointMake(ww/2+i*ww-ff, head.position.y+head.size.height*0.35-(i*ff));
         leftNode.userData=[NSMutableDictionary dictionaryWithObject:@"invisable" forKey:@"invisable"];
         leftNode.zRotation=-radian;
         [self addChild:leftNode];
@@ -86,6 +84,8 @@ const CGFloat gainTime=1;
         [self addChild:rightNode];
     }
     
+    head.yScale=0;
+    [head runAction:[SKAction repeatActionForever:[SKAction sequence:[NSArray arrayWithObjects:[SKAction scaleYTo:1.3 duration:0.2],[SKAction scaleYTo:0.8 duration:0.2], nil]]]];
     
     CGFloat fadeDuration=0.3;
     CGFloat disppearDur=0.1;

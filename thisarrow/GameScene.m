@@ -45,6 +45,11 @@ const NSInteger maxDotCount=200;
     CGPoint centerPoint=CGPointMake(self.size.width/2, self.size.height/2);
     
     CGFloat mx=5;
+    CGFloat WHRate=self.size.width/self.size.height;
+    if (WHRate>480.0/320.0) {
+        CGFloat ww=self.size.height/320*480;
+        mx=(self.size.width-ww)/2+mx;
+    }
     CGFloat my=25;
     
     bgNode=[ZZSpriteNode spriteNodeWithColor:[SKColor clearColor] size:CGSizeMake(self.size.width-2*mx, self.size.height-2*my)];

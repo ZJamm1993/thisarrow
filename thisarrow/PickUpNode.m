@@ -61,7 +61,7 @@ const NSString* rotationActionKey=@"rotationActionKey";
         ran=PickUpTypeBlue;
     }
     
-//    ran=PickUpTypeGreen;
+//    ran=PickUpTypePurple;
     
     SKColor* randomColor;
     SKTexture* texture;
@@ -227,12 +227,13 @@ const NSString* rotationActionKey=@"rotationActionKey";
     }
     else if(self.type==PickUpTypePurple)
     {
-        for (SKNode* child in node.children) {
-            if ([child isKindOfClass:[RailGunNode class]]) {
-                [self removeFromParent];
-                return;
-            }
-        }
+//        for (SKNode* child in node.children) {
+//            if ([child isKindOfClass:[RailGunNode class]]) {
+//                [self removeFromParent];
+        //give up loading if had it
+//                return;
+//            }
+//        }
         RailGunNode* rail=[RailGunNode defaultNode];
         [rail loadedToGun:node];
     }

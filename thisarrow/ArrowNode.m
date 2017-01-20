@@ -60,7 +60,7 @@
     CGFloat rotation=atan2f(-dx, dy);
     CGFloat distance=sqrtf(dx*dx+dy*dy);
     [self runAction:[SKAction rotateToAngle:rotation duration:0.1 shortestUnitArc:YES]];
-    [self runAction:[SKAction moveTo:point duration:distance/90]];
+    [self runAction:[SKAction moveTo:point duration:distance/180]];
 //    [self showTail];
 }
 

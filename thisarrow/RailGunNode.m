@@ -50,7 +50,7 @@ const CGFloat gainTime=1;
     
     
     WeaponNode* head=[WeaponNode spriteNodeWithTexture:[MyTextureAtlas textureNamed:@"purpleRailHead"]];
-    head.position=CGPointMake(0, head.size.height*0.5);//self.size.height);//+head.size.height*0.4);
+    head.position=CGPointMake(0, head.size.height*0.25);//self.size.height);//+head.size.height*0.4);
     [self addChild:head];
     
     self.texture=nil;

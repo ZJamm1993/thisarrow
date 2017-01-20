@@ -149,7 +149,7 @@ const CGFloat defaultPointerSpeed=240/60.0;
         else
         {
             int em=0;
-            int queueCount=bound.height/w-em*2;
+            int queueCount=bound.height/w-em*2-3;
             BOOL isL=arc4random()%2==0;
             CGFloat x=isL?w/2:bound.width-w/2;
             CGFloat speedX=2*defaultFollowSpeed*(isL?1:-1);

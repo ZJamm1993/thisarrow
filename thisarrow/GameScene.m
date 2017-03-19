@@ -14,10 +14,10 @@
 
 const CFTimeInterval frequentPickUp=0.25;
 const CFTimeInterval frequentDot=0.1;
-const CFTimeInterval frequentDotGroup=10;
+const CFTimeInterval frequentDotGroup=1;
 const NSInteger dotIncreasingCount=10;
 const NSInteger maxPickUpCount=3;
-const NSInteger maxDotCount=200;
+const NSInteger maxDotCount=2000;
 
 @interface GameScene()
 @end
@@ -305,8 +305,8 @@ const NSInteger maxDotCount=200;
     for (DotNode* dot in dots) {
         [dot actionWithTarget:arrow];
         if ([dot intersectsNode:arrow]) {
-            [self gameIsOver];
-            return;
+//            [self gameIsOver];
+//            return;
         }
     }
     

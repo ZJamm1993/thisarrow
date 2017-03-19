@@ -67,6 +67,8 @@ const CGFloat defaultPointerSpeed=240/60.0;
 //    DotGroupTypePointer;
     arc4random()%DotGroupTypeNothing;
     
+//    ranType=DotGroupTypeSurround;
+    
     NSMutableArray* newDots=[NSMutableArray array];
     
     CGSize bound=target.parent.frame.size;

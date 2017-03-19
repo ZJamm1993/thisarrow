@@ -295,9 +295,11 @@ const NSInteger maxDotCount=2000;
         [wea actionWithTargets:dots];
         [wea actionWithHero:arrow];
         [wea actionWithTimeInterval:currentTime];
-        for (DotNode* dot in dots) {
+        NSArray* readDots=[NSArray arrayWithArray:dots];
+        for (DotNode* dot in readDots) {
             if ([wea intersectsNode:dot]) {
                 [dot beKilledByWeapon:wea];
+                [dots removeObject:dot];
             }
         }
     }
@@ -305,8 +307,8 @@ const NSInteger maxDotCount=2000;
     for (DotNode* dot in dots) {
         [dot actionWithTarget:arrow];
         if ([dot intersectsNode:arrow]) {
-//            [self gameIsOver];
-//            return;
+            [self gameIsOver];
+            return;
         }
     }
     

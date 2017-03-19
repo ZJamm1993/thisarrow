@@ -197,6 +197,9 @@ const CGFloat defaultPointerSpeed=240/60.0;
         for (int i=0; i<numPointer; i++) {
             CGRect rect=[ZZSpriteNode rectWithCenter:ccp(bound.width/2, bound.height/2) width:bound.width-catchDotBound height:bound.height-catchDotBound];
             CGPoint randomPoint=[ZZSpriteNode randomPositionInRect:rect];
+            
+//            randomPoint=CGPointMake(100, 100);
+            
             NSValue* value=[NSValue valueWithCGPoint:randomPoint];
             
             [positions addObject:value];
@@ -463,9 +466,12 @@ const CGFloat defaultPointerSpeed=240/60.0;
 
 -(void)beKilledByWeapon:(WeaponNode *)weapon
 {
-    if (self.xScale==0||self.yScale==0) {
+    if (self.isDead) {
         return;
     }
+//    if (self.xScale==0||self.yScale==0) {
+//        return;
+//    }
     if ([weapon isKindOfClass:[MegaBombNode class]])
     {
         ZZSpriteNode* burn=[ZZSpriteNode spriteNodeWithTexture:[MyTextureAtlas textureNamed:@"burnup1"]];

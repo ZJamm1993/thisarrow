@@ -126,7 +126,7 @@ const NSString* rotationKey=@"rotationKey";
             selfWidth=nod.frame.size.width;
         }
     }
-    BOOL inter=distance<selfWidth/2+node.frame.size.width/2;
+    BOOL inter=distance<(selfWidth/2+node.frame.size.width/2);
     return inter;
 }
 

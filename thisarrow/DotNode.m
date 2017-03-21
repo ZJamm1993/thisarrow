@@ -198,7 +198,7 @@ const CGFloat defaultPointerSpeed=240/60.0;
             CGRect rect=[ZZSpriteNode rectWithCenter:ccp(bound.width/2, bound.height/2) width:bound.width-catchDotBound height:bound.height-catchDotBound];
             CGPoint randomPoint=[ZZSpriteNode randomPositionInRect:rect];
             
-//            randomPoint=CGPointMake(100, 100);
+//            randomPoint=CGPointMake(bound.width/2, bound.height/2);
             
             NSValue* value=[NSValue valueWithCGPoint:randomPoint];
             
@@ -538,7 +538,7 @@ const CGFloat defaultPointerSpeed=240/60.0;
 -(void)bleedingWithRotation:(CGFloat)rotation
 {
 //    rotation=rotation+M_PI_4*ZZRandom_1_0_1();
-    CFTimeInterval timePer=0.02+0.01*ZZRandom_1_0_1();
+    CFTimeInterval timePer=0.02+0.02*ZZRandom_0_1();
     
     ZZSpriteNode* blood=[ZZSpriteNode spriteNodeWithTexture:[MyTextureAtlas textureNamed:@"bloodRed1"]];
     blood.zRotation=rotation;
@@ -563,9 +563,10 @@ const CGFloat defaultPointerSpeed=240/60.0;
     if (_isDead||!_isAwake) {
         return NO;
     }
-    CGRect r1=[ZZSpriteNode resizeRect:self.frame Scale:0.8];
-    CGRect r2=[ZZSpriteNode resizeRect:node.frame Scale:0.25];
-    return CGRectIntersectsRect(r1, r2);
+//    CGRect r1=[ZZSpriteNode resizeRect:self.frame Scale:0.8];
+//    CGRect r2=[ZZSpriteNode resizeRect:node.frame Scale:0.25];
+//    return CGRectIntersectsRect(r1, r2);
+    return [super intersectsNode:node];
 }
 
 -(void)removeFromParent

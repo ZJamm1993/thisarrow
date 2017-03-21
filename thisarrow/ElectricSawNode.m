@@ -14,6 +14,7 @@ const NSString* rotationKey=@"rotationKey";
 @implementation ElectricSawNode
 {
     BOOL shouldSpeedUp;
+    CGSize heroSize;
 }
 
 +(instancetype)defaultNode
@@ -59,6 +60,9 @@ const NSString* rotationKey=@"rotationKey";
 -(void)actionWithHero:(SKNode *)hero
 {
     self.position=hero.position;
+    if ([hero isKindOfClass:[ZZSpriteNode class]]) {
+        heroSize=[((ZZSpriteNode*)hero)size];
+    }
 }
 
 -(void)actionWithTimeInterval:(CFTimeInterval)timeInterval
@@ -119,13 +123,23 @@ const NSString* rotationKey=@"rotationKey";
     CGFloat dy=p0.y-p1.y;
     CGFloat distance=sqrtf(dx*dx+dy*dy);
     CGFloat selfWidth=self.size.width;
+    if (heroSize.width>selfWidth) {
+        selfWidth=heroSize.width;
+    }
+    if (heroSize.height>selfWidth) {
+        selfWidth=heroSize.height;
+    }
     if(self.children.firstObject)
     {
         SKNode* nod=self.children.firstObject;
-        if (nod.frame.size.width>selfWidth) {
-            selfWidth=nod.frame.size.width;
+        if ([nod isKindOfClass:[ZZSpriteNode class]]) {
+            ZZSpriteNode* tooth=(ZZSpriteNode*)nod;
+            if (tooth.size.width>selfWidth) {
+                selfWidth=tooth.size.width;
+            }
         }
     }
+//    printf("selfWidth:%f\n",selfWidth);
     BOOL inter=distance<(selfWidth/2+node.frame.size.width/2);
     return inter;
 }

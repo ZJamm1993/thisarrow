@@ -10,17 +10,41 @@
 
 @implementation ZZSpriteNode
 
+//-(BOOL)intersectsNode:(SKNode *)node
+//{
+//    CGFloat scaleRate=0.8;
+//    CGRect r1=self.frame;
+//    CGRect r2=node.frame;
+//    CGRect newR1=[ZZSpriteNode resizeRect:r1 Scale:scaleRate];
+//    CGRect newR2=[ZZSpriteNode resizeRect:r2 Scale:scaleRate];
+//    BOOL intersects=CGRectIntersectsRect(newR1, newR2);
+//    return intersects;
+//    
+////    return [super intersectsNode:node];
+//}
+
 -(BOOL)intersectsNode:(SKNode *)node
 {
-    CGFloat scaleRate=0.8;
-    CGRect r1=self.frame;
-    CGRect r2=node.frame;
-    CGRect newR1=[ZZSpriteNode resizeRect:r1 Scale:scaleRate];
-    CGRect newR2=[ZZSpriteNode resizeRect:r2 Scale:scaleRate];
-    BOOL intersects=CGRectIntersectsRect(newR1, newR2);
-    return intersects;
-    
-//    return [super intersectsNode:node];
+    BOOL superIntersects=[super intersectsNode:node];
+    if (superIntersects==YES) {
+        if ([node isKindOfClass:[ZZSpriteNode class]]) {
+            ZZSpriteNode* toNode=(ZZSpriteNode*)node;
+            
+            CGFloat scale=0.6;
+            
+            CGFloat toW=(toNode.size.height<toNode.size.width?toNode.size.height:toNode.size.width)*scale;
+            
+            CGFloat frW=(self.size.height<self.size.width?self.size.height:self.size.width)*scale;
+            
+            CGFloat dis1=toW+frW;
+            
+            CGFloat dx=toNode.position.x-self.position.x;
+            CGFloat dy=toNode.position.y-self.position.y;
+            CGFloat dis2=dx*dx+dy*dy;
+            superIntersects=dis2<(dis1*dis1);
+        }
+    }
+    return superIntersects;
 }
 
 -(void)removeAllActions

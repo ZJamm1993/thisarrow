@@ -61,7 +61,7 @@ const NSString* rotationActionKey=@"rotationActionKey";
         ran=PickUpTypeBlue;
     }
     
-    ran=PickUpTypeBlue;
+//    ran=PickUpTypeBlue;
     
     SKColor* randomColor;
     SKTexture* texture;
@@ -239,7 +239,7 @@ const NSString* rotationActionKey=@"rotationActionKey";
     }
     else if(self.type==PickUpTypeYellow)
     {
-        int count=5;
+        int count=6;
         CGFloat ranRad=M_PI*ZZRandom_0_1();
         for (int i=0; i<count; i++) {
             MissileTrackNode* miss=[MissileTrackNode defaultNode];

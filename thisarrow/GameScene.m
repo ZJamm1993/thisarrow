@@ -14,10 +14,10 @@
 
 const CFTimeInterval frequentPickUp=0.25;
 const CFTimeInterval frequentDot=0.1;
-const CFTimeInterval frequentDotGroup=1;
-const NSInteger dotIncreasingCount=10;
+const CFTimeInterval frequentDotGroup=5;
+const NSInteger dotIncreasingCount=2;
 const NSInteger maxPickUpCount=3;
-const NSInteger maxDotCount=2000;
+const NSInteger maxDotCount=1000;
 
 @interface GameScene()
 @end
@@ -25,13 +25,16 @@ const NSInteger maxDotCount=2000;
 @implementation GameScene
 {
     CMMotionManager* _motionManager;
+    NSNumberFormatter* formatter;
     ArrowNode* arrow;
     ZZSpriteNode* bgNode;
+    SKLabelNode* scoreLabel;
     CFTimeInterval pickUpTimeInterval;
     CFTimeInterval dotTimeInterval;
     CFTimeInterval dotGroupTimeTnterval;
     NSInteger currentMaxDotCount;
     BOOL gameOver;
+    NSInteger killedDotsCount;
 }
 
 -(void)didMoveToView:(SKView *)view {
@@ -56,7 +59,17 @@ const NSInteger maxDotCount=2000;
     bgNode.position=CGPointMake(mx, my);
     bgNode.zPosition=Background_Z_Position;
     [super addChild:bgNode];
-    //
+    
+    formatter=[[NSNumberFormatter alloc]init];
+    formatter.numberStyle=NSNumberFormatterDecimalStyle;
+    
+    scoreLabel=[SKLabelNode labelNodeWithFontNamed:@"Menlo"];
+//    scoreLabel.horizontalAlignmentMode=SKLabelHorizontalAlignmentModeLeft;
+    scoreLabel.position=CGPointMake(self.size.width/2, self.size.height-my);
+    scoreLabel.fontColor=[SKColor whiteColor];
+    scoreLabel.fontSize=14;
+    [super addChild:scoreLabel];
+    
     SKTexture* roundCornerRect=[MyTextureAtlas textureNamed:@"roundCornerRect"];
     ZZSpriteNode* bgRect=[ZZSpriteNode spriteNodeWithTexture:roundCornerRect];
     bgRect.centerRect=CGRectMake(0.45, 0.45, 0.1,0.1);
@@ -165,6 +178,7 @@ const NSInteger maxDotCount=2000;
 -(void)addDot
 {
     DotNode* dot=[DotNode randomPositionNodeOnSize:bgNode.size];
+//    dot.position=arrow.position;
     [self addChild:dot];
     [dot wakeUp];
 }
@@ -201,11 +215,11 @@ const NSInteger maxDotCount=2000;
     scale.timingMode=SKActionTimingEaseOut;
     
     [smashedArrow runAction:[SKAction sequence:[NSArray arrayWithObjects:
-                                                [SKAction waitForDuration:0.7],
+//                                                [SKAction waitForDuration:0.7],
                                                 [SKAction performSelector:@selector(removeFromParent) onTarget:arrow],
                                                 scale
                                                 , nil]] completion:^{
-        [self performSelector:@selector(restartGame) withObject:nil afterDelay:3];
+        [self performSelector:@selector(restartGame) withObject:nil afterDelay:1];
     }];
 }
 
@@ -274,7 +288,7 @@ const NSInteger maxDotCount=2000;
         if (currentMaxDotCount<maxDotCount) {
             currentMaxDotCount+=dotIncreasingCount;
         }
-        if (dots.count<maxDotCount) {
+        if (dots.count<currentMaxDotCount) {
             [self addRandomGroupingDots:dots];
         }
     }
@@ -298,6 +312,7 @@ const NSInteger maxDotCount=2000;
         NSArray* readDots=[NSArray arrayWithArray:dots];
         for (DotNode* dot in readDots) {
             if ([wea intersectsNode:dot]) {
+                killedDotsCount++;
                 [dot beKilledByWeapon:wea];
                 [dots removeObject:dot];
             }
@@ -312,7 +327,7 @@ const NSInteger maxDotCount=2000;
         }
     }
     
-    
+    scoreLabel.text=[NSString stringWithFormat:@"killed dots: %@",[formatter stringFromNumber:[NSNumber numberWithInteger:killedDotsCount]]];
 }
 
 @end

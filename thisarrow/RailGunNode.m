@@ -71,7 +71,7 @@ const CGFloat gainTime=1;
     {
         WeaponNode* leftNode=[WeaponNode spriteNodeWithColor:[UIColor clearColor] size:CGSizeMake(ww, ww)];
         leftNode.zPosition=1000;
-        leftNode.position=CGPointMake(ww/2+i*ww-ff, head.position.y+head.size.height*0.35-(i*ff));
+        leftNode.position=CGPointMake(ww/2+i*ww-ff, head.position.y+head.size.height*0.25-(i*ff));
         leftNode.userData=[NSMutableDictionary dictionaryWithObject:@"invisable" forKey:@"invisable"];
         leftNode.zRotation=-radian;
         [self addChild:leftNode];

@@ -30,7 +30,7 @@
         if ([node isKindOfClass:[ZZSpriteNode class]]) {
             ZZSpriteNode* toNode=(ZZSpriteNode*)node;
             
-            CGFloat scale=0.6;
+            CGFloat scale=0.4;
             
             CGFloat toW=(toNode.size.height<toNode.size.width?toNode.size.height:toNode.size.width)*scale;
             

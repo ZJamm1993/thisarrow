@@ -13,11 +13,11 @@
 #import "DotNode.h"
 
 const CFTimeInterval frequentPickUp=0.25;
-const CFTimeInterval frequentDot=0.1;
+const CFTimeInterval frequentDot=1;
 const CFTimeInterval frequentDotGroup=5;
 const NSInteger dotIncreasingCount=2;
 const NSInteger maxPickUpCount=3;
-const NSInteger maxDotCount=1000;
+const NSInteger maxDotCount=100;
 
 @interface GameScene()
 @end

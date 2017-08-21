@@ -16,7 +16,23 @@
 +(instancetype)defaultNode
 {
     ArrowNode* arrow=[ArrowNode spriteNodeWithTexture:[MyTextureAtlas textureNamed:@"arrow"]];
+//    ZZSpriteNode* sha=[ZZSpriteNode spriteNodeWithTexture:[MyTextureAtlas textureNamed:@"arrow"]];
+//    sha.color=[SKColor grayColor];
+//    sha.zPosition=-1;
+//    sha.xScale=1.1;
+//    sha.yScale=1.1;
+//    [arrow addChild:sha];
     return arrow;
+}
+
+-(void)actionWithHero:(SKNode *)hero
+{
+    
+}
+
+-(void)actionWithTargets:(NSArray *)targets
+{
+    
 }
 
 -(void)actionWithAcceleration:(CMAcceleration)acc

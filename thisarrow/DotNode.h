@@ -7,12 +7,14 @@
 //
 
 #import "ZZSpriteNode.h"
+#import "ArrowNode.h"
 #import "WeaponNode.h"
 #import "MegaBombNode.h"
 #import "RailGunNode.h"
 #import "MissileTrackNode.h"
 #import "GreenCoverNode.h"
 #import "ElectricSawNode.h"
+#import "FreezeNode.h"
 
 typedef NS_ENUM(NSInteger,DotGroupType)
 {
@@ -25,6 +27,7 @@ typedef NS_ENUM(NSInteger,DotGroupType)
 
 @interface DotNode : ZZSpriteNode
 
+@property (nonatomic,assign) BOOL isFreeze;
 @property (nonatomic,assign) BOOL isDead;
 @property (nonatomic,assign) BOOL isAwake;
 @property (nonatomic,assign) CGFloat followSpeed;

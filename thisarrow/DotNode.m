@@ -59,6 +59,45 @@ const CGFloat defaultPointerSpeed=240/60.0;
     return self;
 }
 
+-(void)setIsFreeze:(BOOL)isFreeze
+{
+    BOOL oldFre=_isFreeze;
+    _isFreeze=isFreeze;
+    
+    if (isFreeze) {
+        [self removeAllActions];
+        self.xScale=1;
+        self.yScale=1;
+        self.texture=[MyTextureAtlas textureNamed:@"freezeIce"];
+        [self removeActionForKey:@"unfreeze"];
+        [self runAction:[SKAction sequence:[NSArray arrayWithObjects:[SKAction waitForDuration:5],[SKAction performSelector:@selector(setUnfreeze) onTarget:self], nil]] withKey:@"unfreeze"];
+        
+        self.size=self.texture.size;
+        if (!oldFre) {
+            if (![shadow hasActions]) {
+                [shadow removeAllActions];
+            }
+            [shadow runAction:[SKAction repeatActionForever:[SKAction sequence:[NSArray arrayWithObjects:[SKAction moveTo:CGPointMake(-2, 0) duration:0.1],[SKAction moveTo:CGPointMake(2, 0) duration:0.1], nil]]]];
+        }
+    }
+    else
+    {
+        self.texture=[MyTextureAtlas textureNamed:@"redDot"];
+        
+        self.size=self.texture.size;
+        [shadow removeAllActions];
+        shadow.position=CGPointZero;
+        self.isAwake=YES;
+        self.isDead=NO;
+        self.followSpeed=defaultFollowSpeed;
+    }
+}
+         
+-(void)setUnfreeze
+ {
+     self.isFreeze=NO;
+ }
+
 +(NSArray*)randomGroupNodeWithDots:(NSArray *)dots target:(SKNode *)target
 {
     //dont add child here.
@@ -208,7 +247,7 @@ const CGFloat defaultPointerSpeed=240/60.0;
         
         //find those who is no grouping, and group them
         for (DotNode* d in dots) {
-            if ((d.groupType==DotGroupTypeNothing)&&(arc4random()%3==0))
+            if ((d.groupType==DotGroupTypeNothing)&&(arc4random()%3==0)&&!d.isFreeze)
             {
                 [freeDots addObject:d];
             }
@@ -351,6 +390,11 @@ const CGFloat defaultPointerSpeed=240/60.0;
 {
     if (node.parent==nil) {
         [self removeFromParent];
+        return;
+    }
+    
+    if (_isFreeze) {
+        
         return;
     }
     
@@ -526,6 +570,36 @@ const CGFloat defaultPointerSpeed=240/60.0;
         CGFloat rotaion=-atan2f(self.position.x-weapon.position.x, self.position.y-weapon.position.y);
         [self bleedingWithRotation:rotaion];
     }
+    else if([weapon isKindOfClass:[FreezeNode class]])
+    {
+        if(_isAwake)
+        {
+            
+            self.isFreeze=YES;
+            self.groupType=DotGroupTypeNothing;
+            self.followSpeed=0;
+        }
+        
+        return;
+    }
+    else if([weapon isKindOfClass:[ArrowNode class]])
+    {
+        if(_isFreeze)
+        {
+            ZZSpriteNode* ball=[ZZSpriteNode spriteNodeWithTexture:[MyTextureAtlas textureNamed:@"freezeIceBroken"]];
+            ball.position=self.position;
+            ball.zRotation=(CGFloat)(arc4random()%360)/180*M_PI;
+            [self.parent addChild:ball];
+            CFTimeInterval time=0.5+0.2*ZZRandom_1_0_1();
+            [ball runAction:[SKAction group:[NSArray arrayWithObjects:[SKAction scaleTo:1.2 duration:time],[SKAction fadeAlphaTo:0 duration:time],nil]] completion:^{
+                [ball removeFromParent];
+            }];
+        }
+        else
+        {
+            return;
+        }
+    }
     self.isDead=YES;
     [self removeFromParent];
 }
@@ -560,13 +634,14 @@ const CGFloat defaultPointerSpeed=240/60.0;
 
 -(BOOL)intersectsNode:(SKNode *)node
 {
-    if (_isDead||!_isAwake) {
+    BOOL crash=[super intersectsNode:node];
+    if (_isDead||!_isAwake||_isFreeze) {
         return NO;
     }
 //    CGRect r1=[ZZSpriteNode resizeRect:self.frame Scale:0.8];
 //    CGRect r2=[ZZSpriteNode resizeRect:node.frame Scale:0.25];
 //    return CGRectIntersectsRect(r1, r2);
-    return [super intersectsNode:node];
+    return crash;
 }
 
 -(void)removeFromParent

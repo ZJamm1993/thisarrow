@@ -16,4 +16,8 @@
 
 -(void)actionWithPoint:(CGPoint)point;
 
+-(void)actionWithTargets:(NSArray*)targets;
+-(void)actionWithHero:(SKNode*)hero;
+
+
 @end

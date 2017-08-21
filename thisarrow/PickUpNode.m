@@ -12,6 +12,7 @@
 #import "MissileTrackNode.h"
 #import "GreenCoverNode.h"
 #import "ElectricSawNode.h"
+#import "FreezeNode.h"
 
 const CGFloat speedRate=1/60.0;
 const CFTimeInterval pickUpLifeTime=60;
@@ -48,6 +49,10 @@ const NSString* rotationActionKey=@"rotationActionKey";
     {
         ran=PickUpTypePurple;
     }
+    else if(i<60)
+    {
+        ran=PickUpTypeCyan;
+    }
     else if(i<75)
     {
         ran=PickUpTypeYellow;
@@ -61,7 +66,7 @@ const NSString* rotationActionKey=@"rotationActionKey";
         ran=PickUpTypeBlue;
     }
     
-//    ran=PickUpTypeBlue;
+    ran=PickUpTypeCyan;
     
     SKColor* randomColor;
     SKTexture* texture;
@@ -88,6 +93,10 @@ const NSString* rotationActionKey=@"rotationActionKey";
     {
         randomColor=[SKColor blueColor];
         texture=[MyTextureAtlas textureNamed:@"bluePickUp"];
+    }
+    else if(ran==PickUpTypeCyan)
+    {
+        randomColor=[SKColor cyanColor];
     }
     PickUpNode* node=texture?[PickUpNode spriteNodeWithTexture:texture]:[PickUpNode spriteNodeWithColor:randomColor size:CGSizeMake(24,24)];
     
@@ -281,6 +290,12 @@ const NSString* rotationActionKey=@"rotationActionKey";
         cover.createTime=self.currentTime;
         cover.position=node.position;
         [node.parent addChild:cover];
+    }
+    else if(self.type==PickUpTypeCyan)
+    {
+        FreezeNode* freeze=[FreezeNode defaultNode];
+        freeze.position=self.position;
+        [node.parent addChild:freeze];
     }
     [self removeFromParent];
 }

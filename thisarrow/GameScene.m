@@ -244,7 +244,7 @@ const NSInteger maxDotCount=100;
     NSMutableArray* pickUps=[NSMutableArray array];
     NSMutableArray* dots=[NSMutableArray array];
     NSMutableArray* nothingDots=[NSMutableArray array];
-    NSMutableArray* weapons=[NSMutableArray array];
+    NSMutableArray* weapons=[NSMutableArray arrayWithObject:arrow];
     
     for (SKNode* node in children) {
         if ([node isKindOfClass:[PickUpNode class]]) {
@@ -305,6 +305,16 @@ const NSInteger maxDotCount=100;
         }
     }
     
+    
+    
+    for (DotNode* dot in dots) {
+        [dot actionWithTarget:arrow];
+        if ([dot intersectsNode:arrow]) {
+//            [self gameIsOver];
+//            return;
+        }
+    }
+    
     for (WeaponNode* wea in weapons) {
         [wea actionWithTargets:dots];
         [wea actionWithHero:arrow];
@@ -312,18 +322,13 @@ const NSInteger maxDotCount=100;
         NSArray* readDots=[NSArray arrayWithArray:dots];
         for (DotNode* dot in readDots) {
             if ([wea intersectsNode:dot]) {
-                killedDotsCount++;
+                
                 [dot beKilledByWeapon:wea];
+                if (dot.isDead) {
+                    killedDotsCount++;
+                }
                 [dots removeObject:dot];
             }
-        }
-    }
-    
-    for (DotNode* dot in dots) {
-        [dot actionWithTarget:arrow];
-        if ([dot intersectsNode:arrow]) {
-            [self gameIsOver];
-            return;
         }
     }
     

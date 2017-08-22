@@ -66,7 +66,7 @@ const NSString* rotationActionKey=@"rotationActionKey";
         ran=PickUpTypeBlue;
     }
     
-//    ran=PickUpTypeCyan;
+    ran=PickUpTypeCyan;
     
     SKColor* randomColor;
     SKTexture* texture;
@@ -97,6 +97,7 @@ const NSString* rotationActionKey=@"rotationActionKey";
     else if(ran==PickUpTypeCyan)
     {
         randomColor=[SKColor cyanColor];
+        texture=[MyTextureAtlas textureNamed:@"cyanPickUp"];
     }
     PickUpNode* node=texture?[PickUpNode spriteNodeWithTexture:texture]:[PickUpNode spriteNodeWithColor:randomColor size:CGSizeMake(24,24)];
     

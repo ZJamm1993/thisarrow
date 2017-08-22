@@ -19,5 +19,6 @@
 -(void)actionWithTargets:(NSArray*)targets;
 -(void)actionWithHero:(SKNode*)hero;
 
+-(void)actionWithWeapons:(NSArray *)weapons;
 
 @end

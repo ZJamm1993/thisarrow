@@ -293,6 +293,8 @@ const NSInteger maxDotCount=100;
         }
     }
     
+    [arrow actionWithWeapons:weapons];
+    
     for (PickUpNode * pic in pickUps) {
         [pic movingAround];
         [pic actionWithTimeInterval:currentTime];
@@ -301,7 +303,6 @@ const NSInteger maxDotCount=100;
         }
         if ([arrow intersectsNode:pic]) {
             [pic bePickedUpByNode:arrow];
-            continue;
         }
     }
     
@@ -325,9 +326,9 @@ const NSInteger maxDotCount=100;
                 
                 [dot beKilledByWeapon:wea];
                 if (dot.isDead) {
+                    [dots removeObject:dot];
                     killedDotsCount++;
                 }
-                [dots removeObject:dot];
             }
         }
     }

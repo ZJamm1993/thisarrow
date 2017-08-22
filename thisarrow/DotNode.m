@@ -61,7 +61,6 @@ const CGFloat defaultPointerSpeed=240/60.0;
 
 -(void)setIsFreeze:(BOOL)isFreeze
 {
-    BOOL oldFre=_isFreeze;
     _isFreeze=isFreeze;
     
     if (isFreeze) {
@@ -73,12 +72,12 @@ const CGFloat defaultPointerSpeed=240/60.0;
         [self runAction:[SKAction sequence:[NSArray arrayWithObjects:[SKAction waitForDuration:5],[SKAction performSelector:@selector(setUnfreeze) onTarget:self], nil]] withKey:@"unfreeze"];
         
         self.size=self.texture.size;
-        if (!oldFre) {
-            if (![shadow hasActions]) {
-                [shadow removeAllActions];
-            }
-            [shadow runAction:[SKAction repeatActionForever:[SKAction sequence:[NSArray arrayWithObjects:[SKAction moveTo:CGPointMake(-2, 0) duration:0.1],[SKAction moveTo:CGPointMake(2, 0) duration:0.1], nil]]]];
-        }
+//        if (!oldFre) {
+//            if (![shadow hasActions]) {
+//                [shadow removeAllActions];
+//            }
+//            [shadow runAction:[SKAction repeatActionForever:[SKAction sequence:[NSArray arrayWithObjects:[SKAction moveTo:CGPointMake(-2, 0) duration:0.1],[SKAction moveTo:CGPointMake(2, 0) duration:0.1], nil]]]];
+//        }
     }
     else
     {
@@ -394,7 +393,9 @@ const CGFloat defaultPointerSpeed=240/60.0;
     }
     
     if (_isFreeze) {
-        
+        if (arc4random()%3==0) {
+            shadow.position=CGPointMake(1*ZZRandom_1_0_1(), 1*ZZRandom_1_0_1());
+        }
         return;
     }
     
@@ -404,10 +405,10 @@ const CGFloat defaultPointerSpeed=240/60.0;
 
     self.position=CGPointMake(self.position.x+self.speedX, self.position.y+self.speedY);
     
-    if (self.groupType!=DotGroupTypePointer&&self.groupType!=DotGroupTypeQueue) {
-        self.speedX=self.speedX*defaultSlowDownRate;
-        self.speedY=self.speedY*defaultSlowDownRate;
-    }
+//    if (self.groupType!=DotGroupTypePointer&&self.groupType!=DotGroupTypeQueue) {
+//        self.speedX=self.speedX*defaultSlowDownRate;
+//        self.speedY=self.speedY*defaultSlowDownRate;
+//    }
     
     if (self.touchTopBound) {
         self.speedY=-fabsf((float)self.speedY);
@@ -423,6 +424,9 @@ const CGFloat defaultPointerSpeed=240/60.0;
     }
     
     if (self.groupType==DotGroupTypeNothing||self.groupType==DotGroupTypeSurround) {
+        self.speedX=self.speedX*defaultSlowDownRate;
+        self.speedY=self.speedY*defaultSlowDownRate;
+        
         CGFloat dx=node.position.x-self.position.x;
         CGFloat dy=node.position.y-self.position.y;
         CGFloat rad=atan2f(dx, dy);

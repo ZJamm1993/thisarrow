@@ -7,10 +7,12 @@
 //
 
 #import "ArrowNode.h"
+#import "FreezeNode.h"
 
 @implementation ArrowNode
 {
     NSMutableArray* tailNodes;
+    BOOL hasShadow;
 }
 
 +(instancetype)defaultNode
@@ -30,9 +32,26 @@
     
 }
 
--(void)actionWithTargets:(NSArray *)targets
+-(void)actionWithWeapons:(NSArray *)weapons
 {
     
+    BOOL shadow=NO;
+    
+    for (SKNode* nod in weapons) {
+        if ([nod isKindOfClass:[FreezeNode class]]) {
+            shadow=YES;
+        }
+    }
+    //    if (shadow!=hasShadow) {
+    SKTexture* tex=shadow?[MyTextureAtlas textureNamed:@"arrowShadow"]:[MyTextureAtlas textureNamed:@"arrow"];
+    self.texture=tex;
+//    NSLog(@"%i",shadow);
+    //    }
+    //    hasShadow=shadow;
+}
+
+-(void)actionWithTargets:(NSArray *)targets
+{
 }
 
 -(void)actionWithAcceleration:(CMAcceleration)acc

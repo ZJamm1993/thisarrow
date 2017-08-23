@@ -69,7 +69,7 @@ const CGFloat defaultPointerSpeed=240/60.0;
         self.yScale=1;
         self.texture=[MyTextureAtlas textureNamed:@"freezeIce"];
         [self removeActionForKey:@"unfreeze"];
-        [self runAction:[SKAction sequence:[NSArray arrayWithObjects:[SKAction waitForDuration:5],[SKAction performSelector:@selector(setUnfreeze) onTarget:self], nil]] withKey:@"unfreeze"];
+        [self runAction:[SKAction sequence:[NSArray arrayWithObjects:[SKAction waitForDuration:10],[SKAction performSelector:@selector(setUnfreeze) onTarget:self], nil]] withKey:@"unfreeze"];
         
         self.size=self.texture.size;
 //        if (!oldFre) {
@@ -354,6 +354,66 @@ const CGFloat defaultPointerSpeed=240/60.0;
             [newDots addObjectsFromArray:arr];
         }
     }
+//    else if(ranType==DotGroupTypeTennis)
+//    {
+//        int catchDotBound=160;
+//        
+//        int numPointer=1;
+//        int raa=arc4random()%100;
+//        if (raa<40) {
+//            numPointer=1;
+//        }
+//        else if(raa<70)
+//        {
+//            numPointer=2;
+//        }
+//        else if(raa<90)
+//        {
+//            numPointer=3;
+//        }
+//        else{
+//            numPointer=4;
+//        }
+//        
+//        NSMutableArray* groupedDots=[NSMutableArray array];
+//        
+//        NSMutableArray* positions=[NSMutableArray array];
+//        
+//        NSMutableArray* freeDots=[NSMutableArray array];
+//        
+//        for (int i=0; i<numPointer; i++) {
+//            CGRect rect=[ZZSpriteNode rectWithCenter:ccp(bound.width/2, bound.height/2) width:bound.width-catchDotBound height:bound.height-catchDotBound];
+//            CGPoint randomPoint=[ZZSpriteNode randomPositionInRect:rect];
+//            
+//            //            randomPoint=CGPointMake(bound.width/2, bound.height/2);
+//            
+//            NSValue* value=[NSValue valueWithCGPoint:randomPoint];
+//            
+//            [positions addObject:value];
+//            [groupedDots addObject:[NSMutableArray array]];
+//        }
+//        
+//        //find those who is no grouping, and group them
+//        for (DotNode* d in dots) {
+//            if ((d.groupType==DotGroupTypeNothing)&&(arc4random()%3==0)&&!d.isFreeze)
+//            {
+//                [freeDots addObject:d];
+//            }
+//        }
+//        
+//        for (DotNode* d in freeDots) {
+//            for (int i=0; i<positions.count; i++) {
+//                NSValue* value=[positions objectAtIndex:i];
+//                CGPoint p=value.CGPointValue;
+//                CGRect rect=[ZZSpriteNode rectWithCenter:p width:catchDotBound height:catchDotBound];
+//                if (CGRectContainsPoint(rect, d.position)) {
+//                    NSMutableArray* ar=[groupedDots objectAtIndex:i];
+//                    [ar addObject:d];
+//                    break;
+//                }
+//            }
+//        }
+//    }
     
     return newDots;
 }
@@ -515,6 +575,7 @@ const CGFloat defaultPointerSpeed=240/60.0;
 -(void)beKilledByWeapon:(WeaponNode *)weapon
 {
     if (self.isDead) {
+        [self removeFromParent];
         return;
     }
 //    if (self.xScale==0||self.yScale==0) {
@@ -540,7 +601,7 @@ const CGFloat defaultPointerSpeed=240/60.0;
     }
     else if ([weapon isKindOfClass:[GreenCoverNode class]]) {
         GreenCoverNode* cover=(GreenCoverNode*)weapon;
-        if (self.isAwake==NO||cover.blowedUp==YES) {
+        if (self.isAwake==NO||cover.blowedUp==YES||self.isFreeze) {
             return;
         }
         cover.blowedUp=YES;
@@ -576,13 +637,13 @@ const CGFloat defaultPointerSpeed=240/60.0;
     }
     else if([weapon isKindOfClass:[FreezeNode class]])
     {
-        if(_isAwake)
-        {
-            
+//        if(_isAwake)
+//        {
+        
             self.isFreeze=YES;
             self.groupType=DotGroupTypeNothing;
             self.followSpeed=0;
-        }
+//        }
         
         return;
     }
@@ -591,6 +652,7 @@ const CGFloat defaultPointerSpeed=240/60.0;
         if(_isFreeze)
         {
             ZZSpriteNode* ball=[ZZSpriteNode spriteNodeWithTexture:[MyTextureAtlas textureNamed:@"freezeIceBroken"]];
+            ball.zPosition=Weapon_Z_Position;
             ball.position=self.position;
             ball.zRotation=(CGFloat)(arc4random()%360)/180*M_PI;
             [self.parent addChild:ball];

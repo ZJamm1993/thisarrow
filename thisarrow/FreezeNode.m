@@ -12,8 +12,8 @@
 
 +(instancetype)defaultNode
 {
-    FreezeNode* fre=[FreezeNode spriteNodeWithColor:[SKColor clearColor] size:CGSizeMake(155, 155)];
-    
+    FreezeNode* fre=[FreezeNode spriteNodeWithColor:[SKColor clearColor] size:CGSizeMake(300, 300)];
+    fre.zPosition=Background_Z_Position;
     [fre performSelector:@selector(freezeAction) withObject:nil afterDelay:0.01];
     [fre performSelector:@selector(disappear) withObject:nil afterDelay:2];
     
@@ -26,9 +26,15 @@
     
     CGFloat ranRad=(CGFloat)(arc4random()%360)/180*M_PI;
     
+    CGFloat totalHeight=0;
+    
     for (int i=0; i<icecount; i++) {
         NSString* name=[NSString stringWithFormat:@"ice%d",arc4random()%8+1];
         ZZSpriteNode* ice=[ZZSpriteNode spriteNodeWithTexture:[MyTextureAtlas textureNamed:name]];
+//        NSLog(@"%f",ice.size.height);
+        
+        totalHeight=totalHeight+ice.size.height;
+        
         ice.zRotation=M_PI*2/icecount*i+ranRad;
         ice.anchorPoint=CGPointMake(0.5, 0);
         ice.xScale=0;
@@ -39,6 +45,27 @@
         }];
         
         [self addChild:ice];
+    }
+    
+    CGFloat avgHeight=(totalHeight/icecount)*2;
+    self.size=CGSizeMake(avgHeight, avgHeight);
+    
+    NSLog(@"parent? %@",self.parent);
+    
+    for (int i=0; i<icecount; i++) {
+        NSString* name=[NSString stringWithFormat:@"iceSmall%d",arc4random()%2+1];
+        ZZSpriteNode* ic=[ZZSpriteNode spriteNodeWithImageNamed:name];
+        ic.zPosition=Weapon_Z_Position+1;
+        ic.zRotation=M_PI*2*ZZRandom_0_1();
+        ic.position=self.position;
+        [self.parent addChild:ic];
+        
+        CGFloat ranDis=avgHeight/2+20*ZZRandom_1_0_1();
+        CGFloat dx=ranDis*sin(-ic.zRotation);
+        CGFloat dy=ranDis*cos(ic.zRotation);
+        [ic runAction:[SKAction sequence:[NSArray arrayWithObjects:[SKAction moveByX:dx y:dy duration:0.1],[SKAction waitForDuration:0.75],[SKAction fadeAlphaTo:0 duration:0.5], nil]] completion:^{
+            [ic removeFromParent];
+        }];
     }
 }
 

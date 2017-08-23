@@ -14,8 +14,8 @@
 
 const CFTimeInterval frequentPickUp=0.25;
 const CFTimeInterval frequentDot=1;
-const CFTimeInterval frequentDotGroup=5;
-const NSInteger dotIncreasingCount=2;
+const CFTimeInterval frequentDotGroup=10;
+const NSInteger dotIncreasingCount=1;
 const NSInteger maxPickUpCount=3;
 const NSInteger maxDotCount=100;
 
@@ -35,6 +35,7 @@ const NSInteger maxDotCount=100;
     NSInteger currentMaxDotCount;
     BOOL gameOver;
     NSInteger killedDotsCount;
+    CMAcceleration originAcceleration;
 }
 
 -(void)didMoveToView:(SKView *)view {
@@ -87,6 +88,11 @@ const NSInteger maxDotCount=100;
     _motionManager=[[CMMotionManager alloc]init];
     [_motionManager startAccelerometerUpdates];
     [_motionManager setAccelerometerUpdateInterval:1/60.0];
+    
+    if ([_motionManager isAccelerometerAvailable]) {
+//        [arrow actionWithAcceleration:_motionManager.accelerometerData.acceleration];
+        originAcceleration=_motionManager.accelerometerData.acceleration;
+    }
 }
 
 -(void)addChild:(SKNode *)node
@@ -237,7 +243,11 @@ const NSInteger maxDotCount=100;
     }
     
     if ([_motionManager isAccelerometerAvailable]) {
-        [arrow actionWithAcceleration:_motionManager.accelerometerData.acceleration];
+        CMAcceleration thisAcc=_motionManager.accelerometerData.acceleration;
+        thisAcc.x=thisAcc.x-originAcceleration.x;
+        thisAcc.y=thisAcc.y-originAcceleration.y;
+        thisAcc.z=thisAcc.z-originAcceleration.z;
+        [arrow actionWithAcceleration:thisAcc];
     }
     
     NSArray* children=[NSArray arrayWithArray:self.children];
@@ -306,16 +316,6 @@ const NSInteger maxDotCount=100;
         }
     }
     
-    
-    
-    for (DotNode* dot in dots) {
-        [dot actionWithTarget:arrow];
-        if ([dot intersectsNode:arrow]) {
-//            [self gameIsOver];
-//            return;
-        }
-    }
-    
     for (WeaponNode* wea in weapons) {
         [wea actionWithTargets:dots];
         [wea actionWithHero:arrow];
@@ -330,6 +330,14 @@ const NSInteger maxDotCount=100;
                     killedDotsCount++;
                 }
             }
+        }
+    }
+    
+    for (DotNode* dot in dots) {
+        [dot actionWithTarget:arrow];
+        if ([dot intersectsNode:arrow]) {
+            [self gameIsOver];
+            return;
         }
     }
     

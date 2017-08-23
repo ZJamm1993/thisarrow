@@ -20,6 +20,7 @@ const NSString* rotationKey=@"rotationKey";
 +(instancetype)defaultNode
 {
     ElectricSawNode* nod=[ElectricSawNode spriteNodeWithImageNamed:@"blueCover"];
+    nod.zPosition=Dot_Z_Position;
     nod.xScale=0;
     nod.yScale=nod.xScale;
     [nod runAction:[SKAction sequence:[NSArray arrayWithObjects:[SKAction scaleTo:1 duration:0.25],nil]] completion:^{

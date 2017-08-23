@@ -21,6 +21,7 @@ typedef NS_ENUM(NSInteger,DotGroupType)
     DotGroupTypeQueue,
     DotGroupTypeSurround,
     DotGroupTypePointer,
+//    DotGroupTypeTennis,
 //    DotGroupType
     DotGroupTypeNothing,  // default
 };

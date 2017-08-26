@@ -15,7 +15,7 @@
     FreezeNode* fre=[FreezeNode spriteNodeWithColor:[SKColor clearColor] size:CGSizeMake(300, 300)];
     fre.zPosition=Background_Z_Position;
     [fre performSelector:@selector(freezeAction) withObject:nil afterDelay:0.01];
-    [fre performSelector:@selector(disappear) withObject:nil afterDelay:2];
+    [fre performSelector:@selector(disappear) withObject:nil afterDelay:1];
     
     return fre;
 }

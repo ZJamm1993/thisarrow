@@ -80,6 +80,85 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		393E915620CFCA5D00DB24FC /* PickUps */ = {
+			isa = PBXGroup;
+			children = (
+				397536791E07FCD8000A44D6 /* PickUpNode.h */,
+				3975367A1E07FCD8000A44D6 /* PickUpNode.m */,
+			);
+			name = PickUps;
+			sourceTree = "<group>";
+		};
+		393E915720CFCA7C00DB24FC /* Dots */ = {
+			isa = PBXGroup;
+			children = (
+				390113591E0E01360005EB3D /* DotNode.h */,
+				3901135A1E0E01360005EB3D /* DotNode.m */,
+			);
+			name = Dots;
+			sourceTree = "<group>";
+		};
+		393E915820CFCA8E00DB24FC /* Scene */ = {
+			isa = PBXGroup;
+			children = (
+				398312F31DFE82B700BB4306 /* GameScene.h */,
+				398312F41DFE82B700BB4306 /* GameScene.m */,
+			);
+			name = Scene;
+			sourceTree = "<group>";
+		};
+		393E915920CFCA9C00DB24FC /* Node */ = {
+			isa = PBXGroup;
+			children = (
+				BB0B1AE21E08FF66004DB73E /* ZZSpriteNode.h */,
+				BB0B1AE31E08FF66004DB73E /* ZZSpriteNode.m */,
+				393E915B20CFCAD700DB24FC /* Weapon */,
+				393E915A20CFCAC100DB24FC /* Arrow */,
+				393E915720CFCA7C00DB24FC /* Dots */,
+				393E915620CFCA5D00DB24FC /* PickUps */,
+			);
+			name = Node;
+			sourceTree = "<group>";
+		};
+		393E915A20CFCAC100DB24FC /* Arrow */ = {
+			isa = PBXGroup;
+			children = (
+				BBDBD8141DFF7DD2001C5F4A /* ArrowNode.h */,
+				BBDBD8151DFF7DD2001C5F4A /* ArrowNode.m */,
+			);
+			name = Arrow;
+			sourceTree = "<group>";
+		};
+		393E915B20CFCAD700DB24FC /* Weapon */ = {
+			isa = PBXGroup;
+			children = (
+				8FA65E7C1F4ABB6C00259F42 /* FreezeNode.h */,
+				8FA65E7D1F4ABB6C00259F42 /* FreezeNode.m */,
+				BBF89D5D1E0A0D8100AC0E80 /* WeaponNode.h */,
+				BBF89D5E1E0A0D8100AC0E80 /* WeaponNode.m */,
+				BBF89D651E0A2C0F00AC0E80 /* MegaBombNode.h */,
+				BBF89D661E0A2C0F00AC0E80 /* MegaBombNode.m */,
+				BBF89D681E0A7EAC00AC0E80 /* RailGunNode.h */,
+				BBF89D691E0A7EAC00AC0E80 /* RailGunNode.m */,
+				BBEB627F1E10E0A500DED9F4 /* MissileTrackNode.h */,
+				BBEB62801E10E0A500DED9F4 /* MissileTrackNode.m */,
+				BB2D9EA41E1B892F00C43E53 /* GreenCoverNode.h */,
+				BB2D9EA51E1B892F00C43E53 /* GreenCoverNode.m */,
+				BBF69AAD1E1CE63200CDCD07 /* ElectricSawNode.h */,
+				BBF69AAE1E1CE63200CDCD07 /* ElectricSawNode.m */,
+			);
+			name = Weapon;
+			sourceTree = "<group>";
+		};
+		393E915C20CFCB0100DB24FC /* Tool */ = {
+			isa = PBXGroup;
+			children = (
+				BBDBD81B1DFF8921001C5F4A /* MyTextureAtlas.h */,
+				BBDBD81C1DFF8921001C5F4A /* MyTextureAtlas.m */,
+			);
+			name = Tool;
+			sourceTree = "<group>";
+		};
 		398312E11DFE82B700BB4306 = {
 			isa = PBXGroup;
 			children = (
@@ -100,41 +179,18 @@
 		398312EC1DFE82B700BB4306 /* thisarrow */ = {
 			isa = PBXGroup;
 			children = (
+				393E915C20CFCB0100DB24FC /* Tool */,
+				393E915920CFCA9C00DB24FC /* Node */,
+				393E915820CFCA8E00DB24FC /* Scene */,
 				398312FE1DFE82B700BB4306 /* Assets.xcassets */,
 				398313031DFE82B700BB4306 /* Info.plist */,
 				398312ED1DFE82B700BB4306 /* Supporting Files */,
 				BBDBD8191DFF85AA001C5F4A /* texture.atlas */,
 				398312F01DFE82B700BB4306 /* AppDelegate.h */,
 				398312F11DFE82B700BB4306 /* AppDelegate.m */,
-				398312F31DFE82B700BB4306 /* GameScene.h */,
-				398312F41DFE82B700BB4306 /* GameScene.m */,
-				390113591E0E01360005EB3D /* DotNode.h */,
-				3901135A1E0E01360005EB3D /* DotNode.m */,
-				BBDBD8141DFF7DD2001C5F4A /* ArrowNode.h */,
-				BBDBD8151DFF7DD2001C5F4A /* ArrowNode.m */,
-				BBDBD81B1DFF8921001C5F4A /* MyTextureAtlas.h */,
-				BBDBD81C1DFF8921001C5F4A /* MyTextureAtlas.m */,
 				BBDBD81E1DFF8A6E001C5F4A /* pch.pch */,
-				397536791E07FCD8000A44D6 /* PickUpNode.h */,
-				3975367A1E07FCD8000A44D6 /* PickUpNode.m */,
-				BB0B1AE21E08FF66004DB73E /* ZZSpriteNode.h */,
-				BB0B1AE31E08FF66004DB73E /* ZZSpriteNode.m */,
 				398312F81DFE82B700BB4306 /* GameViewController.h */,
 				398312F91DFE82B700BB4306 /* GameViewController.m */,
-				BBF89D5D1E0A0D8100AC0E80 /* WeaponNode.h */,
-				BBF89D5E1E0A0D8100AC0E80 /* WeaponNode.m */,
-				BBF89D651E0A2C0F00AC0E80 /* MegaBombNode.h */,
-				BBF89D661E0A2C0F00AC0E80 /* MegaBombNode.m */,
-				BBF89D681E0A7EAC00AC0E80 /* RailGunNode.h */,
-				BBF89D691E0A7EAC00AC0E80 /* RailGunNode.m */,
-				BBEB627F1E10E0A500DED9F4 /* MissileTrackNode.h */,
-				BBEB62801E10E0A500DED9F4 /* MissileTrackNode.m */,
-				BB2D9EA41E1B892F00C43E53 /* GreenCoverNode.h */,
-				BB2D9EA51E1B892F00C43E53 /* GreenCoverNode.m */,
-				BBF69AAD1E1CE63200CDCD07 /* ElectricSawNode.h */,
-				BBF69AAE1E1CE63200CDCD07 /* ElectricSawNode.m */,
-				8FA65E7C1F4ABB6C00259F42 /* FreezeNode.h */,
-				8FA65E7D1F4ABB6C00259F42 /* FreezeNode.m */,
 			);
 			path = thisarrow;
 			sourceTree = "<group>";
@@ -178,6 +234,7 @@
 				TargetAttributes = {
 					398312E91DFE82B700BB4306 = {
 						CreatedOnToolsVersion = 7.2.1;
+						DevelopmentTeam = 4NU738LHQ7;
 					};
 				};
 			};
@@ -327,6 +384,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 4NU738LHQ7;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/thisarrow/pch.pch";
 				INFOPLIST_FILE = thisarrow/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -346,6 +404,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 4NU738LHQ7;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/thisarrow/pch.pch";
 				INFOPLIST_FILE = thisarrow/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;

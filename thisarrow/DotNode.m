@@ -18,6 +18,7 @@ const CGFloat defaultPointerSpeed=240/60.0;
 @implementation DotNode
 {
     ZZSpriteNode* shadow;
+    NSArray* pointerGroup;
 }
 
 +(instancetype)defaultNode
@@ -105,7 +106,7 @@ const CGFloat defaultPointerSpeed=240/60.0;
 //    DotGroupTypePointer;
     arc4random()%DotGroupTypeNothing;
     
-//    ranType=DotGroupTypeSurround;
+//    ranType=DotGroupTypePointer;
     
     NSMutableArray* newDots=[NSMutableArray array];
     
@@ -289,6 +290,7 @@ const CGFloat defaultPointerSpeed=240/60.0;
             
             for (int j=0;j<arr.count;j++) {
                 DotNode* d=[arr objectAtIndex:j];
+                d->pointerGroup = [NSArray arrayWithArray:arr];
                 d.groupType=DotGroupTypePointer;
                 d.isAwake=NO;
                 
@@ -440,9 +442,11 @@ const CGFloat defaultPointerSpeed=240/60.0;
 
 -(void)shootPointer
 {
-    self.originPoint=CGPointZero;
-    self.speedX=defaultPointerSpeed*sinf(-self.zRotation);
-    self.speedY=defaultPointerSpeed*cosf(-self.zRotation);
+    if (self.groupType == DotGroupTypePointer) {
+        self.originPoint=CGPointZero;
+        self.speedX=defaultPointerSpeed*sinf(-self.zRotation);
+        self.speedY=defaultPointerSpeed*cosf(-self.zRotation);
+    }
 }
 
 -(void)actionWithTarget:(SKNode *)node
@@ -531,6 +535,21 @@ const CGFloat defaultPointerSpeed=240/60.0;
         CGFloat dy=node.position.y-realOrigin.y;
         CGFloat rad=-atan2f(dx, dy);
         self.zRotation=rad;
+        
+        // if its pointer group lost many dots, become normal and slow down
+        NSInteger deadCount = 0;
+        for (DotNode *dot in self->pointerGroup) {
+            if (dot.isDead) {
+                deadCount++;
+            }
+        }
+        if (deadCount > 7) {
+            for (DotNode *dot in self->pointerGroup) {
+                dot.groupType = DotGroupTypeNothing;
+                dot.speedX = 0;
+                dot.speedY = 0;
+            }
+        }
     }
 }
 

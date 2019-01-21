@@ -66,7 +66,7 @@ const NSString* rotationActionKey=@"rotationActionKey";
         ran=PickUpTypeBlue;
     }
     
-//    ran=PickUpTypeCyan;
+//    ran=PickUpTypeBlue;
 //    ran=arc4random()%2==0?PickUpTypeGreen:PickUpTypeCyan;
     
     SKColor* randomColor;

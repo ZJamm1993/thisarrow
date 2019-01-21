@@ -234,7 +234,7 @@
 				TargetAttributes = {
 					398312E91DFE82B700BB4306 = {
 						CreatedOnToolsVersion = 7.2.1;
-						DevelopmentTeam = 4NU738LHQ7;
+						DevelopmentTeam = 5Q82V2U2B5;
 					};
 				};
 			};
@@ -384,7 +384,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 4NU738LHQ7;
+				DEVELOPMENT_TEAM = 5Q82V2U2B5;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/thisarrow/pch.pch";
 				INFOPLIST_FILE = thisarrow/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -404,7 +404,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 4NU738LHQ7;
+				DEVELOPMENT_TEAM = 5Q82V2U2B5;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/thisarrow/pch.pch";
 				INFOPLIST_FILE = thisarrow/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;

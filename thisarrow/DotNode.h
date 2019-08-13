@@ -16,6 +16,13 @@
 #import "ElectricSawNode.h"
 #import "FreezeNode.h"
 
+FOUNDATION_EXPORT const CGFloat defaultFollowSpeed;
+FOUNDATION_EXPORT const CGFloat defaultTopSpeed;
+FOUNDATION_EXPORT const CGFloat defaultSlowDownRate;
+FOUNDATION_EXPORT const CGFloat defaultFastUpRate;
+FOUNDATION_EXPORT const CGFloat defaultReboundRate;
+FOUNDATION_EXPORT const CGFloat defaultPointerSpeed;
+
 typedef NS_ENUM(NSInteger,DotGroupType)
 {
     DotGroupTypeQueue,
@@ -27,6 +34,10 @@ typedef NS_ENUM(NSInteger,DotGroupType)
 };
 
 @interface DotNode : ZZSpriteNode
+{
+    ZZSpriteNode* shadow;
+    NSArray* pointerGroup;
+}
 
 @property (nonatomic,assign) BOOL isFreeze;
 @property (nonatomic,assign) BOOL isDead;
@@ -36,8 +47,8 @@ typedef NS_ENUM(NSInteger,DotGroupType)
 @property (nonatomic,assign) CGPoint originPoint;
 
 +(instancetype)defaultNode;
++(CGFloat)defaultWidth;
 +(instancetype)randomPositionNodeOnSize:(CGSize)size;
-+(NSArray*)randomGroupNodeWithDots:(NSArray*)dots target:(SKNode*)target;
 
 -(void)actionWithTarget:(SKNode*)node;
 +(SKAction*)wakeUpAction;

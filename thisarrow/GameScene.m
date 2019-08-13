@@ -11,6 +11,7 @@
 #import "PickUpNode.h"
 #import "WeaponNode.h"
 #import "DotNode.h"
+#import "DotNode+Grouping.h"
 
 const CFTimeInterval frequentPickUp=0.25;
 const CFTimeInterval frequentDot=1;

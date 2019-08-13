@@ -15,6 +15,7 @@
 		398312F51DFE82B700BB4306 /* GameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 398312F41DFE82B700BB4306 /* GameScene.m */; };
 		398312FA1DFE82B700BB4306 /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 398312F91DFE82B700BB4306 /* GameViewController.m */; };
 		398312FF1DFE82B700BB4306 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 398312FE1DFE82B700BB4306 /* Assets.xcassets */; };
+		6DA5A51123029D7F008C368D /* DotNode+Grouping.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DA5A51023029D7F008C368D /* DotNode+Grouping.m */; };
 		8FA65E7E1F4ABB6C00259F42 /* FreezeNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FA65E7D1F4ABB6C00259F42 /* FreezeNode.m */; };
 		BB0B1AE41E08FF66004DB73E /* ZZSpriteNode.m in Sources */ = {isa = PBXBuildFile; fileRef = BB0B1AE31E08FF66004DB73E /* ZZSpriteNode.m */; };
 		BB2D9EA61E1B892F00C43E53 /* GreenCoverNode.m in Sources */ = {isa = PBXBuildFile; fileRef = BB2D9EA51E1B892F00C43E53 /* GreenCoverNode.m */; };
@@ -44,6 +45,8 @@
 		398312F91DFE82B700BB4306 /* GameViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameViewController.m; sourceTree = "<group>"; };
 		398312FE1DFE82B700BB4306 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		398313031DFE82B700BB4306 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6DA5A50F23029D7F008C368D /* DotNode+Grouping.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DotNode+Grouping.h"; sourceTree = "<group>"; };
+		6DA5A51023029D7F008C368D /* DotNode+Grouping.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "DotNode+Grouping.m"; sourceTree = "<group>"; };
 		8FA65E7C1F4ABB6C00259F42 /* FreezeNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FreezeNode.h; sourceTree = "<group>"; };
 		8FA65E7D1F4ABB6C00259F42 /* FreezeNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FreezeNode.m; sourceTree = "<group>"; };
 		BB0B1AE21E08FF66004DB73E /* ZZSpriteNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZZSpriteNode.h; sourceTree = "<group>"; };
@@ -94,6 +97,8 @@
 			children = (
 				390113591E0E01360005EB3D /* DotNode.h */,
 				3901135A1E0E01360005EB3D /* DotNode.m */,
+				6DA5A50F23029D7F008C368D /* DotNode+Grouping.h */,
+				6DA5A51023029D7F008C368D /* DotNode+Grouping.m */,
 			);
 			name = Dots;
 			sourceTree = "<group>";
@@ -282,6 +287,7 @@
 				3901135B1E0E01360005EB3D /* DotNode.m in Sources */,
 				BBEB62811E10E0A500DED9F4 /* MissileTrackNode.m in Sources */,
 				BB2D9EA61E1B892F00C43E53 /* GreenCoverNode.m in Sources */,
+				6DA5A51123029D7F008C368D /* DotNode+Grouping.m in Sources */,
 				BBDBD81D1DFF8921001C5F4A /* MyTextureAtlas.m in Sources */,
 				BBF89D6A1E0A7EAC00AC0E80 /* RailGunNode.m in Sources */,
 				3975367B1E07FCD8000A44D6 /* PickUpNode.m in Sources */,
